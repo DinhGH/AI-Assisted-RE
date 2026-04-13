@@ -45,3 +45,28 @@ No business logic, AI algorithm, or production feature implementation has been a
 3. Forward analysis requests to the AI engine
 4. Persist results and version history in MySQL
 5. Visualize quality metrics in the dashboard
+
+## Team working rules
+
+To keep collaboration clean and predictable, follow these rules:
+
+- The `main` branch is the official integration branch on GitHub.
+- Each team member must create and work on their own feature branch.
+- Branch names should match the feature or task being worked on.
+- If the task is a small part of a larger feature, use a nested feature branch name in the format `big-feature-small-feature`.
+- Do not merge directly into `main` unless you are explicitly responsible for integration.
+- Do not push code to `main` just to share work in progress.
+- The team lead will handle integration and merging into `main` after review.
+- If environment variables change, notify the team in Zalo and include the exact variable name(s) that changed.
+- If the database structure changes, notify the team so everyone is aware of the update before continuing work.
+
+## Recommended branch naming examples
+
+- `upload-module`
+- `dashboard-radar-chart`
+- `ai-chat-message-history`
+- `requirement-analysis-ambiguity-check`
+
+## Collaboration note
+
+This repository is organized for parallel development. Please keep changes isolated, communicate breaking updates early, and let the integration owner manage final merging.
