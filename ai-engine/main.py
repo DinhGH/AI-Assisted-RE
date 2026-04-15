@@ -1,16 +1,32 @@
-"""AI engine entry point placeholder.
+"""AI engine service entrypoint."""
 
-This file exists to define the Python service bootstrap boundary for the analysis engine.
-Implementation will later connect API routes, models, and runtime configuration.
-"""
+from __future__ import annotations
+
+import os
+
+import uvicorn
+from fastapi import FastAPI
+
+from api.routes import register_routes
 
 
-def create_app():
-    """Create and return the AI engine application skeleton."""
-    # TODO: Wire up service startup and API adapters.
-    pass
+def create_app() -> FastAPI:
+    """Create and configure FastAPI app instance.
+
+    WHY: Factory style enables cleaner test setup and dependency injection later.
+    """
+    app = FastAPI(
+        title="AI-Assisted Requirement Quality Analysis Engine",
+        version="1.0.0",
+    )
+    register_routes(app)
+    return app
+
+
+app = create_app()
 
 
 if __name__ == "__main__":
-    # TODO: Start the AI service using the configured runtime entry point.
-    create_app()
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
+

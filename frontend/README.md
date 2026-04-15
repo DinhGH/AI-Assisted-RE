@@ -1,8 +1,8 @@
 # Frontend
 
 <!--
-  This folder contains the React/Vite application shell for the requirement analysis UI.
-  The implementation will live here later; for now, this file defines the boundary and purpose.
+  This folder contains the React/Vite frontend for uploading requirements,
+  browsing extracted items, viewing quality metrics, and chatting with the AI helper.
 -->
 
 ## Purpose
@@ -18,4 +18,4 @@ Host the user interface for requirement upload, analysis dashboards, AI chat, an
 
 ## Example usage
 
-Developers should work inside `frontend/src/` and keep reusable UI and client logic in its own layer.
+Run `npm install` and `npm run dev` to launch the UI locally.

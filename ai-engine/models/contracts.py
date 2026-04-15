@@ -1,11 +1,43 @@
-"""AI engine model contracts placeholder.
+"""Pydantic contracts for AI engine API."""
 
-This file exists to describe data contracts and model references for the service.
-Implementation will later capture structured request and response shapes.
-"""
+from __future__ import annotations
+
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
 
 
-def describe_models():
-    """Return a placeholder description of configured AI assets."""
-    # TODO: Define model metadata and contract structures.
-    return None
+class AnalyzeRequest(BaseModel):
+    text: str = Field(..., min_length=1)
+
+
+class AnalyzeResponse(BaseModel):
+    actor: str
+    action: str
+    object: str
+    ambiguity: float
+    readability: float
+    similarity: float
+    contradiction: float
+    clarity: float
+    completeness: float
+    consistency: float
+    score: float
+    explanation: List[str]
+
+
+class ChatHistoryMessage(BaseModel):
+    role: str
+    message: str
+
+
+class ChatRequest(BaseModel):
+    session_id: str = Field(..., min_length=1)
+    message: str = Field(..., min_length=1)
+    history: Optional[List[ChatHistoryMessage]] = None
+
+
+class ChatResponse(BaseModel):
+    session_id: str
+    message: str
+

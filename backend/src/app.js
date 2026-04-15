@@ -1,4 +1,16 @@
-// Express application bootstrap placeholder.
-// This file exists to define middleware, routing, and shared server configuration later.
+const express = require("express");
+const cors = require("cors");
+const requirementRoutes = require("./routes/requirement.routes");
+const { errorMiddleware } = require("./middlewares/error.middleware");
 
-// TODO: Create and export the Express app instance.
+const app = express();
+
+app.use(cors());
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/", requirementRoutes);
+
+app.use(errorMiddleware);
+
+module.exports = app;

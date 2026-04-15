@@ -1,4 +1,34 @@
-// Logger utility placeholder.
-// This file exists to define a consistent backend logging abstraction later.
+/**
+ * Lightweight structured logger.
+ *
+ * WHY: A small logger abstraction makes runtime diagnostics consistent without
+ * coupling the codebase to a specific logging vendor.
+ */
+function log(level, message, meta = {}) {
+  const payload = {
+    timestamp: new Date().toISOString(),
+    level,
+    message,
+    ...meta,
+  };
 
-// TODO: Export logging helpers and structured logging configuration.
+  const output = JSON.stringify(payload);
+
+  if (level === "error") {
+    console.error(output);
+    return;
+  }
+
+  if (level === "warn") {
+    console.warn(output);
+    return;
+  }
+
+  console.log(output);
+}
+
+module.exports = {
+  info: (message, meta) => log("info", message, meta),
+  warn: (message, meta) => log("warn", message, meta),
+  error: (message, meta) => log("error", message, meta),
+};

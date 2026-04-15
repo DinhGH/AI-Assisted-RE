@@ -1,9 +1,9 @@
 # AI-Assisted Requirement Quality Analysis
 
 <!--
-  This repository is a monorepo scaffold for an AI-powered requirement analysis platform.
-  It exists to align teams on the architecture, module boundaries, and delivery workflow
-  before any business logic is implemented.
+  This repository now contains a working end-to-end implementation of the platform.
+  The monorepo keeps frontend, backend, AI engine, shared contracts, Docker files,
+  and setup guidance separated so the system can be run locally or in containers.
 -->
 
 ## What this repository is for
@@ -35,8 +35,67 @@ This workspace is a non-functional project skeleton for:
 
 ## Status
 
-This project currently contains structure, comments, and documentation only.
-No business logic, AI algorithm, or production feature implementation has been added yet.
+This project now includes a working end-to-end implementation for:
+
+- file upload and parsing
+- requirement segmentation
+- AI analysis and scoring
+- queue-based background processing
+- chat history
+- dashboard visualization
+- versioning and exports
+
+The codebase is functional, but the first production pass should still be validated in
+your local environment or CI/CD pipeline before release.
+
+## How to run
+
+### Option 1: Docker Compose
+
+1. Make sure Docker Desktop is running.
+2. From the repository root, start all services:
+
+   ```bash
+   docker compose up --build
+   docker compose up
+   ```
+
+3. Open the apps:
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:3000/health
+   - AI Engine: http://localhost:8000/health
+   - MySQL: localhost:3307
+   - Redis: localhost:6379
+
+### Option 2: Run services individually
+
+- Backend:
+  - `cd backend`
+  - `npm install`
+  - `npm run start:api`
+- Backend worker:
+  - `cd backend`
+  - `npm run start:worker`
+- Frontend:
+  - `cd frontend`
+  - `npm install`
+  - `npm run dev`
+- AI engine:
+  - `cd ai-engine`
+  - `pip install -r requirements.txt`
+  - `uvicorn main:app --host 0.0.0.0 --port 8000`
+
+## Required services
+
+- MySQL 8.4
+- Redis 7
+- Node.js 20+
+- Python 3.12+
+
+## Environment variables
+
+Each service has an `.env.example` file in its folder. Copy the example file to `.env`
+and adjust values if you are not using Docker Compose defaults.
 
 ## Example workflow
 

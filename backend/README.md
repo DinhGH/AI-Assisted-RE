@@ -1,8 +1,8 @@
 # Backend
 
 <!--
-  This folder contains the Express.js application shell.
-  It exists to define API boundaries, route organization, and service orchestration points.
+  This folder contains the Express.js backend implementation for upload handling,
+  requirement segmentation, queue orchestration, exports, metrics, and chat proxying.
 -->
 
 ## Purpose
@@ -18,4 +18,4 @@ Expose HTTP APIs, coordinate analysis workflows, manage queues, and persist appl
 
 ## Example usage
 
-Developers should add route handlers, services, and queue workers under `backend/src/`.
+Run the API with `npm run start:api` and the worker with `npm run start:worker`.

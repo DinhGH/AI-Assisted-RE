@@ -1,8 +1,9 @@
 # AI Engine
 
 <!--
-  This folder contains the Python-based NLP and scoring service boundary.
-  It exists to isolate requirement analysis concerns from the web stack.
+  This folder contains the Python-based analysis service implementation.
+  It performs NLP extraction, ambiguity detection, readability scoring,
+  similarity, contradiction checks, and final requirement scoring.
 -->
 
 ## Purpose
@@ -18,4 +19,5 @@ Analyze requirement text using NLP, similarity, contradiction, scoring, and expl
 
 ## Example usage
 
-Implement analysis components under `ai-engine/app/` and keep external API surfaces in `ai-engine/api/`.
+Install dependencies with `pip install -r requirements.txt` and run
+`uvicorn main:app --host 0.0.0.0 --port 8000`.

@@ -9,9 +9,13 @@ services:
     env_file:
       - ./frontend/.env.example
     ports:
-      - "3000:3000"
+      - "5173:5173"
+    restart: unless-stopped
     depends_on:
       - backend
+    volumes:
+    - ./frontend:/app
+    - /app/node_modules
 
   backend:
     build:
@@ -20,7 +24,21 @@ services:
     env_file:
       - ./backend/.env.example
     ports:
-      - "4000:4000"
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - mysql
+      - redis
+      - ai-engine
+
+  backend-worker:
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend.Dockerfile
+    env_file:
+      - ./backend/.env.example
+    command: ["npm", "run", "start:worker"]
+    restart: unless-stopped
     depends_on:
       - mysql
       - redis
@@ -33,7 +51,8 @@ services:
     env_file:
       - ./ai-engine/.env.example
     ports:
-      - "5000:5000"
+      - "8000:8000"
+    restart: unless-stopped
     depends_on:
       - redis
 
@@ -45,7 +64,8 @@ services:
       MYSQL_PASSWORD: ai_password
       MYSQL_ROOT_PASSWORD: root_password
     ports:
-      - "3306:3306"
+      - "3307:3306"
+    restart: unless-stopped
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -53,6 +73,7 @@ services:
     image: redis:7-alpine
     ports:
       - "6379:6379"
+    restart: unless-stopped
     volumes:
       - redis_data:/data
 

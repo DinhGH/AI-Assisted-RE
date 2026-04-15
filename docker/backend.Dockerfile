@@ -3,4 +3,15 @@
 
 FROM node:20-alpine
 WORKDIR /app
-# Implementation will later copy backend source, install dependencies, and launch the API server.
+
+# Install dependencies separately to maximize Docker cache hits.
+COPY package*.json ./
+RUN npm install
+
+# Copy backend source after dependencies are installed.
+COPY . .
+
+EXPOSE 3000
+
+# Start backend API.
+CMD ["npm", "start"]

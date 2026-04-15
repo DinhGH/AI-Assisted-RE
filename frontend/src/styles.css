@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --ring: rgba(255, 255, 255, 0.3);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Inter, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.08),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(255, 255, 255, 0.05),
+      transparent 40%
+    ),
+    #020202;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.glass-card {
+  @apply rounded-2xl border border-zinc-800/90 bg-black/65 shadow-[0_12px_48px_rgba(0,0,0,0.45)] backdrop-blur-xl;
+}
+
+.panel {
+  @apply glass-card p-6 transition duration-300;
+}
+
+.input {
+  @apply w-full rounded-xl border border-zinc-700/90 bg-black/80 px-4 py-3 text-sm text-zinc-100 outline-none transition duration-200 focus:border-zinc-300 focus:ring-2 focus:ring-white/20;
+}
+
+.button-primary {
+  @apply inline-flex items-center justify-center rounded-xl bg-white px-4 py-3 text-sm font-semibold text-black transition duration-200 hover:-translate-y-0.5 hover:bg-zinc-200 hover:shadow-[0_10px_24px_rgba(255,255,255,0.1)] disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+.button-secondary {
+  @apply inline-flex items-center justify-center rounded-xl border border-zinc-700 bg-black px-4 py-3 text-sm font-semibold text-zinc-100 transition duration-200 hover:-translate-y-0.5 hover:border-zinc-300 hover:text-white;
+}
+
+.nav-link {
+  @apply rounded-xl px-3 py-2 text-sm font-medium text-zinc-300 transition duration-200 hover:bg-zinc-900 hover:text-white;
+}
+
+.nav-link-active {
+  @apply bg-white/10 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.25)];
+}
+
+.soft-divider {
+  @apply border border-slate-800/70;
+}
+
+.card-hover {
+  @apply transition duration-200 hover:-translate-y-0.5 hover:border-slate-600/90 hover:bg-slate-900/70;
+}
+
+.ring-focus {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30;
+}
+
+.fade-in-up {
+  animation: fadeInUp 320ms ease-out;
+}
+
+.pulse-dot {
+  animation: pulseDot 1.9s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
