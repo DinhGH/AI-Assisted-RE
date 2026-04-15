@@ -9,18 +9,8 @@ function formatScore(value) {
   return `${Math.round(numeric)}`;
 }
 
-function buildRequirementSummary(requirement) {
-  if (!requirement) {
-    return "Select a requirement in the left column to view analysis and chat with AI.";
-  }
-
-  const score = formatScore(requirement.score);
-  const clarity = formatScore(requirement.clarity);
-  const completeness = formatScore(requirement.completeness);
-  const consistency = formatScore(requirement.consistency);
-  const ambiguity = formatScore(requirement.ambiguity);
-
-  return `AI quick assessment for this requirement:\n- Overall score: ${score}/100\n- Clarity: ${clarity}\n- Completeness: ${completeness}\n- Consistency: ${consistency}\n- Ambiguity: ${ambiguity}\n\nTip: ask AI to rewrite this requirement for better clarity, lower ambiguity, and stronger testability.`;
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
 }
 
 export default function HomePage() {
@@ -38,11 +28,25 @@ export default function HomePage() {
   const selectRequirement = useAppStore((state) => state.selectRequirement);
   const updateRequirement = useAppStore((state) => state.updateRequirement);
   const sendChatMessage = useAppStore((state) => state.sendChatMessage);
+  const requestRequirementReview = useAppStore(
+    (state) => state.requestRequirementReview,
+  );
 
   const [manualModalOpen, setManualModalOpen] = useState(false);
   const [manualRequirement, setManualRequirement] = useState("");
   const [chatDraft, setChatDraft] = useState("");
   const [editorDraft, setEditorDraft] = useState("");
+  const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(min-width: 1280px)").matches
+      : false,
+  );
+  const [columnWeights, setColumnWeights] = useState({
+    left: 22,
+    right: 26,
+  });
+  const [draggingSeparator, setDraggingSeparator] = useState(null);
 
   const activeSession = useMemo(
     () =>
@@ -77,6 +81,72 @@ export default function HomePage() {
     setEditorDraft(selectedRequirement?.text || "");
   }, [selectedRequirement?.id, selectedRequirement?.text]);
 
+  useEffect(() => {
+    if (!selectedRequirement?.id) {
+      return;
+    }
+
+    void requestRequirementReview(selectedRequirement.id);
+  }, [
+    selectedRequirement?.id,
+    selectedRequirement?.updatedAt,
+    requestRequirementReview,
+  ]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const media = window.matchMedia("(min-width: 1280px)");
+    const update = (event) => setIsDesktop(event.matches);
+
+    setIsDesktop(media.matches);
+    media.addEventListener("change", update);
+
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (!isDesktop || !draggingSeparator) {
+      return undefined;
+    }
+
+    const handleMove = (event) => {
+      const viewportWidth = window.innerWidth || 1;
+      const pointerPercent = (event.clientX / viewportWidth) * 100;
+
+      setColumnWeights((current) => {
+        const minCenter = 28;
+
+        if (draggingSeparator === "left") {
+          const maxLeft = 100 - current.right - minCenter;
+          return {
+            ...current,
+            left: clamp(pointerPercent, 16, maxLeft),
+          };
+        }
+
+        const nextRight = clamp(100 - pointerPercent, 18, 34);
+        const maxRight = 100 - current.left - minCenter;
+        return {
+          ...current,
+          right: clamp(nextRight, 18, maxRight),
+        };
+      });
+    };
+
+    const stopDrag = () => setDraggingSeparator(null);
+
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mouseup", stopDrag);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", stopDrag);
+    };
+  }, [draggingSeparator, isDesktop]);
+
   const handleUpload = async (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -105,18 +175,31 @@ export default function HomePage() {
     await updateRequirement(selectedRequirement.id, editorDraft);
   };
 
+  const centerWeight = clamp(
+    100 - columnWeights.left - columnWeights.right,
+    24,
+    64,
+  );
+
+  const desktopGridTemplate = `${columnWeights.left}% 10px ${centerWeight}% 10px ${columnWeights.right}%`;
+
   return (
     <>
-      <div className="grid min-h-[calc(100vh-170px)] gap-4 xl:grid-cols-[320px_1fr_420px]">
-        <aside className="panel fade-in-up flex min-h-0 flex-col gap-4 p-4">
+      <div
+        className="grid h-full gap-4 overflow-hidden xl:gap-0"
+        style={
+          isDesktop ? { gridTemplateColumns: desktopGridTemplate } : undefined
+        }
+      >
+        <aside
+          className="panel fade-in-up flex min-h-0 flex-col gap-4 overflow-hidden p-4"
+          style={isDesktop ? { gridColumn: 1, marginRight: 12 } : undefined}
+        >
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.25em] text-slate-400">
                 Session sources
               </p>
-              <h2 className="text-lg font-semibold text-white">
-                📚 Requirements
-              </h2>
             </div>
             <span className="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">
               {requirements.length}
@@ -142,7 +225,7 @@ export default function HomePage() {
             </button>
           </div>
 
-          <div className="no-scrollbar flex-1 space-y-2 overflow-y-auto pr-1">
+          <div className="app-scrollbar flex-1 space-y-2 overflow-y-auto pr-1">
             {requirements.length === 0 ? (
               <div className="rounded-xl border border-dashed border-slate-700 bg-slate-950/50 p-4 text-sm text-slate-400">
                 No requirements in this session yet.
@@ -151,26 +234,44 @@ export default function HomePage() {
               requirements.map((item, index) => (
                 <div
                   key={item.id}
-                  className={`card-hover rounded-2xl border p-3 ${item.id === selectedRequirement?.id ? "border-white/35 bg-white/5 shadow-[0_0_18px_rgba(255,255,255,0.14)]" : "border-slate-800 bg-slate-950/60"}`}
+                  className={`card-hover rounded-2xl border-2 p-3 transition ${
+                    item.id === selectedRequirement?.id
+                      ? "border-white bg-white/10 shadow-[0_0_24px_rgba(255,255,255,0.2)]"
+                      : "border-slate-700 bg-slate-950/60 hover:border-slate-600"
+                  }`}
                 >
+                  <div className="mb-2 flex items-center justify-between gap-2">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
+                      Requirement {index + 1}
+                    </p>
+                    <button
+                      className="ring-focus inline-flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900/80 text-zinc-300 transition hover:border-red-500 hover:bg-red-950/60 hover:text-red-300"
+                      type="button"
+                      aria-label="Delete requirement"
+                      onClick={() => setDeleteConfirmId(item.id)}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        className="h-4 w-4"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                      >
+                        <path d="M4 7h16" strokeLinecap="round" />
+                        <path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                        <path d="M7 7l1 12a1 1 0 0 0 1 .9h6a1 1 0 0 0 1-.9L17 7" />
+                        <path d="M10 11v5M14 11v5" strokeLinecap="round" />
+                      </svg>
+                    </button>
+                  </div>
                   <button
                     className="w-full text-left ring-focus"
                     type="button"
                     onClick={() => selectRequirement(item.id)}
                   >
-                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
-                      Requirement {index + 1}
-                    </p>
-                    <p className="mt-1 line-clamp-3 text-sm text-slate-100">
+                    <p className="line-clamp-3 text-sm text-slate-100">
                       {item.text}
                     </p>
-                  </button>
-                  <button
-                    className="ring-focus mt-3 w-full rounded-lg border border-zinc-600/70 bg-zinc-900/70 px-3 py-2 text-xs font-semibold text-zinc-100 transition hover:border-zinc-400 hover:bg-zinc-800/80"
-                    type="button"
-                    onClick={() => deleteRequirement(item.id)}
-                  >
-                    Delete requirement
                   </button>
                 </div>
               ))
@@ -178,7 +279,26 @@ export default function HomePage() {
           </div>
         </aside>
 
-        <section className="panel fade-in-up flex min-h-0 flex-col gap-4 p-4">
+        {isDesktop ? (
+          <button
+            type="button"
+            aria-label="Resize left panel"
+            className="group relative cursor-col-resize"
+            style={{ gridColumn: 2 }}
+            onMouseDown={() => setDraggingSeparator("left")}
+          >
+            <span className="absolute inset-x-[3px] top-2 bottom-2 rounded-full bg-slate-800/80 transition group-hover:bg-slate-600" />
+          </button>
+        ) : null}
+
+        <section
+          className="panel fade-in-up flex min-h-0 flex-col gap-3 overflow-hidden p-4"
+          style={
+            isDesktop
+              ? { gridColumn: 3, marginLeft: 6, marginRight: 6 }
+              : undefined
+          }
+        >
           {requirements.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-dashed border-slate-700 bg-slate-950/40 p-10 text-center">
               <p className="text-xs uppercase tracking-[0.35em] text-zinc-400">
@@ -213,16 +333,7 @@ export default function HomePage() {
             </div>
           ) : (
             <>
-              <div className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-950/80 to-slate-900/50 p-4">
-                <p className="text-xs uppercase tracking-[0.25em] text-zinc-400">
-                  AI Insight
-                </p>
-                <p className="mt-2 whitespace-pre-wrap text-sm leading-7 text-slate-200">
-                  {buildRequirementSummary(selectedRequirement)}
-                </p>
-              </div>
-
-              <div className="no-scrollbar flex-1 space-y-3 overflow-y-auto rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+              <div className="app-scrollbar flex-1 space-y-3 overflow-y-auto rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
                 {visibleMessages.length === 0 ? (
                   <div className="flex h-full min-h-56 items-center justify-center rounded-xl border border-dashed border-slate-700 text-sm text-slate-500">
                     No conversation yet. Ask AI about the selected requirement.
@@ -244,54 +355,92 @@ export default function HomePage() {
                 )}
               </div>
 
-              <form className="space-y-3" onSubmit={handleSendChat}>
-                <textarea
-                  className="input ring-focus min-h-28 resize-y"
+              <form
+                className="flex items-center gap-2"
+                onSubmit={handleSendChat}
+              >
+                <input
+                  className="input ring-focus h-11"
                   value={chatDraft}
                   onChange={(event) => setChatDraft(event.target.value)}
-                  placeholder="Ask AI about this requirement, request a rewrite, or discuss improvements..."
+                  placeholder="Message AI about the selected requirement..."
                 />
                 <button
-                  className="button-primary ring-focus"
+                  className="button-primary ring-focus h-11 w-11 rounded-xl p-0"
                   type="submit"
                   disabled={loading || !chatDraft.trim()}
+                  aria-label="Send message"
                 >
-                  {loading ? "Sending..." : "Send to AI"}
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className="h-5 w-5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      d="M4 12L20 4L14 20L11 13L4 12Z"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </button>
               </form>
             </>
           )}
         </section>
 
-        <aside className="fade-in-up grid min-h-0 gap-4 xl:grid-rows-[0.45fr_0.55fr]">
+        {isDesktop ? (
+          <button
+            type="button"
+            aria-label="Resize right panel"
+            className="group relative cursor-col-resize"
+            style={{ gridColumn: 4 }}
+            onMouseDown={() => setDraggingSeparator("right")}
+          >
+            <span className="absolute inset-x-[3px] top-2 bottom-2 rounded-full bg-slate-800/80 transition group-hover:bg-slate-600" />
+          </button>
+        ) : null}
+
+        <aside
+          className="fade-in-up flex min-h-0 flex-col gap-4"
+          style={isDesktop ? { gridColumn: 5, marginLeft: 12 } : undefined}
+        >
           <section className="panel space-y-3 p-4">
             <p className="text-xs uppercase tracking-[0.25em] text-slate-400">
               Requirement score
             </p>
             {selectedRequirement ? (
               <>
-                <h3 className="line-clamp-3 text-sm font-semibold text-white">
-                  {selectedRequirement.text}
-                </h3>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   {[
-                    ["Score", selectedRequirement.score],
                     ["Clarity", selectedRequirement.clarity],
                     ["Completeness", selectedRequirement.completeness],
                     ["Consistency", selectedRequirement.consistency],
+                    ["Ambiguity", selectedRequirement.ambiguity],
                   ].map(([label, value]) => (
                     <div
                       key={label}
-                      className="card-hover rounded-xl border border-slate-800 bg-slate-950/60 p-3"
+                      className="card-hover rounded-lg border border-slate-800 bg-slate-950/60 px-3 py-2"
                     >
-                      <p className="text-[10px] uppercase tracking-[0.25em] text-slate-500">
+                      <p className="text-[9px] uppercase tracking-[0.22em] text-slate-500">
                         {label}
                       </p>
-                      <p className="mt-1 text-lg font-semibold text-white">
+                      <p className="mt-1 text-base font-semibold text-white">
                         {formatScore(value)}
                       </p>
                     </div>
                   ))}
+                </div>
+                <div className="flex justify-center pt-0.5">
+                  <div className="w-full max-w-44 rounded-xl border border-white/25 bg-white/10 px-3 py-2.5 text-center">
+                    <p className="text-[10px] uppercase tracking-[0.25em] text-slate-400">
+                      Score
+                    </p>
+                    <p className="mt-1 text-3xl font-semibold text-white">
+                      {formatScore(selectedRequirement.score)}
+                    </p>
+                  </div>
                 </div>
               </>
             ) : (
@@ -301,12 +450,12 @@ export default function HomePage() {
             )}
           </section>
 
-          <section className="panel flex min-h-0 flex-col gap-3 p-4">
+          <section className="panel flex min-h-0 flex-1 flex-col gap-3 p-4">
             <p className="text-xs uppercase tracking-[0.25em] text-slate-400">
               Editor
             </p>
             <textarea
-              className="input ring-focus no-scrollbar min-h-0 flex-1 resize-none"
+              className="input ring-focus app-scrollbar min-h-0 flex-1 resize-none"
               value={editorDraft}
               onChange={(event) => setEditorDraft(event.target.value)}
               placeholder="The selected requirement content appears here..."
@@ -333,21 +482,6 @@ export default function HomePage() {
           </section>
         </aside>
       </div>
-
-      {(error || success) && (
-        <div className="fixed bottom-4 right-4 z-40 max-w-md space-y-2">
-          {error ? (
-            <p className="rounded-xl border border-zinc-600/70 bg-zinc-900/85 px-4 py-3 text-sm text-zinc-100">
-              {error}
-            </p>
-          ) : null}
-          {success ? (
-            <p className="rounded-xl border border-zinc-500/70 bg-zinc-800/85 px-4 py-3 text-sm text-zinc-100">
-              {success}
-            </p>
-          ) : null}
-        </div>
-      )}
 
       {manualModalOpen ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
@@ -385,6 +519,39 @@ export default function HomePage() {
                 onClick={handleManualAdd}
               >
                 {loading ? "Adding..." : "Add requirement"}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {deleteConfirmId ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
+          <div className="panel fade-in-up w-full max-w-sm space-y-4 p-5">
+            <h3 className="text-lg font-semibold text-white">
+              Delete requirement?
+            </h3>
+            <p className="text-sm text-slate-300">
+              This action cannot be undone. The requirement will be permanently
+              deleted.
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                className="button-secondary ring-focus"
+                type="button"
+                onClick={() => setDeleteConfirmId(null)}
+              >
+                Cancel
+              </button>
+              <button
+                className="ring-focus rounded-lg border border-red-700 bg-red-950/60 px-4 py-2 font-medium text-red-200 transition hover:border-red-600 hover:bg-red-950/80"
+                type="button"
+                onClick={() => {
+                  deleteRequirement(deleteConfirmId);
+                  setDeleteConfirmId(null);
+                }}
+              >
+                Delete
               </button>
             </div>
           </div>

@@ -504,6 +504,110 @@ export const useAppStore = create(
           throw error;
         }
       },
+
+      requestRequirementReview: async (requirementId) => {
+        const state = get();
+        const currentSession = state.sessions.find(
+          (item) => item.id === state.activeSessionId,
+        );
+
+        if (!currentSession) {
+          return null;
+        }
+
+        const requirement = currentSession.requirements.find(
+          (item) => item.id === requirementId,
+        );
+
+        if (!requirement) {
+          return null;
+        }
+
+        const alreadyReviewed = currentSession.chatMessages.some(
+          (item) =>
+            item.role === "assistant" &&
+            item.autoReview === true &&
+            item.requirementId === requirementId &&
+            item.requirementUpdatedAt === requirement.updatedAt,
+        );
+
+        if (alreadyReviewed) {
+          return null;
+        }
+
+        const prompt = [
+          "You are an AI assistant that analyzes software requirements in English.",
+          "Reply in 4 short parts: assessment, analysis, recommendations, and revision guidance.",
+          "Use a clear, practical, easy-to-follow tone.",
+          `Requirement: ${requirement.text}`,
+          `Score: ${requirement.score ?? "N/A"}`,
+          `Clarity: ${requirement.clarity ?? "N/A"}`,
+          `Completeness: ${requirement.completeness ?? "N/A"}`,
+          `Consistency: ${requirement.consistency ?? "N/A"}`,
+          `Ambiguity: ${requirement.ambiguity ?? "N/A"}`,
+        ].join("\n");
+
+        try {
+          const response = await chatService.sendMessage(
+            currentSession.id,
+            prompt,
+          );
+
+          const assistantChat = {
+            role: "assistant",
+            message:
+              response.response ||
+              "I reviewed this requirement. Do you want me to rewrite it in a testable format?",
+            createdAt: new Date().toISOString(),
+            requirementId,
+            autoReview: true,
+            requirementUpdatedAt: requirement.updatedAt,
+          };
+
+          set((s) => {
+            const patch = updateActiveSession(
+              ensureDefaultSession({
+                ...s,
+                activeSessionId: s.activeSessionId || s.sessions[0]?.id || null,
+              }),
+              (session) => ({
+                ...session,
+                chatMessages: [...session.chatMessages, assistantChat],
+              }),
+            );
+
+            return patch;
+          });
+
+          return assistantChat;
+        } catch {
+          const fallbackMessage = {
+            role: "assistant",
+            message: `Quick assessment:\n- The current requirement is understandable, but it can be more explicit.\n\nAnalysis:\n- Actor/Action/Object exist at a basic level, but measurable acceptance criteria are still vague.\n\nRecommendations:\n- Add measurable constraints (response time, completion criteria, scope of users).\n\nRevision guidance:\n- Share the business goal, and I will rewrite it into a testable requirement right away.`,
+            createdAt: new Date().toISOString(),
+            requirementId,
+            autoReview: true,
+            requirementUpdatedAt: requirement.updatedAt,
+          };
+
+          set((s) => {
+            const patch = updateActiveSession(
+              ensureDefaultSession({
+                ...s,
+                activeSessionId: s.activeSessionId || s.sessions[0]?.id || null,
+              }),
+              (session) => ({
+                ...session,
+                chatMessages: [...session.chatMessages, fallbackMessage],
+              }),
+            );
+
+            return patch;
+          });
+
+          return fallbackMessage;
+        }
+      },
     }),
     {
       name: "ai-assisted-re-session-store",

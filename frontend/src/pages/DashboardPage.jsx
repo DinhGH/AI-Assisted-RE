@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Radar, Bar } from "react-chartjs-2";
 import {
@@ -42,6 +42,11 @@ export default function DashboardPage() {
   const navigate = useNavigate();
   const sessions = useAppStore((state) => state.sessions);
   const activeSessionId = useAppStore((state) => state.activeSessionId);
+
+  // State for resizable layout
+  const [leftColWidth, setLeftColWidth] = useState(60); // percentage
+  const containerRef = useRef(null);
+  const isResizing = useRef(false);
 
   const activeSession = useMemo(
     () =>
@@ -120,33 +125,27 @@ export default function DashboardPage() {
     },
   };
 
-  const topFive = useMemo(() => {
-    const sorted = [...requirements].sort(
-      (a, b) => numeric(b.score) - numeric(a.score),
-    );
-    return sorted.slice(0, 5);
-  }, [requirements]);
-
   const barData = useMemo(
     () => ({
-      labels: topFive.map(
+      labels: requirements.map(
         (item, index) => item.requirementCode || `REQ-${index + 1}`,
       ),
       datasets: [
         {
           label: "Requirement score",
-          data: topFive.map((item) => numeric(item.score)),
+          data: requirements.map((item) => numeric(item.score)),
           backgroundColor: "rgba(255, 255, 255, 0.65)",
           borderColor: "rgba(255, 255, 255, 1)",
           borderWidth: 1,
         },
       ],
     }),
-    [topFive],
+    [requirements],
   );
 
   const barOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       x: {
         ticks: { color: "#cbd5e1" },
@@ -162,6 +161,105 @@ export default function DashboardPage() {
     plugins: {
       legend: { labels: { color: "#e2e8f0" } },
     },
+  };
+
+  // Calculate chart dimensions for horizontal scrolling
+  const requirementSlotWidth = 130;
+  const chartsNeedScroll = requirements.length > 5;
+
+  const allRequirementsData = useMemo(() => {
+    const labels = requirements.map(
+      (item, index) => item.requirementCode || `REQ-${index + 1}`,
+    );
+
+    return {
+      labels,
+      datasets: [
+        {
+          label: "Score",
+          data: requirements.map((item) => numeric(item.score)),
+          borderColor: "rgba(255,255,255,1)",
+          backgroundColor: "rgba(255,255,255,0.75)",
+          borderWidth: 1,
+        },
+        {
+          label: "Clarity",
+          data: requirements.map((item) => numeric(item.clarity)),
+          borderColor: "rgba(56,189,248,1)",
+          backgroundColor: "rgba(56,189,248,0.65)",
+          borderWidth: 1,
+        },
+        {
+          label: "Completeness",
+          data: requirements.map((item) => numeric(item.completeness)),
+          borderColor: "rgba(74,222,128,1)",
+          backgroundColor: "rgba(74,222,128,0.65)",
+          borderWidth: 1,
+        },
+        {
+          label: "Consistency",
+          data: requirements.map((item) => numeric(item.consistency)),
+          borderColor: "rgba(250,204,21,1)",
+          backgroundColor: "rgba(250,204,21,0.65)",
+          borderWidth: 1,
+        },
+        {
+          label: "Ambiguity (x10)",
+          data: requirements.map((item) => numeric(item.ambiguity) * 10),
+          borderColor: "rgba(248,113,113,1)",
+          backgroundColor: "rgba(248,113,113,0.6)",
+          borderWidth: 1,
+        },
+      ],
+    };
+  }, [requirements]);
+
+  const allRequirementsOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        ticks: { color: "#cbd5e1" },
+        grid: { color: "rgba(148, 163, 184, 0.12)" },
+      },
+      y: {
+        min: 0,
+        max: 100,
+        ticks: { color: "#cbd5e1" },
+        grid: { color: "rgba(148, 163, 184, 0.12)" },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: { color: "#e2e8f0" },
+      },
+      tooltip: {
+        mode: "index",
+        intersect: false,
+      },
+    },
+  };
+
+  // Handle resize
+  const handleMouseDown = () => {
+    isResizing.current = true;
+  };
+
+  const handleMouseUp = () => {
+    isResizing.current = false;
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isResizing.current || !containerRef.current) return;
+
+    const container = containerRef.current;
+    const rect = container.getBoundingClientRect();
+    const newWidth = ((e.clientX - rect.left) / rect.width) * 100;
+
+    // Constrain between 40% and 70%
+    if (newWidth >= 40 && newWidth <= 70) {
+      setLeftColWidth(newWidth);
+    }
   };
 
   const exportPdf = () => {
@@ -211,8 +309,19 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
-      <section className="fade-in-up space-y-4">
+    <div
+      ref={containerRef}
+      className="flex h-full gap-0"
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      style={{ userSelect: isResizing.current ? "none" : "auto" }}
+    >
+      {/* Left Panel */}
+      <section
+        className="fade-in-up app-scrollbar flex min-h-0 flex-col gap-4 overflow-y-auto pr-1"
+        style={{ width: `${leftColWidth}%` }}
+      >
         <div className="panel p-4">
           <p className="text-xs uppercase tracking-[0.25em] text-zinc-400">
             Session analytics
@@ -230,11 +339,66 @@ export default function DashboardPage() {
         </div>
 
         <div className="panel p-4">
-          <Bar data={barData} options={barOptions} />
+          <div className="h-[300px] overflow-x-auto overflow-y-hidden">
+            <div
+              style={{
+                width: chartsNeedScroll
+                  ? `${requirements.length * requirementSlotWidth}px`
+                  : "100%",
+              }}
+              className="h-full"
+            >
+              <Bar data={barData} options={barOptions} />
+            </div>
+          </div>
+        </div>
+
+        <div className="panel p-4">
+          <div className="mb-3">
+            <p className="text-xs uppercase tracking-[0.25em] text-slate-400">
+              Full requirement statistics
+            </p>
+            <h3 className="mt-1 text-lg font-semibold text-white">
+              All requirements across all dimensions
+            </h3>
+          </div>
+
+          {requirements.length === 0 ? (
+            <div className="rounded-xl border border-dashed border-slate-700 bg-slate-950/50 p-4 text-sm text-slate-400">
+              No requirement data available yet.
+            </div>
+          ) : (
+            <div className="app-scrollbar overflow-x-auto overflow-y-hidden">
+              <div
+                style={{
+                  width: chartsNeedScroll
+                    ? `${requirements.length * requirementSlotWidth}px`
+                    : "100%",
+                }}
+                className="h-[400px]"
+              >
+                <Bar
+                  data={allRequirementsData}
+                  options={allRequirementsOptions}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
-      <section className="fade-in-up space-y-4">
+      {/* Resizer Divider */}
+      <div
+        onMouseDown={handleMouseDown}
+        className="w-1 cursor-col-resize bg-slate-700 hover:bg-slate-500 transition-colors"
+        style={{ userSelect: "none" }}
+      />
+
+      {/* Right Panel */}
+      <section
+        className="fade-in-up app-scrollbar flex min-h-0 flex-col gap-4 overflow-y-auto pr-1"
+        style={{ width: `${100 - leftColWidth}%` }}
+      >
         <div className="panel p-4">
           <p className="text-xs uppercase tracking-[0.25em] text-slate-400">
             KPI
