@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "../store/useAppStore";
 
@@ -31,12 +31,14 @@ export default function HomePage() {
   const requestRequirementReview = useAppStore(
     (state) => state.requestRequirementReview,
   );
+  const reviewInFlight = useAppStore((state) => state.reviewInFlight);
 
   const [manualModalOpen, setManualModalOpen] = useState(false);
   const [manualRequirement, setManualRequirement] = useState("");
   const [chatDraft, setChatDraft] = useState("");
   const [editorDraft, setEditorDraft] = useState("");
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+  const [isAiResponding, setIsAiResponding] = useState(false);
   const [isDesktop, setIsDesktop] = useState(() =>
     typeof window !== "undefined"
       ? window.matchMedia("(min-width: 1280px)").matches
@@ -47,6 +49,9 @@ export default function HomePage() {
     right: 26,
   });
   const [draggingSeparator, setDraggingSeparator] = useState(null);
+  const chatScrollRef = useRef(null);
+  const chatBottomRef = useRef(null);
+  const chatInputRef = useRef(null);
 
   const activeSession = useMemo(
     () =>
@@ -76,6 +81,18 @@ export default function HomePage() {
         item.requirementId === selectedId || item.requirementId === null,
     );
   }, [activeSession?.chatMessages, selectedRequirement?.id]);
+
+  const isAutoReviewInFlight = useMemo(() => {
+    const sessionId = activeSession?.id;
+    const requirementId = selectedRequirement?.id;
+    if (!sessionId || !requirementId) {
+      return false;
+    }
+
+    return Boolean(reviewInFlight?.[`${sessionId}:${requirementId}`]);
+  }, [activeSession?.id, selectedRequirement?.id, reviewInFlight]);
+
+  const showAiTyping = isAiResponding || isAutoReviewInFlight;
 
   useEffect(() => {
     setEditorDraft(selectedRequirement?.text || "");
@@ -163,7 +180,13 @@ export default function HomePage() {
     const message = chatDraft.trim();
     if (!message) return;
     setChatDraft("");
-    await sendChatMessage(message);
+    setIsAiResponding(true);
+    try {
+      await sendChatMessage(message);
+    } finally {
+      setIsAiResponding(false);
+      chatInputRef.current?.focus();
+    }
   };
 
   const handleSaveRequirement = async () => {
@@ -171,13 +194,25 @@ export default function HomePage() {
     await updateRequirement(selectedRequirement.id, editorDraft);
   };
 
+  useEffect(() => {
+    chatInputRef.current?.focus();
+  }, [selectedRequirement?.id, visibleMessages.length, showAiTyping]);
+
+  useEffect(() => {
+    if (!chatBottomRef.current) return;
+    chatBottomRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  }, [visibleMessages.length, showAiTyping, selectedRequirement?.id]);
+
   const centerWeight = clamp(
     100 - columnWeights.left - columnWeights.right,
     24,
     64,
   );
 
-  const desktopGridTemplate = `${columnWeights.left}% 10px ${centerWeight}% 10px ${columnWeights.right}%`;
+  const desktopGridTemplate = `calc((100% - 20px) * ${columnWeights.left / 100}) 10px calc((100% - 20px) * ${centerWeight / 100}) 10px calc((100% - 20px) * ${columnWeights.right / 100})`;
 
   return (
     <>
@@ -189,7 +224,7 @@ export default function HomePage() {
       >
         <aside
           className="panel fade-in-up flex min-h-0 flex-col gap-4 overflow-hidden p-4"
-          style={isDesktop ? { gridColumn: 1, marginRight: 12 } : undefined}
+          style={isDesktop ? { gridColumn: 1 } : undefined}
         >
           <div className="flex items-center justify-between">
             <div>
@@ -289,11 +324,7 @@ export default function HomePage() {
 
         <section
           className="panel fade-in-up flex min-h-0 flex-col gap-3 overflow-hidden p-4"
-          style={
-            isDesktop
-              ? { gridColumn: 3, marginLeft: 6, marginRight: 6 }
-              : undefined
-          }
+          style={isDesktop ? { gridColumn: 3 } : undefined}
         >
           {requirements.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-dashed border-slate-700 bg-slate-950/40 p-10 text-center">
@@ -329,7 +360,10 @@ export default function HomePage() {
             </div>
           ) : (
             <>
-              <div className="app-scrollbar flex-1 space-y-3 overflow-y-auto rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+              <div
+                ref={chatScrollRef}
+                className="app-scrollbar flex-1 space-y-3 overflow-y-auto rounded-2xl border border-slate-800 bg-slate-950/60 p-4"
+              >
                 {visibleMessages.length === 0 ? (
                   <div className="flex h-full min-h-56 items-center justify-center rounded-xl border border-dashed border-slate-700 text-sm text-slate-500">
                     No conversation yet. Ask AI about the selected requirement.
@@ -349,22 +383,39 @@ export default function HomePage() {
                     </div>
                   ))
                 )}
+                <div ref={chatBottomRef} />
               </div>
+
+              {showAiTyping ? (
+                <div
+                  className="flex items-center gap-2 pl-1 text-xs text-slate-400"
+                  aria-live="polite"
+                >
+                  <span>AI is typing</span>
+                  <span className="typing-dots" aria-hidden="true">
+                    <span className="typing-dot" />
+                    <span className="typing-dot" />
+                    <span className="typing-dot" />
+                  </span>
+                </div>
+              ) : null}
 
               <form
                 className="flex items-center gap-2"
                 onSubmit={handleSendChat}
               >
                 <input
+                  ref={chatInputRef}
                   className="input ring-focus h-11"
                   value={chatDraft}
                   onChange={(event) => setChatDraft(event.target.value)}
                   placeholder="Message AI about the selected requirement..."
+                  autoComplete="off"
                 />
                 <button
                   className="button-primary ring-focus h-11 w-11 rounded-xl p-0"
                   type="submit"
-                  disabled={loading || !chatDraft.trim()}
+                  disabled={loading || isAiResponding || !chatDraft.trim()}
                   aria-label="Send message"
                 >
                   <svg
@@ -400,7 +451,7 @@ export default function HomePage() {
 
         <aside
           className="fade-in-up flex min-h-0 flex-col gap-4"
-          style={isDesktop ? { gridColumn: 5, marginLeft: 12 } : undefined}
+          style={isDesktop ? { gridColumn: 5 } : undefined}
         >
           <section className="panel space-y-3 p-4">
             <p className="text-xs uppercase tracking-[0.25em] text-slate-400">

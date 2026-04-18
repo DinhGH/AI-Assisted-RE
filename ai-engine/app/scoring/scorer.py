@@ -10,7 +10,8 @@ def calculate_quality_dimensions(*, readability: float, ambiguity: float, simila
 
     WHY: Separating dimensions from final score keeps scoring transparent and tunable.
     """
-    ambiguity_penalty = min(60.0, ambiguity * 12.0)
+    # ambiguity is normalized to 0..10, convert to percentage-like impact.
+    ambiguity_penalty = min(60.0, ambiguity * 6.0)
 
     clarity = clamp((0.65 * readability) + 35.0 - ambiguity_penalty)
 
@@ -28,6 +29,7 @@ def calculate_quality_dimensions(*, readability: float, ambiguity: float, simila
 
 def score_requirement(*, clarity: float, completeness: float, consistency: float, ambiguity: float) -> float:
     """Compute final score according to project weighting contract."""
-    total = (0.3 * clarity) + (0.3 * completeness) + (0.25 * consistency) + (0.15 * (100.0 - ambiguity))
+    ambiguity_percent = min(100.0, max(0.0, ambiguity * 10.0))
+    total = (0.3 * clarity) + (0.3 * completeness) + (0.25 * consistency) + (0.15 * (100.0 - ambiguity_percent))
     return float(clamp(total))
 

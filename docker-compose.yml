@@ -7,7 +7,7 @@ services:
       context: ./frontend
       dockerfile: ../docker/frontend.Dockerfile
     env_file:
-      - ./frontend/.env.example
+      - ./frontend/.env
     environment:
       CHOKIDAR_USEPOLLING: "true"
       CHOKIDAR_INTERVAL: "300"
@@ -26,7 +26,7 @@ services:
       context: ./backend
       dockerfile: ../docker/backend.Dockerfile
     env_file:
-      - ./backend/.env.example
+      - ./backend/.env
     environment:
       OLLAMA_BASE_URL: http://ollama:11434
       OLLAMA_MODEL: qwen2.5:0.5b
@@ -48,7 +48,7 @@ services:
       context: ./backend
       dockerfile: ../docker/backend.Dockerfile
     env_file:
-      - ./backend/.env.example
+      - ./backend/.env
     environment:
       OLLAMA_BASE_URL: http://ollama:11434
       OLLAMA_MODEL: qwen2.5:0.5b

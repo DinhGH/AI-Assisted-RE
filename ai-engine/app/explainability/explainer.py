@@ -14,7 +14,7 @@ def explain_result(result: Dict[str, object]) -> Dict[str, List[str]]:
     contradiction = float(result.get("contradiction", 0.0))
     score = float(result.get("score", 0.0))
 
-    if ambiguity > 1.0:
+    if ambiguity >= 2.0:
         bullets.append("Requirement includes ambiguous terms; consider replacing vague words with measurable constraints.")
     if readability < 40.0:
         bullets.append("Readability is low; simplify sentence structure for easier validation.")

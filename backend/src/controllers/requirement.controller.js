@@ -334,7 +334,7 @@ const metricsController = asyncHandler(async (req, res) => {
   requirements.forEach((item) => {
     const predictedGood = (item.score || 0) >= threshold;
     const actualGood =
-      (item.ambiguity || 0) <= 1 && (item.contradiction || 0) < 0.5;
+      (item.ambiguity || 0) <= 2 && (item.contradiction || 0) < 0.5;
 
     if (predictedGood && actualGood) tp += 1;
     if (predictedGood && !actualGood) fp += 1;

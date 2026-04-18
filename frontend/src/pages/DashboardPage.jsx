@@ -38,6 +38,14 @@ function numeric(value) {
   return Number.isFinite(n) ? n : 0;
 }
 
+function toAmbiguityPercent(value) {
+  return clamp(numeric(value) * 10, 0, 100);
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
 export default function DashboardPage() {
   const navigate = useNavigate();
   const sessions = useAppStore((state) => state.sessions);
@@ -67,21 +75,32 @@ export default function DashboardPage() {
     const consistency = average(
       requirements.map((item) => numeric(item.consistency)),
     );
-    const ambiguity =
-      average(requirements.map((item) => numeric(item.ambiguity))) * 10;
+    const ambiguityRaw = average(
+      requirements.map((item) => numeric(item.ambiguity)),
+    );
+    const ambiguityPercent = toAmbiguityPercent(ambiguityRaw);
+    const ambiguityReadable = 100 - ambiguityPercent;
 
     return {
       score,
       clarity,
       completeness,
       consistency,
-      ambiguity,
+      ambiguityRaw,
+      ambiguityPercent,
+      ambiguityReadable,
     };
   }, [requirements]);
 
   const radarData = useMemo(
     () => ({
-      labels: ["Score", "Clarity", "Completeness", "Consistency", "Ambiguity"],
+      labels: [
+        "Score",
+        "Clarity",
+        "Completeness",
+        "Consistency",
+        "Ambiguity (100-x)",
+      ],
       datasets: [
         {
           label: "Session average",
@@ -90,7 +109,7 @@ export default function DashboardPage() {
             totals.clarity,
             totals.completeness,
             totals.consistency,
-            totals.ambiguity,
+            totals.ambiguityReadable,
           ],
           backgroundColor: "rgba(255, 255, 255, 0.1)",
           borderColor: "rgba(255, 255, 255, 0.9)",
@@ -204,8 +223,8 @@ export default function DashboardPage() {
           borderWidth: 1,
         },
         {
-          label: "Ambiguity (x10)",
-          data: requirements.map((item) => numeric(item.ambiguity) * 10),
+          label: "Ambiguity",
+          data: requirements.map((item) => numeric(item.ambiguity)),
           borderColor: "rgba(248,113,113,1)",
           backgroundColor: "rgba(248,113,113,0.6)",
           borderWidth: 1,
@@ -410,7 +429,7 @@ export default function DashboardPage() {
               ["Avg clarity", Math.round(totals.clarity)],
               ["Avg completeness", Math.round(totals.completeness)],
               ["Avg consistency", Math.round(totals.consistency)],
-              ["Avg ambiguity", Math.round(totals.ambiguity)],
+              ["Avg ambiguity", Math.round(totals.ambiguityPercent)],
             ].map(([label, value]) => (
               <div
                 key={label}
