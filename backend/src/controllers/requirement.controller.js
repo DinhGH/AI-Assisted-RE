@@ -17,7 +17,7 @@ const {
   enqueueRequirementAnalysis,
   getQueueStats,
 } = require("../jobs/analysis.job");
-const { chatWithAi } = require("../services/ai.service");
+const { chatWithAI } = require("../services/ai.service");
 
 const uploadMiddleware = multer({
   storage: multer.memoryStorage(),
@@ -177,53 +177,147 @@ const listRequirements = asyncHandler(async (req, res) => {
 });
 
 const chatController = asyncHandler(async (req, res) => {
-  const { session_id: sessionId, message } = req.body;
+  const {
+    session_id: sessionId,
+    message,
+    mode,
+    requirement_id: requirementId,
+    requirement_text: requirementTextFromBody,
+  } = req.body;
 
-  if (!sessionId || !message) {
-    throw new AppError(400, "session_id and message are required");
+  if (!sessionId) {
+    throw new AppError(400, "session_id is required");
+  }
+
+  const normalizedMode =
+    mode === "initial" || mode === "followup" ? mode : null;
+
+  const question = String(message || "").trim();
+
+  const effectiveMode = normalizedMode || (question ? "followup" : "initial");
+
+  if (effectiveMode === "followup" && !question) {
+    throw new AppError(400, "message is required for followup mode");
+  }
+
+  let requirement = null;
+  if (requirementId) {
+    requirement = await models.Requirement.findByPk(Number(requirementId));
+  }
+
+  let requirementText =
+    typeof requirementTextFromBody === "string"
+      ? requirementTextFromBody.trim()
+      : "";
+
+  if (!requirementText && requirement) {
+    requirementText = requirement?.text ? String(requirement.text).trim() : "";
+  }
+
+  if (!requirementText) {
+    throw new AppError(
+      400,
+      "A selected requirement is required to start or continue requirement chat",
+    );
+  }
+
+  const currentRequirementId = requirement?.id
+    ? Number(requirement.id)
+    : requirementId
+      ? Number(requirementId)
+      : null;
+
+  if (!currentRequirementId) {
+    throw new AppError(400, "requirement_id is required for requirement chat");
+  }
+
+  if (effectiveMode === "followup") {
+    await models.ChatMessage.create({
+      sessionId,
+      requirementId: currentRequirementId,
+      role: "user",
+      message: question,
+    });
+  }
+
+  const history = await models.ChatMessage.findAll({
+    where: {
+      sessionId,
+      requirementId: currentRequirementId,
+    },
+    order: [["createdAt", "ASC"]],
+  });
+
+  let analysisPayload = {
+    actor: requirement?.actor || null,
+    action: requirement?.action || null,
+    object: requirement?.object || null,
+    ambiguity: requirement?.ambiguity ?? null,
+    readability: requirement?.readability ?? null,
+    similarity: requirement?.similarity ?? null,
+    contradiction: requirement?.contradiction ?? null,
+    clarity: requirement?.clarity ?? null,
+    completeness: requirement?.completeness ?? null,
+    consistency: requirement?.consistency ?? null,
+    score: requirement?.score ?? null,
+    status: requirement?.status || null,
+    requirement_id: requirement?.id || requirementId || null,
+    requirement_updated_at: requirement?.updatedAt || null,
+  };
+
+  if (requirement?.id) {
+    const latestAnalysis = await models.AnalysisResult.findOne({
+      where: { requirementId: requirement.id },
+      order: [["createdAt", "DESC"]],
+    });
+
+    if (
+      latestAnalysis?.rawResult &&
+      typeof latestAnalysis.rawResult === "object"
+    ) {
+      analysisPayload = {
+        ...latestAnalysis.rawResult,
+        ...analysisPayload,
+      };
+    }
+  }
+
+  const assistantMessage = await chatWithAI({
+    requirement: requirementText,
+    analysis: analysisPayload,
+    history: history.map((item) => ({
+      role: item.role,
+      content: item.message,
+    })),
+    question: effectiveMode === "initial" ? "" : question,
+    mode: effectiveMode,
+  });
+
+  if (!assistantMessage) {
+    throw new AppError(502, "Ollama returned an empty response");
   }
 
   await models.ChatMessage.create({
     sessionId,
-    role: "user",
-    message,
-  });
-
-  const history = await models.ChatMessage.findAll({
-    where: { sessionId },
-    order: [["createdAt", "ASC"]],
-    limit: 20,
-  });
-
-  const aiResponse = await chatWithAi({
-    session_id: sessionId,
-    message,
-    history: history.map((item) => ({
-      role: item.role,
-      message: item.message,
-    })),
-  });
-
-  const assistantMessage =
-    aiResponse.message || "AI engine returned no message";
-
-  await models.ChatMessage.create({
-    sessionId,
+    requirementId: currentRequirementId,
     role: "assistant",
-    message: assistantMessage,
+    message: String(assistantMessage),
   });
 
   const updatedHistory = await models.ChatMessage.findAll({
-    where: { sessionId },
+    where: {
+      sessionId,
+      requirementId: currentRequirementId,
+    },
     order: [["createdAt", "ASC"]],
   });
 
   res.json({
     session_id: sessionId,
-    response: assistantMessage,
+    response: String(assistantMessage),
     history: updatedHistory.map((item) => ({
       role: item.role,
-      message: item.message,
+      content: item.message,
       created_at: item.createdAt,
     })),
   });

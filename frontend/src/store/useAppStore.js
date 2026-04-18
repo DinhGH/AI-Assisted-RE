@@ -24,6 +24,8 @@ function createSession(name) {
   };
 }
 
+const AUTO_REVIEW_VERSION = 3;
+
 function updateActiveSession(state, updater) {
   const sessionIndex = state.sessions.findIndex(
     (item) => item.id === state.activeSessionId,
@@ -50,9 +52,96 @@ function updateActiveSession(state, updater) {
 }
 
 function ensureDefaultSession(state) {
-  if (state.sessions?.length) {
-    return state;
+  const rawSessions = Array.isArray(state.sessions) ? state.sessions : [];
+
+  const normalizedSessions = rawSessions
+    .map((session, index) => {
+      const safeSession =
+        session && typeof session === "object" ? session : createSession();
+      const requirements = Array.isArray(safeSession.requirements)
+        ? safeSession.requirements
+        : [];
+      const requirementIds = new Set(
+        requirements.map((item) => item?.id).filter(Boolean),
+      );
+
+      const selectedRequirementId = requirementIds.has(
+        safeSession.selectedRequirementId,
+      )
+        ? safeSession.selectedRequirementId
+        : requirements[0]?.id || null;
+
+      return {
+        id:
+          typeof safeSession.id === "string" && safeSession.id.trim()
+            ? safeSession.id
+            : createId("session"),
+        name:
+          typeof safeSession.name === "string" && safeSession.name.trim()
+            ? safeSession.name
+            : `Session ${index + 1}`,
+        createdAt: safeSession.createdAt || new Date().toISOString(),
+        updatedAt:
+          safeSession.updatedAt ||
+          safeSession.createdAt ||
+          new Date().toISOString(),
+        documentIds: Array.isArray(safeSession.documentIds)
+          ? Array.from(new Set(safeSession.documentIds.filter(Boolean)))
+          : [],
+        activeDocumentId: safeSession.activeDocumentId || null,
+        requirements,
+        selectedRequirementId,
+        chatMessages: Array.isArray(safeSession.chatMessages)
+          ? safeSession.chatMessages
+              .map((item) => {
+                const message = String(
+                  item?.message ?? item?.content ?? "",
+                ).trim();
+                if (!message) {
+                  return null;
+                }
+
+                return {
+                  ...item,
+                  role: item?.role === "assistant" ? "assistant" : "user",
+                  message,
+                  createdAt: item?.createdAt || new Date().toISOString(),
+                  requirementId: item?.requirementId ?? null,
+                };
+              })
+              .filter(Boolean)
+          : [],
+      };
+    })
+    .filter((item) => item?.id);
+
+  if (normalizedSessions.length) {
+    const uniqueSessions = [];
+    const ids = new Set();
+
+    normalizedSessions.forEach((session) => {
+      let id = session.id;
+      while (ids.has(id)) {
+        id = createId("session");
+      }
+      ids.add(id);
+      uniqueSessions.push({
+        ...session,
+        id,
+      });
+    });
+
+    const activeSessionId = ids.has(state.activeSessionId)
+      ? state.activeSessionId
+      : uniqueSessions[0].id;
+
+    return {
+      ...state,
+      sessions: uniqueSessions,
+      activeSessionId,
+    };
   }
+
   const initialSession = createSession("First session");
   return {
     ...state,
@@ -88,6 +177,7 @@ export const useAppStore = create(
     (set, get) => ({
       sessions: [initialSession],
       activeSessionId: initialSession.id,
+      reviewInFlight: {},
       loading: false,
       error: null,
       success: null,
@@ -347,7 +437,7 @@ export const useAppStore = create(
         }
       },
 
-      selectRequirement: (requirementId) =>
+      selectRequirement: (requirementId) => {
         set((state) => {
           const patch = updateActiveSession(
             ensureDefaultSession({
@@ -365,7 +455,10 @@ export const useAppStore = create(
             error: null,
             success: null,
           };
-        }),
+        });
+
+        void get().requestRequirementReview(requirementId);
+      },
 
       updateRequirement: async (requirementId, text) => {
         const trimmed = String(text || "").trim();
@@ -434,10 +527,6 @@ export const useAppStore = create(
           (item) => item.id === currentSession.selectedRequirementId,
         );
 
-        const requestMessage = selectedRequirement
-          ? `Selected requirement: ${selectedRequirement.text}\n\nUser question: ${text}`
-          : text;
-
         const userChat = {
           role: "user",
           message: text,
@@ -466,10 +555,12 @@ export const useAppStore = create(
         });
 
         try {
-          const response = await chatService.sendMessage(
-            currentSession.id,
-            requestMessage,
-          );
+          const response = await chatService.sendMessage(currentSession.id, {
+            message: text,
+            mode: "followup",
+            requirementId: selectedRequirement?.id || null,
+            requirementText: selectedRequirement?.text || null,
+          });
           const assistantChat = {
             role: "assistant",
             message: response.response || "No response from AI.",
@@ -523,45 +614,115 @@ export const useAppStore = create(
           return null;
         }
 
+        const reviewKey = `${currentSession.id}:${requirementId}`;
+        if (state.reviewInFlight?.[reviewKey]) {
+          return null;
+        }
+
+        set((s) => ({
+          reviewInFlight: {
+            ...(s.reviewInFlight || {}),
+            [reviewKey]: true,
+          },
+        }));
+
+        let requirementForReview = requirement;
+
+        const needsReanalysis =
+          String(requirement.status || "").toLowerCase() !== "analyzed" ||
+          [
+            requirement.score,
+            requirement.clarity,
+            requirement.completeness,
+            requirement.consistency,
+            requirement.ambiguity,
+          ].some((value) => value === null || value === undefined);
+
+        if (needsReanalysis) {
+          try {
+            const reEvaluate =
+              await requirementService.reEvaluateRequirement(requirementId);
+            const analysis = reEvaluate?.analysis;
+
+            if (analysis && typeof analysis === "object") {
+              requirementForReview = {
+                ...requirement,
+                actor: analysis.actor ?? requirement.actor ?? null,
+                action: analysis.action ?? requirement.action ?? null,
+                object: analysis.object ?? requirement.object ?? null,
+                ambiguity: analysis.ambiguity ?? requirement.ambiguity ?? null,
+                readability:
+                  analysis.readability ?? requirement.readability ?? null,
+                similarity:
+                  analysis.similarity ?? requirement.similarity ?? null,
+                contradiction:
+                  analysis.contradiction ?? requirement.contradiction ?? null,
+                clarity: analysis.clarity ?? requirement.clarity ?? null,
+                completeness:
+                  analysis.completeness ?? requirement.completeness ?? null,
+                consistency:
+                  analysis.consistency ?? requirement.consistency ?? null,
+                score: analysis.score ?? requirement.score ?? null,
+                status: "analyzed",
+              };
+
+              set((s) => {
+                const patch = updateActiveSession(
+                  ensureDefaultSession({
+                    ...s,
+                    activeSessionId:
+                      s.activeSessionId || s.sessions[0]?.id || null,
+                  }),
+                  (session) => ({
+                    ...session,
+                    requirements: session.requirements.map((item) =>
+                      item.id === requirementId ? requirementForReview : item,
+                    ),
+                  }),
+                );
+
+                return patch;
+              });
+            }
+          } catch {
+            // Keep existing requirement snapshot if re-evaluation fails.
+          }
+        }
+
         const alreadyReviewed = currentSession.chatMessages.some(
           (item) =>
             item.role === "assistant" &&
             item.autoReview === true &&
+            item.reviewVersion === AUTO_REVIEW_VERSION &&
             item.requirementId === requirementId &&
-            item.requirementUpdatedAt === requirement.updatedAt,
+            item.requirementUpdatedAt === requirementForReview.updatedAt,
         );
 
         if (alreadyReviewed) {
+          set((s) => {
+            const next = { ...(s.reviewInFlight || {}) };
+            delete next[reviewKey];
+            return { reviewInFlight: next };
+          });
           return null;
         }
 
-        const prompt = [
-          "You are an AI assistant that analyzes software requirements in English.",
-          "Reply in 4 short parts: assessment, analysis, recommendations, and revision guidance.",
-          "Use a clear, practical, easy-to-follow tone.",
-          `Requirement: ${requirement.text}`,
-          `Score: ${requirement.score ?? "N/A"}`,
-          `Clarity: ${requirement.clarity ?? "N/A"}`,
-          `Completeness: ${requirement.completeness ?? "N/A"}`,
-          `Consistency: ${requirement.consistency ?? "N/A"}`,
-          `Ambiguity: ${requirement.ambiguity ?? "N/A"}`,
-        ].join("\n");
-
         try {
-          const response = await chatService.sendMessage(
-            currentSession.id,
-            prompt,
-          );
+          const response = await chatService.sendMessage(currentSession.id, {
+            message: "Please provide a full analysis for this requirement.",
+            mode: "initial",
+            requirementId,
+            requirementText: requirementForReview.text,
+          });
 
           const assistantChat = {
             role: "assistant",
-            message:
-              response.response ||
-              "I reviewed this requirement. Do you want me to rewrite it in a testable format?",
+            message: response.response || "No response from AI.",
             createdAt: new Date().toISOString(),
             requirementId,
             autoReview: true,
-            requirementUpdatedAt: requirement.updatedAt,
+            reviewVersion: AUTO_REVIEW_VERSION,
+            requirementUpdatedAt: requirementForReview.updatedAt,
           };
 
           set((s) => {
@@ -576,36 +737,30 @@ export const useAppStore = create(
               }),
             );
 
-            return patch;
+            const next = { ...(s.reviewInFlight || {}) };
+            delete next[reviewKey];
+
+            return {
+              ...patch,
+              reviewInFlight: next,
+            };
           });
 
           return assistantChat;
-        } catch {
-          const fallbackMessage = {
-            role: "assistant",
-            message: `Quick assessment:\n- The current requirement is understandable, but it can be more explicit.\n\nAnalysis:\n- Actor/Action/Object exist at a basic level, but measurable acceptance criteria are still vague.\n\nRecommendations:\n- Add measurable constraints (response time, completion criteria, scope of users).\n\nRevision guidance:\n- Share the business goal, and I will rewrite it into a testable requirement right away.`,
-            createdAt: new Date().toISOString(),
-            requirementId,
-            autoReview: true,
-            requirementUpdatedAt: requirement.updatedAt,
-          };
-
+        } catch (error) {
+          const message =
+            error?.response?.data?.message ||
+            error.message ||
+            "Unable to generate AI requirement review";
           set((s) => {
-            const patch = updateActiveSession(
-              ensureDefaultSession({
-                ...s,
-                activeSessionId: s.activeSessionId || s.sessions[0]?.id || null,
-              }),
-              (session) => ({
-                ...session,
-                chatMessages: [...session.chatMessages, fallbackMessage],
-              }),
-            );
-
-            return patch;
+            const next = { ...(s.reviewInFlight || {}) };
+            delete next[reviewKey];
+            return {
+              error: message,
+              reviewInFlight: next,
+            };
           });
-
-          return fallbackMessage;
+          return null;
         }
       },
     }),

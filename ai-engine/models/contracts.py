@@ -34,6 +34,8 @@ class ChatHistoryMessage(BaseModel):
 class ChatRequest(BaseModel):
     session_id: str = Field(..., min_length=1)
     message: str = Field(..., min_length=1)
+    requirement_text: Optional[str] = None
+    requirement_id: Optional[int] = None
     history: Optional[List[ChatHistoryMessage]] = None
 
 

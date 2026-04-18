@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 const config = require("../config");
 const logger = require("../utils/logger");
 const defineRequirementModel = require("./requirement.model");
@@ -46,11 +46,21 @@ Version.belongsTo(Requirement, {
 async function initDatabase() {
   await sequelize.authenticate();
 
-  /**
-   * WHY: We use alter=true during this stage to keep schema aligned quickly
-   * while iterating. For production migrations, swap this for migration files.
-   */
-  await sequelize.sync({ alter: true });
+  // Keep startup stable: avoid heavy alter operations that can lock tables.
+  await sequelize.sync();
+
+  // Targeted schema patch for chat context support.
+  const queryInterface = sequelize.getQueryInterface();
+  const chatMessagesSchema =
+    await queryInterface.describeTable("chat_messages");
+
+  if (!chatMessagesSchema.requirementId) {
+    await queryInterface.addColumn("chat_messages", "requirementId", {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    });
+  }
+
   logger.info("Database initialized");
 }
 

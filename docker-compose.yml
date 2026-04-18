@@ -27,13 +27,21 @@ services:
       dockerfile: ../docker/backend.Dockerfile
     env_file:
       - ./backend/.env.example
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: qwen2.5:0.5b
     ports:
       - "3000:3000"
     restart: unless-stopped
     depends_on:
-      - mysql
-      - redis
-      - ai-engine
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      ai-engine:
+        condition: service_started
+      ollama:
+        condition: service_started
 
   backend-worker:
     build:
@@ -41,19 +49,37 @@ services:
       dockerfile: ../docker/backend.Dockerfile
     env_file:
       - ./backend/.env.example
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: qwen2.5:0.5b
     command: ["npm", "run", "start:worker"]
     restart: unless-stopped
     depends_on:
-      - mysql
-      - redis
-      - ai-engine
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      ai-engine:
+        condition: service_started
+      ollama:
+        condition: service_started
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+    restart: unless-stopped
+    volumes:
+      - ollama_data:/root/.ollama
 
   ai-engine:
     build:
       context: ./ai-engine
       dockerfile: ../docker/ai-engine.Dockerfile
     env_file:
-      - ./ai-engine/.env.example
+      - ./.env
     ports:
       - "8000:8000"
     restart: unless-stopped
@@ -72,6 +98,12 @@ services:
     restart: unless-stopped
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_password"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
 
   redis:
     image: redis:7-alpine
@@ -84,3 +116,4 @@ services:
 volumes:
   mysql_data:
   redis_data:
+  ollama_data:

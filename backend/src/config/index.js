@@ -28,6 +28,29 @@ const config = {
   aiEngine: {
     baseUrl: process.env.AI_ENGINE_URL || "http://localhost:8000",
   },
+  ollama: {
+    baseUrl: process.env.OLLAMA_BASE_URL || "http://localhost:11434",
+    model: process.env.OLLAMA_MODEL || "qwen2.5:0.5b",
+    timeoutMs: Number(process.env.OLLAMA_TIMEOUT_MS || 600000),
+    temperature: Number(process.env.OLLAMA_TEMPERATURE || 0.2),
+    maxTokens: Number(process.env.OLLAMA_MAX_TOKENS || 256),
+    contextWindow: Number(process.env.OLLAMA_CONTEXT_WINDOW || 2048),
+    maxHistoryMessages: Number(process.env.OLLAMA_MAX_HISTORY_MESSAGES || 10),
+    keepAlive: process.env.OLLAMA_KEEP_ALIVE || "30m",
+    warmupEnabled:
+      String(process.env.OLLAMA_WARMUP_ENABLED || "true").toLowerCase() !==
+      "false",
+  },
+  groq: {
+    enabled:
+      String(process.env.GROQ_ENABLED || "false").toLowerCase() === "true",
+    apiKey: process.env.GROQ_API_KEY || "",
+    baseUrl: process.env.GROQ_BASE_URL || "https://api.groq.com/openai/v1",
+    model: process.env.GROQ_MODEL || "llama-3.1-8b-instant",
+    timeoutMs: Number(process.env.GROQ_TIMEOUT_MS || 60000),
+    temperature: Number(process.env.GROQ_TEMPERATURE || 0.3),
+    maxTokens: Number(process.env.GROQ_MAX_TOKENS || 512),
+  },
   upload: {
     maxFileSizeInBytes: 10 * 1024 * 1024,
   },

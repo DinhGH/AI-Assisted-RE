@@ -3,6 +3,7 @@ const config = require("./config");
 const logger = require("./utils/logger");
 const { initDatabase } = require("./models");
 const { retryAsync } = require("./utils/retry");
+const { warmupChatModel } = require("./services/ai.service");
 
 async function bootstrap() {
   await retryAsync(() => initDatabase(), {
@@ -16,6 +17,22 @@ async function bootstrap() {
       port: config.server.port,
       env: config.env,
     });
+
+    warmupChatModel()
+      .then((ok) => {
+        if (ok) {
+          logger.info("Ollama chat model warmed up", {
+            model: config.ollama.model,
+          });
+        } else {
+          logger.warn("Ollama warmup skipped or failed", {
+            model: config.ollama.model,
+          });
+        }
+      })
+      .catch((error) => {
+        logger.warn("Ollama warmup failed", { error: error.message });
+      });
   });
 }
 

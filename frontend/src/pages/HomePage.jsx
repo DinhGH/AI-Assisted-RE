@@ -87,11 +87,7 @@ export default function HomePage() {
     }
 
     void requestRequirementReview(selectedRequirement.id);
-  }, [
-    selectedRequirement?.id,
-    selectedRequirement?.updatedAt,
-    requestRequirementReview,
-  ]);
+  }, [requestRequirementReview, selectedRequirement?.id]);
 
   useEffect(() => {
     if (typeof window === "undefined") {

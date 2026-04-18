@@ -75,17 +75,25 @@ def analyze(payload: AnalyzeRequest) -> AnalyzeResponse:
 
 @router.post("/chat", response_model=ChatResponse)
 def chat(payload: ChatRequest) -> ChatResponse:
-    """Lightweight chat endpoint for backend integration.
-
-    WHY: Keeps backend flow unblocked while allowing future LLM provider swapping.
+    """DEPRECATED: Chat is now handled by backend + Ollama.
+    
+    This endpoint is kept for backwards compatibility only.
+    All new chat requests should be routed through the backend
+    `/chat` endpoint, which calls Ollama directly with full context.
+    
+    The backend service handles:
+    - Mode-aware prompt assembly (initial vs followup)
+    - Full conversation history
+    - Requirement analysis context
+    - Ollama integration
+    
+    Do NOT use this endpoint for new implementations.
     """
-    history_size = len(payload.history or [])
-    assistant_message = (
-        "I reviewed your requirement. Consider making actor/action/object explicit, "
-        "adding measurable acceptance criteria, and removing vague terms. "
-        f"(session={payload.session_id}, history={history_size})"
+    raise NotImplementedError(
+        "Chat endpoint has been moved to backend. "
+        "Use POST /chat on the Express backend instead, which integrates with Ollama. "
+        "See backend/src/controllers/requirement.controller.js for implementation."
     )
-    return ChatResponse(session_id=payload.session_id, message=assistant_message)
 
 
 def register_routes(app: FastAPI):

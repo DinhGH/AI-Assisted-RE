@@ -13,6 +13,10 @@ function defineChatMessageModel(sequelize) {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      requirementId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       role: {
         type: DataTypes.ENUM("system", "user", "assistant"),
         allowNull: false,

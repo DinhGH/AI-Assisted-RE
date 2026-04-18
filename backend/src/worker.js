@@ -1,15 +1,28 @@
 const config = require("./config");
 const logger = require("./utils/logger");
-const { initDatabase } = require("./models");
+const { initDatabase, sequelize } = require("./models");
 const { initAnalysisWorker, analysisQueue } = require("./jobs/analysis.job");
 const { retryAsync } = require("./utils/retry");
 
 async function bootstrapWorker() {
-  await retryAsync(() => initDatabase(), {
-    retries: Number(process.env.DB_BOOT_RETRIES || 10),
-    delayMs: Number(process.env.DB_BOOT_DELAY_MS || 3000),
-    label: "worker database bootstrap",
-  });
+  const skipSchemaSync =
+    String(process.env.WORKER_SKIP_SCHEMA_SYNC || "true").toLowerCase() !==
+    "false";
+
+  if (skipSchemaSync) {
+    await retryAsync(() => sequelize.authenticate(), {
+      retries: Number(process.env.DB_BOOT_RETRIES || 10),
+      delayMs: Number(process.env.DB_BOOT_DELAY_MS || 3000),
+      label: "worker database connectivity check",
+    });
+  } else {
+    await retryAsync(() => initDatabase(), {
+      retries: Number(process.env.DB_BOOT_RETRIES || 10),
+      delayMs: Number(process.env.DB_BOOT_DELAY_MS || 3000),
+      label: "worker database bootstrap",
+    });
+  }
+
   initAnalysisWorker({
     concurrency: Number(process.env.QUEUE_CONCURRENCY || 2),
   });

@@ -58,9 +58,23 @@ your local environment or CI/CD pipeline before release.
    ```bash
    docker compose up --build
    docker compose up
+   docker compose restart ai-engine backend
+   docker compose down
    ```
 
-3. Open the apps:
+3. Pull the Ollama model once before using chat:
+
+```bash
+docker exec -it ai-assistedre-ollama-1 ollama pull llama3:8b
+```
+
+If the backend started before the model finished downloading, restart the API services:
+
+```bash
+docker compose restart backend backend-worker
+```
+
+4. Open the apps:
    - Frontend: http://localhost:5173
    - Backend API: http://localhost:3000/health
    - AI Engine: http://localhost:8000/health
