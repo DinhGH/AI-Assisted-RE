@@ -142,15 +142,10 @@ export default function Layout({ children }) {
           <div className="fade-in-up flex min-w-max flex-col items-end justify-end gap-2 overflow-hidden">
             {displayError
               ? (() => {
-                  const isDelete = isDeleteNotification(displayError.message);
                   return (
                     <div
                       key={displayError.id}
-                      className={`animate-pulse rounded-xl border px-4 py-3 text-sm font-medium shadow-[0_0_18px_rgba(234,179,8,0.35)] transition-all duration-300 ease-out ${
-                        isDelete
-                          ? "border-red-700/70 bg-red-950/80 text-red-200 shadow-[0_0_18px_rgba(220,38,38,0.35)]"
-                          : "border-amber-600/70 bg-amber-950/80 text-amber-100"
-                      } ${
+                      className={`animate-pulse rounded-xl border px-4 py-3 text-sm font-medium shadow-[0_0_18px_rgba(220,38,38,0.35)] transition-all duration-300 ease-out border-red-700/70 bg-red-950/80 text-red-200 ${
                         displayError.phase === "enter"
                           ? "translate-x-full opacity-0"
                           : displayError.phase === "exit"
@@ -159,26 +154,14 @@ export default function Layout({ children }) {
                       } relative w-[320px] overflow-hidden`}
                     >
                       <div className="flex items-start gap-2 pr-2">
-                        <span
-                          className={`mt-[1px] inline-flex h-5 w-5 items-center justify-center rounded-full border text-xs font-bold ${
-                            isDelete
-                              ? "border-red-400/70 bg-red-500/15 text-red-200"
-                              : "border-amber-300/70 bg-amber-400/15 text-amber-100"
-                          }`}
-                        >
+                        <span className="mt-[1px] inline-flex h-5 w-5 items-center justify-center rounded-full border border-red-400/70 bg-red-500/15 text-xs font-bold text-red-200">
                           ⚠
                         </span>
                         <p className="leading-5">{displayError.message}</p>
                       </div>
-                      <div
-                        className={`absolute inset-x-0 bottom-0 h-1 ${
-                          isDelete ? "bg-red-900/70" : "bg-amber-900/70"
-                        }`}
-                      >
+                      <div className="absolute inset-x-0 bottom-0 h-1 bg-red-900/70">
                         <span
-                          className={`block h-full origin-left ${
-                            isDelete ? "bg-red-300/95" : "bg-amber-300/95"
-                          }`}
+                          className="block h-full origin-left bg-red-300/95"
                           style={{
                             animation: "toastCountdown 4s linear forwards",
                           }}
@@ -195,10 +178,10 @@ export default function Layout({ children }) {
                   return (
                     <div
                       key={displaySuccess.id}
-                      className={`animate-pulse rounded-xl border px-4 py-3 text-sm font-medium shadow-[0_0_18px_rgba(234,179,8,0.35)] transition-all duration-300 ease-out ${
+                      className={`animate-pulse rounded-xl border px-4 py-3 text-sm font-medium transition-all duration-300 ease-out ${
                         isDelete
                           ? "border-red-700/70 bg-red-950/80 text-red-200 shadow-[0_0_18px_rgba(220,38,38,0.35)]"
-                          : "border-amber-600/70 bg-amber-950/80 text-amber-100"
+                          : "border-emerald-700/70 bg-emerald-950/80 text-emerald-100 shadow-[0_0_18px_rgba(16,185,129,0.35)]"
                       } ${
                         displaySuccess.phase === "enter"
                           ? "translate-x-full opacity-0"
@@ -212,7 +195,7 @@ export default function Layout({ children }) {
                           className={`mt-[1px] inline-flex h-5 w-5 items-center justify-center rounded-full border text-xs font-bold ${
                             isDelete
                               ? "border-red-400/70 bg-red-500/15 text-red-200"
-                              : "border-amber-300/70 bg-amber-400/15 text-amber-100"
+                              : "border-emerald-300/70 bg-emerald-400/15 text-emerald-100"
                           }`}
                         >
                           ✓
@@ -221,12 +204,12 @@ export default function Layout({ children }) {
                       </div>
                       <div
                         className={`absolute inset-x-0 bottom-0 h-1 ${
-                          isDelete ? "bg-red-900/70" : "bg-amber-900/70"
+                          isDelete ? "bg-red-900/70" : "bg-emerald-900/70"
                         }`}
                       >
                         <span
                           className={`block h-full origin-left ${
-                            isDelete ? "bg-red-300/95" : "bg-amber-300/95"
+                            isDelete ? "bg-red-300/95" : "bg-emerald-300/95"
                           }`}
                           style={{
                             animation: "toastCountdown 4s linear forwards",
