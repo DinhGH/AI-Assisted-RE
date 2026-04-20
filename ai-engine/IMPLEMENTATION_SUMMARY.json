@@ -1,0 +1,52 @@
+{
+  "timestamp": "2026-04-15T17:01:41.878492",
+  "project": "AI-Assisted Requirements Engineering (ISO 29148)",
+  "components": {
+    "dataset": {
+      "samples": 500,
+      "location": "data/iso29148_dataset.json",
+      "format": "JSON",
+      "categories": 7,
+      "quality_distribution": "40% poor, 35% good, 25% intermediate"
+    },
+    "classifiers": {
+      "gradient_boosting": "models/quality_classifier_gb.pkl",
+      "random_forest": "models/quality_classifier_rf.pkl",
+      "features": "TF-IDF + handcrafted features"
+    },
+    "api_endpoints": {
+      "/health": "Health check",
+      "/analyze": "Comprehensive requirement analysis",
+      "/iso29148/analyze": "ISO 29148 compliance analysis",
+      "/iso29148/batch-analyze": "Batch analysis (multiple requirements)",
+      "/chat": "LLM-based chat interface",
+      "/chat/enhanced": "Chat with integrated ISO 29148 analysis",
+      "/chat/sessions/{id}/history": "Get conversation history",
+      "/chat/sessions/{id}/clear": "Clear session history"
+    },
+    "quality_dimensions": [
+      "Unambiguous",
+      "Verifiable",
+      "Consistent",
+      "Complete",
+      "Feasible",
+      "Implementation-Independent",
+      "Traceable"
+    ]
+  },
+  "features": {
+    "iso29148_analysis": "Real-time requirement quality assessment",
+    "ambiguity_detection": "Identifies vague and ambiguous terms",
+    "verifiability_check": "Ensures measurable acceptance criteria",
+    "completeness_validation": "Verifies Actor-Action-Object pattern",
+    "conversation_memory": "Maintains context across chat sessions",
+    "batch_processing": "Analyze multiple requirements at once",
+    "quality_scoring": "0-100 compliance scoring system"
+  },
+  "quick_start": {
+    "step_1": "python setup_and_train.py  # Run this setup script",
+    "step_2": "python main.py  # Start AI engine server",
+    "step_3": "curl -X POST http://localhost:8000/iso29148/analyze",
+    "step_4": "Open documentation: http://localhost:8000/docs"
+  }
+}

@@ -1,0 +1,61 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Node / frontend / backend
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+backend/node_modules/
+backend/dist/
+backend/build/
+
+# Python / AI engine
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+.ai-engine-cache/
+ai-engine/__pycache__/
+ai-engine/.venv/
+
+# Python packaging / build outputs
+*.egg-info/
+.eggs/
+wheelhouse/
+
+# Docker / local data
+mysql_data/
+redis_data/
+*.pid
+
+# Misc
+coverage-final.json

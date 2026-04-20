@@ -1,0 +1,31 @@
+{
+  "name": "ai-assisted-re-backend",
+  "version": "1.0.0",
+  "description": "Backend API and orchestration for AI-Assisted Requirement Quality Analysis",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "start:api": "node src/server.js",
+    "start:worker": "node src/worker.js",
+    "dev:worker": "nodemon src/worker.js"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "bull": "^4.16.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "ioredis": "^5.4.2",
+    "json2csv": "^6.0.0-alpha.2",
+    "multer": "^1.4.5-lts.2",
+    "mysql2": "^3.14.1",
+    "pdf-parse": "^1.1.1",
+    "pdfkit": "^0.15.2",
+    "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

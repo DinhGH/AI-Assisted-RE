@@ -1,0 +1,214 @@
+---
+
+name: ai-requirement-ui-system
+description: Refactor and enhance a full-stack AI-powered requirement analysis system with a distinctive, production-grade UI and tight integration between frontend, backend, and AI engine.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+This skill is designed for a **monorepo full-stack system** with:
+
+* Frontend: React (Vite + Tailwind)
+* Backend: Node.js (Express)
+* AI Engine: Python (FastAPI)
+* Database: MySQL
+* Queue: Redis + Bull
+
+⚠️ The project is ALREADY scaffolded. Your task is to **REFINE and EXTEND**, not rebuild.
+
+---
+
+# 🧠 SYSTEM CONTEXT
+
+This system analyzes software requirements using AI:
+
+* Requirement upload (file/manual)
+* NLP analysis (actor/action/object)
+* Ambiguity detection
+* Consistency & contradiction detection
+* Quality scoring
+* AI chat for refinement
+* Dashboard visualization
+
+---
+
+# 🎯 CORE UI REQUIREMENT (MANDATORY)
+
+You MUST implement a **NotebookLM-style 3-column workspace**:
+
+### LEFT — Requirements Panel
+
+* List of requirements
+* Select / Add / Delete / Upload
+* Drives entire system state
+
+### CENTER — Main Workspace
+
+* Initial: Upload / Manual input
+* After: Chat interface
+* Context-aware (based on selected requirement)
+
+### RIGHT — Analysis Panel
+
+* Top: Score visualization
+* Bottom: Editable requirement + actions
+
+### DASHBOARD (STATE-BASED)
+
+* NO routing
+* Toggle via state
+* Show charts + aggregated data
+* Export PDF
+
+---
+
+# 🧠 FULLSTACK RESPONSIBILITY
+
+You are NOT just a frontend designer.
+
+You MUST:
+
+### Frontend
+
+* Refactor layout into 3-column system
+* Implement global state (Zustand/Context)
+* Ensure UI synchronization across panels
+
+### Backend
+
+* Adjust APIs if needed to support UI flow
+* Ensure endpoints return structured data
+* Maintain clean architecture
+
+### AI Engine
+
+* Ensure output format supports UI
+* Return structured JSON for scoring & analysis
+
+---
+
+# 🎨 DESIGN THINKING (CRITICAL)
+
+Before coding, define a STRONG aesthetic direction:
+
+Choose ONE:
+
+* Brutalist tech lab
+* Futuristic AI console
+* Editorial research tool
+* Minimalist dark intelligence
+* Industrial system UI
+
+Then execute consistently.
+
+---
+
+# 🎨 UI DESIGN RULES
+
+## Typography
+
+* Use distinctive fonts (NO Inter, Arial, Roboto)
+* Combine display + readable font
+
+## Color System
+
+* Use CSS variables
+* Strong contrast
+* Avoid generic gradients
+
+## Layout
+
+* Asymmetry is encouraged
+* Clear hierarchy
+* Independent scroll per column
+
+## Motion
+
+* Subtle but meaningful
+* Hover, transitions, panel changes
+* Avoid over-animation
+
+## Visual Identity
+
+* Must feel like a real product
+* Not generic dashboard
+
+---
+
+# ⚙️ DATA FLOW (VERY IMPORTANT)
+
+* Selecting a requirement:
+  → triggers backend call
+  → updates:
+
+  * chat (center)
+  * score (right top)
+  * editor (right bottom)
+
+* Editing requirement:
+  → update backend
+  → update UI immediately
+
+* Switching dashboard:
+  → NO data loss
+
+---
+
+# 🧩 IMPLEMENTATION STRATEGY
+
+## Step 1
+
+Analyze existing codebase
+
+## Step 2
+
+Refactor layout (frontend)
+
+## Step 3
+
+Fix state management
+
+## Step 4
+
+Adjust backend APIs (if needed)
+
+## Step 5
+
+Align AI response format
+
+## Step 6
+
+Polish UI/UX
+
+---
+
+# 📌 OUTPUT REQUIREMENTS
+
+* DO NOT rewrite entire codebase
+* Modify existing files where possible
+* Clearly show:
+
+  * files changed
+  * what changed
+* Add comments explaining WHY
+
+---
+
+# 🚫 AVOID
+
+* Rebuilding project from scratch
+* Breaking working features
+* Generic UI (AI-style dashboards)
+* Overusing libraries unnecessarily
+
+---
+
+# 🎯 FINAL RESULT
+
+✔ Distinctive UI (not generic)
+✔ 3-column layout working smoothly
+✔ Fullstack integration functional
+✔ Real-time state synchronization
+✔ Clean, modular architecture
+
+---
+
+If anything is unclear, ASK before making major changes.

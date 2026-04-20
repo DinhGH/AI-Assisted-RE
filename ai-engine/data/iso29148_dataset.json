@@ -1,0 +1,5977 @@
+{
+  "timestamp": "2026-04-15T17:01:41.405806",
+  "total_samples": 425,
+  "categories": {
+    "functional": "What the system shall do",
+    "performance": "Response time, throughput, capacity",
+    "security": "Protection of data and system access",
+    "usability": "User interaction and learning",
+    "reliability": "Availability and fault tolerance",
+    "scalability": "Handling growth and load",
+    "maintainability": "Ease of maintenance and updates"
+  },
+  "requirements": [
+    {
+      "requirement_id": "REQ-0001",
+      "text": "Users shall have a seamless experience",
+      "quality_score": 31,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0002",
+      "text": "Reports are generated",
+      "quality_score": 41,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0003",
+      "text": "The API must return data",
+      "quality_score": 42,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0004",
+      "text": "Users receive alerts",
+      "quality_score": 47,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0005",
+      "text": "The system should be fast",
+      "quality_score": 37,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0006",
+      "text": "The API should respond quickly to requests",
+      "quality_score": 50,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0007",
+      "text": "The system should minimize latency",
+      "quality_score": 24,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0008",
+      "text": "Files can be uploaded",
+      "quality_score": 41,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0009",
+      "text": "The software should be secure",
+      "quality_score": 34,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "scalability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0010",
+      "text": "Data integrity shall be maintained",
+      "quality_score": 24,
+      "issues": [
+        "non_verifiable",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "security",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0011",
+      "text": "Deliver features rapidly while maintaining zero technical debt",
+      "quality_score": 48,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0012",
+      "text": "The API must return data",
+      "quality_score": 35,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0013",
+      "text": "Users receive alerts",
+      "quality_score": 24,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0014",
+      "text": "Users should be able to manage data efficiently",
+      "quality_score": 20,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0015",
+      "text": "The API must return data",
+      "quality_score": 42,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0016",
+      "text": "System performance shall be acceptable",
+      "quality_score": 43,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0017",
+      "text": "Require strong encryption AND allow legacy unsecured protocols",
+      "quality_score": 33,
+      "issues": [
+        "inconsistency",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "scalability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "verifiable",
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0018",
+      "text": "Users should be able to manage data efficiently",
+      "quality_score": 33,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0019",
+      "text": "Support all browsers with identical UI",
+      "quality_score": 32,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0020",
+      "text": "Users shall have a seamless experience",
+      "quality_score": 34,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0021",
+      "text": "Support all browsers with identical UI",
+      "quality_score": 25,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0022",
+      "text": "Users can search",
+      "quality_score": 34,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0023",
+      "text": "The application must be easy to use",
+      "quality_score": 49,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0024",
+      "text": "Users can search",
+      "quality_score": 21,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0025",
+      "text": "The system shall be available 99.99% and allow unlimited maintenance windows",
+      "quality_score": 39,
+      "issues": [
+        "inconsistency",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "reliability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "complete",
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0026",
+      "text": "The system shall be available 99.99% and allow unlimited maintenance windows",
+      "quality_score": 45,
+      "issues": [
+        "inconsistency",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "security",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "complete",
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0027",
+      "text": "The system shall be available 99.99% and allow unlimited maintenance windows",
+      "quality_score": 30,
+      "issues": [
+        "inconsistency",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "maintainability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "complete",
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0028",
+      "text": "The application should be optimized",
+      "quality_score": 32,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0029",
+      "text": "The system processes transactions",
+      "quality_score": 21,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0030",
+      "text": "The system processes transactions",
+      "quality_score": 37,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0031",
+      "text": "The platform must be user-friendly",
+      "quality_score": 27,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0032",
+      "text": "Data shall be properly secured",
+      "quality_score": 34,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "critical",
+      "category": "security",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0033",
+      "text": "Users should be able to manage data efficiently",
+      "quality_score": 43,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0034",
+      "text": "Users shall have a seamless experience",
+      "quality_score": 49,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0035",
+      "text": "The platform should maximize uptime",
+      "quality_score": 22,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0036",
+      "text": "The system should be fast",
+      "quality_score": 35,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "maintainability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0037",
+      "text": "Users shall have a seamless experience",
+      "quality_score": 23,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0038",
+      "text": "The system should minimize latency",
+      "quality_score": 33,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0039",
+      "text": "The API must return data",
+      "quality_score": 35,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0040",
+      "text": "Support all browsers with identical UI",
+      "quality_score": 30,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0041",
+      "text": "The application should be optimized",
+      "quality_score": 47,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0042",
+      "text": "The API should respond quickly to requests",
+      "quality_score": 24,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0043",
+      "text": "Data shall be properly secured",
+      "quality_score": 31,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "critical",
+      "category": "usability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0044",
+      "text": "Users can search",
+      "quality_score": 48,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0045",
+      "text": "Data integrity shall be maintained",
+      "quality_score": 50,
+      "issues": [
+        "non_verifiable",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "security",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0046",
+      "text": "The system should be fast",
+      "quality_score": 29,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0047",
+      "text": "The API must return data",
+      "quality_score": 34,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0048",
+      "text": "The product must provide a good user experience",
+      "quality_score": 41,
+      "issues": [
+        "ambiguity",
+        "complete"
+      ],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0049",
+      "text": "System performance shall be acceptable",
+      "quality_score": 25,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0050",
+      "text": "The system should minimize latency",
+      "quality_score": 38,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0051",
+      "text": "The database stores information",
+      "quality_score": 47,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0052",
+      "text": "Data integrity shall be maintained",
+      "quality_score": 27,
+      "issues": [
+        "non_verifiable",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "scalability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0053",
+      "text": "The system shall validate input",
+      "quality_score": 25,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0054",
+      "text": "System performance shall be acceptable",
+      "quality_score": 27,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0055",
+      "text": "Users can search",
+      "quality_score": 43,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0056",
+      "text": "The system shall validate input",
+      "quality_score": 20,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0057",
+      "text": "Deliver features rapidly while maintaining zero technical debt",
+      "quality_score": 26,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0058",
+      "text": "Deliver features rapidly while maintaining zero technical debt",
+      "quality_score": 29,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0059",
+      "text": "The system shall validate input",
+      "quality_score": 36,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0060",
+      "text": "The system shall work reliably",
+      "quality_score": 46,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0061",
+      "text": "The application must be easy to use",
+      "quality_score": 34,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0062",
+      "text": "The system processes transactions",
+      "quality_score": 30,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0063",
+      "text": "The system shall validate input",
+      "quality_score": 31,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0064",
+      "text": "Users need quick access to information",
+      "quality_score": 37,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0065",
+      "text": "Support all browsers with identical UI",
+      "quality_score": 43,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0066",
+      "text": "Data integrity shall be maintained",
+      "quality_score": 48,
+      "issues": [
+        "non_verifiable",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "performance",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0067",
+      "text": "System performance shall be acceptable",
+      "quality_score": 42,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0068",
+      "text": "The API should respond quickly to requests",
+      "quality_score": 49,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0069",
+      "text": "Data shall be properly secured",
+      "quality_score": 29,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "critical",
+      "category": "usability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0070",
+      "text": "The platform must be user-friendly",
+      "quality_score": 29,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0071",
+      "text": "Users should be able to manage data efficiently",
+      "quality_score": 32,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0072",
+      "text": "The software should be secure",
+      "quality_score": 30,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0073",
+      "text": "Require strong encryption AND allow legacy unsecured protocols",
+      "quality_score": 40,
+      "issues": [
+        "inconsistency",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "usability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "verifiable",
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0074",
+      "text": "The database stores information",
+      "quality_score": 35,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0075",
+      "text": "The system must handle errors gracefully",
+      "quality_score": 31,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0076",
+      "text": "System performance shall be acceptable",
+      "quality_score": 45,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0077",
+      "text": "Notifications are sent to users",
+      "quality_score": 43,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0078",
+      "text": "Files can be uploaded",
+      "quality_score": 29,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0079",
+      "text": "The platform must be user-friendly",
+      "quality_score": 49,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0080",
+      "text": "The software should be secure",
+      "quality_score": 26,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0081",
+      "text": "The system should minimize latency",
+      "quality_score": 33,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0082",
+      "text": "The application should be optimized",
+      "quality_score": 39,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0083",
+      "text": "The platform should maximize uptime",
+      "quality_score": 42,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0084",
+      "text": "The platform must be user-friendly",
+      "quality_score": 37,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0085",
+      "text": "The API should respond quickly to requests",
+      "quality_score": 20,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0086",
+      "text": "Data integrity shall be maintained",
+      "quality_score": 26,
+      "issues": [
+        "non_verifiable",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "usability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0087",
+      "text": "Notifications are sent to users",
+      "quality_score": 33,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0088",
+      "text": "Reports are generated",
+      "quality_score": 22,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0089",
+      "text": "The system processes transactions",
+      "quality_score": 26,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0090",
+      "text": "Users can search",
+      "quality_score": 49,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0091",
+      "text": "The application should be optimized",
+      "quality_score": 40,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0092",
+      "text": "The API should respond quickly to requests",
+      "quality_score": 27,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0093",
+      "text": "The application should be optimized",
+      "quality_score": 30,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0094",
+      "text": "Reports are generated",
+      "quality_score": 50,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0095",
+      "text": "The system processes transactions",
+      "quality_score": 47,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0096",
+      "text": "The system shall validate input",
+      "quality_score": 38,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0097",
+      "text": "System performance shall be acceptable",
+      "quality_score": 39,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0098",
+      "text": "Files can be uploaded",
+      "quality_score": 38,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0099",
+      "text": "The platform should maximize uptime",
+      "quality_score": 32,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0100",
+      "text": "The application must be easy to use",
+      "quality_score": 27,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0101",
+      "text": "The database stores information",
+      "quality_score": 41,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0102",
+      "text": "The platform must be user-friendly",
+      "quality_score": 20,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0103",
+      "text": "The platform should maximize uptime",
+      "quality_score": 42,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0104",
+      "text": "The application must be easy to use",
+      "quality_score": 50,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0105",
+      "text": "Users need quick access to information",
+      "quality_score": 32,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0106",
+      "text": "Data integrity shall be maintained",
+      "quality_score": 38,
+      "issues": [
+        "non_verifiable",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "reliability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0107",
+      "text": "The system shall be available 99.99% and allow unlimited maintenance windows",
+      "quality_score": 26,
+      "issues": [
+        "inconsistency",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "maintainability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "complete",
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0108",
+      "text": "Users need quick access to information",
+      "quality_score": 34,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0109",
+      "text": "Deliver features rapidly while maintaining zero technical debt",
+      "quality_score": 27,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0110",
+      "text": "The system should be fast",
+      "quality_score": 21,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "maintainability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0111",
+      "text": "The platform should maximize uptime",
+      "quality_score": 50,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0112",
+      "text": "Notifications are sent to users",
+      "quality_score": 36,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0113",
+      "text": "The API should respond quickly to requests",
+      "quality_score": 37,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0114",
+      "text": "The system should be fast",
+      "quality_score": 37,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0115",
+      "text": "Users receive alerts",
+      "quality_score": 26,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0116",
+      "text": "Deliver features rapidly while maintaining zero technical debt",
+      "quality_score": 36,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0117",
+      "text": "Deliver features rapidly while maintaining zero technical debt",
+      "quality_score": 36,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0118",
+      "text": "The system must handle errors gracefully",
+      "quality_score": 49,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0119",
+      "text": "The API must return data",
+      "quality_score": 21,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0120",
+      "text": "The product must provide a good user experience",
+      "quality_score": 36,
+      "issues": [
+        "ambiguity",
+        "complete"
+      ],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0121",
+      "text": "The system shall work reliably",
+      "quality_score": 36,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0122",
+      "text": "Support all browsers with identical UI",
+      "quality_score": 34,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0123",
+      "text": "The system must handle errors gracefully",
+      "quality_score": 32,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0124",
+      "text": "System performance shall be acceptable",
+      "quality_score": 26,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0125",
+      "text": "Deliver features rapidly while maintaining zero technical debt",
+      "quality_score": 36,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0126",
+      "text": "Users can search",
+      "quality_score": 32,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0127",
+      "text": "The system should be fast",
+      "quality_score": 22,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0128",
+      "text": "The system must handle errors gracefully",
+      "quality_score": 34,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0129",
+      "text": "The platform should maximize uptime",
+      "quality_score": 26,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0130",
+      "text": "Users shall have a seamless experience",
+      "quality_score": 49,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0131",
+      "text": "The system must handle errors gracefully",
+      "quality_score": 40,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0132",
+      "text": "Data shall be properly secured",
+      "quality_score": 27,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "critical",
+      "category": "usability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0133",
+      "text": "The system shall work reliably",
+      "quality_score": 38,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0134",
+      "text": "Reports are generated",
+      "quality_score": 38,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0135",
+      "text": "Users shall have a seamless experience",
+      "quality_score": 20,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0136",
+      "text": "The system shall validate input",
+      "quality_score": 37,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0137",
+      "text": "The platform should maximize uptime",
+      "quality_score": 47,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0138",
+      "text": "The application must be easy to use",
+      "quality_score": 41,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0139",
+      "text": "The software should be secure",
+      "quality_score": 40,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "functional",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0140",
+      "text": "Reports are generated",
+      "quality_score": 43,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0141",
+      "text": "The system handles requests",
+      "quality_score": 40,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0142",
+      "text": "The system must handle errors gracefully",
+      "quality_score": 29,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0143",
+      "text": "Notifications are sent to users",
+      "quality_score": 35,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0144",
+      "text": "The system must handle errors gracefully",
+      "quality_score": 44,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0145",
+      "text": "The software should be secure",
+      "quality_score": 20,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "maintainability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0146",
+      "text": "The application must be easy to use",
+      "quality_score": 27,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0147",
+      "text": "Deliver features rapidly while maintaining zero technical debt",
+      "quality_score": 50,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0148",
+      "text": "The API should respond quickly to requests",
+      "quality_score": 31,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0149",
+      "text": "The system shall work reliably",
+      "quality_score": 20,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0150",
+      "text": "Data shall be properly secured",
+      "quality_score": 45,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "critical",
+      "category": "reliability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0151",
+      "text": "Files can be uploaded",
+      "quality_score": 50,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0152",
+      "text": "The system shall work reliably",
+      "quality_score": 23,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0153",
+      "text": "Users need quick access to information",
+      "quality_score": 41,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0154",
+      "text": "The system should minimize latency",
+      "quality_score": 32,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0155",
+      "text": "The system should minimize latency",
+      "quality_score": 45,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0156",
+      "text": "The system should be fast",
+      "quality_score": 22,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "scalability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0157",
+      "text": "The system shall work reliably",
+      "quality_score": 31,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0158",
+      "text": "Users can search",
+      "quality_score": 36,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0159",
+      "text": "The product must provide a good user experience",
+      "quality_score": 50,
+      "issues": [
+        "ambiguity",
+        "complete"
+      ],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0160",
+      "text": "The platform must be user-friendly",
+      "quality_score": 45,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0161",
+      "text": "Notifications are sent to users",
+      "quality_score": 36,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0162",
+      "text": "The system processes transactions",
+      "quality_score": 30,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0163",
+      "text": "Require strong encryption AND allow legacy unsecured protocols",
+      "quality_score": 23,
+      "issues": [
+        "inconsistency",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "scalability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "verifiable",
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0164",
+      "text": "Users need quick access to information",
+      "quality_score": 41,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0165",
+      "text": "The platform should maximize uptime",
+      "quality_score": 30,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0166",
+      "text": "The system processes transactions",
+      "quality_score": 31,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0167",
+      "text": "The system processes transactions",
+      "quality_score": 30,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0168",
+      "text": "The system handles requests",
+      "quality_score": 46,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0169",
+      "text": "Notifications are sent to users",
+      "quality_score": 43,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0170",
+      "text": "The system shall work reliably",
+      "quality_score": 36,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0171",
+      "text": "The API should respond quickly to requests",
+      "quality_score": 32,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0172",
+      "text": "The platform must be user-friendly",
+      "quality_score": 29,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0173",
+      "text": "The platform should maximize uptime",
+      "quality_score": 25,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0174",
+      "text": "Users shall have a seamless experience",
+      "quality_score": 27,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0175",
+      "text": "The application should be optimized",
+      "quality_score": 48,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0176",
+      "text": "The system should be fast",
+      "quality_score": 33,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0177",
+      "text": "Deliver features rapidly while maintaining zero technical debt",
+      "quality_score": 25,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0178",
+      "text": "Support all browsers with identical UI",
+      "quality_score": 48,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0179",
+      "text": "The application should be optimized",
+      "quality_score": 36,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0180",
+      "text": "The system shall work reliably",
+      "quality_score": 26,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0181",
+      "text": "Users receive alerts",
+      "quality_score": 39,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0182",
+      "text": "Users need quick access to information",
+      "quality_score": 37,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0183",
+      "text": "The system shall be available 99.99% and allow unlimited maintenance windows",
+      "quality_score": 29,
+      "issues": [
+        "inconsistency",
+        "incomplete"
+      ],
+      "severity_level": "critical",
+      "category": "functional",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "complete",
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0184",
+      "text": "The system processes transactions",
+      "quality_score": 43,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0185",
+      "text": "The application should be optimized",
+      "quality_score": 37,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0186",
+      "text": "The system handles requests",
+      "quality_score": 45,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0187",
+      "text": "The application should be optimized",
+      "quality_score": 50,
+      "issues": [
+        "non_verifiable"
+      ],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0188",
+      "text": "Notifications are sent to users",
+      "quality_score": 24,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0189",
+      "text": "Reports are generated",
+      "quality_score": 43,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0190",
+      "text": "The software should be secure",
+      "quality_score": 41,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "functional",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0191",
+      "text": "The database stores information",
+      "quality_score": 31,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0192",
+      "text": "The system handles requests",
+      "quality_score": 35,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0193",
+      "text": "The software should be secure",
+      "quality_score": 26,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "performance",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0194",
+      "text": "Support all browsers with identical UI",
+      "quality_score": 36,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0195",
+      "text": "The software should be secure",
+      "quality_score": 26,
+      "issues": [
+        "ambiguity",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "security",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0196",
+      "text": "The system must handle errors gracefully",
+      "quality_score": 21,
+      "issues": [
+        "ambiguity",
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Replace ambiguous term with specific metrics: 'fast' → 'within X seconds', 'easy' → 'accomplishable in N steps'",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0197",
+      "text": "System performance shall be acceptable",
+      "quality_score": 29,
+      "issues": [
+        "non_verifiable",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Add measurable metrics, units, thresholds, and testable acceptance criteria with clear pass/fail conditions.",
+      "iso_violations": [
+        "unambiguous",
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0198",
+      "text": "Files can be uploaded",
+      "quality_score": 46,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Review ISO 29148 guidelines for quality improvement",
+      "iso_violations": [
+        "unambiguous",
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0199",
+      "text": "Deliver features rapidly while maintaining zero technical debt",
+      "quality_score": 34,
+      "issues": [
+        "inconsistency"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0200",
+      "text": "Require strong encryption AND allow legacy unsecured protocols",
+      "quality_score": 50,
+      "issues": [
+        "inconsistency",
+        "non_verifiable"
+      ],
+      "severity_level": "critical",
+      "category": "security",
+      "improvement_suggestion": "Clarify conflicting statements. Define exceptions, constraints, and boundary conditions explicitly.",
+      "iso_violations": [
+        "verifiable",
+        "consistent"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0201",
+      "text": "Database connections shall use encrypted passwords stored in environment variables or secure vaults, never hardcoded",
+      "quality_score": 88,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0202",
+      "text": "The system shall log all security events and retain logs for 90 days",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0203",
+      "text": "All functions shall have docstrings documenting parameters and return values",
+      "quality_score": 96,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0204",
+      "text": "Backup procedures shall complete successfully 100% of the time with zero data loss",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0205",
+      "text": "All user authentication shall use OAuth 2.0 or SAML 2.0 with session timeout of 30 minutes of inactivity",
+      "quality_score": 96,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0206",
+      "text": "Database design shall support partitioning to handle 100 million records",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0207",
+      "text": "Average time between failures (MTBF) shall be at least 720 hours",
+      "quality_score": 88,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0208",
+      "text": "The system shall authenticate users via username and password",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0209",
+      "text": "The system shall support horizontal scaling across 3+ application servers with load balancing",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0210",
+      "text": "Authenticated administrative users shall be able to create, read, update, and delete user accounts through the administrative dashboard",
+      "quality_score": 95,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0211",
+      "text": "Database schema changes shall be tracked with version control and migration scripts",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0212",
+      "text": "The system shall generate daily reports containing: user count, transaction volume, system errors, and performance metrics",
+      "quality_score": 98,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0213",
+      "text": "Database indexes shall optimize query performance for tables with up to 50 million records",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0214",
+      "text": "Mean time to recovery (MTTR) shall not exceed 30 minutes for critical system failures",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0215",
+      "text": "Database schema changes shall be tracked with version control and migration scripts",
+      "quality_score": 98,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0216",
+      "text": "The system architecture shall support horizontal scaling to handle 10x current user load",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0217",
+      "text": "Database design shall support partitioning to handle 100 million records",
+      "quality_score": 95,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0218",
+      "text": "Page load time shall not exceed 3 seconds on broadband connections (3+ Mbps)",
+      "quality_score": 98,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0219",
+      "text": "All database access shall require multi-factor authentication for privileged operations",
+      "quality_score": 98,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0220",
+      "text": "REST API endpoints shall execute CRUD operations with response times of ≤200ms (p99) under peak load of 5000 concurrent users",
+      "quality_score": 85,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0221",
+      "text": "Cloud resources shall auto-scale based on CPU utilization thresholds of 70%",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0222",
+      "text": "The system shall maintain response times within specified limits when user load doubles",
+      "quality_score": 97,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0223",
+      "text": "The system shall provide real-time validation feedback with clear error messages",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0224",
+      "text": "Authenticated administrative users shall be able to create, read, update, and delete user accounts through the administrative dashboard",
+      "quality_score": 92,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0225",
+      "text": "All functions shall have docstrings documenting parameters and return values",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0226",
+      "text": "Users shall be able to customize dashboard layout with drag-and-drop functionality",
+      "quality_score": 96,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0227",
+      "text": "Database schema changes shall be tracked with version control and migration scripts",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0228",
+      "text": "The system shall support horizontal scaling across 3+ application servers with load balancing",
+      "quality_score": 96,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0229",
+      "text": "Database queries shall complete in under 500ms for standard analytics reports",
+      "quality_score": 85,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0230",
+      "text": "REST API endpoints shall execute CRUD operations with response times of ≤200ms (p99) under peak load of 5000 concurrent users",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0231",
+      "text": "Database design shall support partitioning to handle 100 million records",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0232",
+      "text": "The system shall implement rate limiting of 100 requests per minute per IP address",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0233",
+      "text": "REST API endpoints shall execute CRUD operations with response times of ≤200ms (p99) under peak load of 5000 concurrent users",
+      "quality_score": 97,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0234",
+      "text": "API endpoints shall process requests at a minimum throughput of 1000 RPS under normal load",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0235",
+      "text": "The system shall be available 99.9% uptime annually, excluding scheduled maintenance",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0236",
+      "text": "All functions shall have docstrings documenting parameters and return values",
+      "quality_score": 85,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0237",
+      "text": "The system shall validate email addresses before user registration",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0238",
+      "text": "System architecture documentation shall be updated within 2 weeks of any major changes",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0239",
+      "text": "Database schema changes shall be tracked with version control and migration scripts",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0240",
+      "text": "The system shall automatically restart services after unexpected failures",
+      "quality_score": 97,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0241",
+      "text": "The system shall automatically restart services after unexpected failures",
+      "quality_score": 90,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0242",
+      "text": "REST API endpoints shall execute CRUD operations with response times of ≤200ms (p99) under peak load of 5000 concurrent users",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0243",
+      "text": "The system shall enforce HTTPS for all external communications using TLS 1.3",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0244",
+      "text": "Users shall be able to export reports in PDF, CSV, and Excel formats",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0245",
+      "text": "The system shall generate daily reports containing: user count, transaction volume, system errors, and performance metrics",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0246",
+      "text": "API endpoints shall process requests at a minimum throughput of 1000 RPS under normal load",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0247",
+      "text": "API endpoints shall process requests at a minimum throughput of 1000 RPS under normal load",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0248",
+      "text": "Page load time shall not exceed 3 seconds on broadband connections (3+ Mbps)",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0249",
+      "text": "Database queries shall complete in under 500ms for standard analytics reports",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0250",
+      "text": "Mean time to recovery (MTTR) shall not exceed 30 minutes for critical system failures",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0251",
+      "text": "Backup procedures shall complete successfully 100% of the time with zero data loss",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0252",
+      "text": "Users shall be able to export reports in PDF, CSV, and Excel formats",
+      "quality_score": 97,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0253",
+      "text": "The system shall support user registration with email verification and password complexity rules (minimum 12 characters, 1 uppercase, 1 number, 1 symbol)",
+      "quality_score": 90,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0254",
+      "text": "The system shall load the dashboard homepage within 2.5 seconds (p95) for 99% of requests on 4G networks",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0255",
+      "text": "Page load time shall not exceed 3 seconds on broadband connections (3+ Mbps)",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0256",
+      "text": "The user interface shall follow WCAG 2.1 AA accessibility standards",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0257",
+      "text": "The system shall support user registration with email verification and password complexity rules (minimum 12 characters, 1 uppercase, 1 number, 1 symbol)",
+      "quality_score": 88,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0258",
+      "text": "The system shall automatically restart services after unexpected failures",
+      "quality_score": 88,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0259",
+      "text": "The system shall return search results within 2 seconds (p95) for datasets up to 1 million records",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0260",
+      "text": "System architecture documentation shall be updated within 2 weeks of any major changes",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0261",
+      "text": "Mobile interface shall be fully functional on devices with minimum screen width of 320px",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0262",
+      "text": "The system shall support user registration with email verification and password complexity rules (minimum 12 characters, 1 uppercase, 1 number, 1 symbol)",
+      "quality_score": 90,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0263",
+      "text": "The system shall load the dashboard homepage within 2.5 seconds (p95) for 99% of requests on 4G networks",
+      "quality_score": 88,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0264",
+      "text": "The user interface shall follow WCAG 2.1 AA accessibility standards",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0265",
+      "text": "The system shall be available 99.9% uptime annually, excluding scheduled maintenance",
+      "quality_score": 98,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0266",
+      "text": "The system shall support horizontal scaling across 3+ application servers with load balancing",
+      "quality_score": 85,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0267",
+      "text": "The system shall return search results within 2 seconds (p95) for datasets up to 1 million records",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0268",
+      "text": "Database connections shall use encrypted passwords stored in environment variables or secure vaults, never hardcoded",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0269",
+      "text": "Test coverage shall exceed 80% for critical business logic",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0270",
+      "text": "Test coverage shall exceed 80% for critical business logic",
+      "quality_score": 92,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0271",
+      "text": "Test coverage shall exceed 80% for critical business logic",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0272",
+      "text": "The system shall log all security events and retain logs for 90 days",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0273",
+      "text": "Database design shall support partitioning to handle 100 million records",
+      "quality_score": 88,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0274",
+      "text": "Database indexes shall optimize query performance for tables with up to 50 million records",
+      "quality_score": 98,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0275",
+      "text": "The system architecture shall support horizontal scaling to handle 10x current user load",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0276",
+      "text": "Cloud resources shall auto-scale based on CPU utilization thresholds of 70%",
+      "quality_score": 97,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0277",
+      "text": "The system shall be available 99.9% uptime annually, excluding scheduled maintenance",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0278",
+      "text": "Cloud resources shall auto-scale based on CPU utilization thresholds of 70%",
+      "quality_score": 90,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0279",
+      "text": "Backup procedures shall complete successfully 100% of the time with zero data loss",
+      "quality_score": 97,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0280",
+      "text": "Mobile interface shall be fully functional on devices with minimum screen width of 320px",
+      "quality_score": 90,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0281",
+      "text": "Mean time to recovery (MTTR) shall not exceed 30 minutes for critical system failures",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0282",
+      "text": "API endpoints shall process requests at a minimum throughput of 1000 RPS under normal load",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0283",
+      "text": "Database indexes shall optimize query performance for tables with up to 50 million records",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0284",
+      "text": "The system shall validate email addresses before user registration",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0285",
+      "text": "User passwords shall be hashed using bcrypt with minimum cost factor of 12",
+      "quality_score": 95,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0286",
+      "text": "The application shall encrypt sensitive data using AES-256",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0287",
+      "text": "The application shall encrypt sensitive data using AES-256",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0288",
+      "text": "Database connections shall use encrypted passwords stored in environment variables or secure vaults, never hardcoded",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0289",
+      "text": "The application shall encrypt sensitive data using AES-256",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0290",
+      "text": "The system shall load the dashboard homepage within 2.5 seconds (p95) for 99% of requests on 4G networks",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0291",
+      "text": "Code shall follow PEP 8 style guide with maximum cyclomatic complexity of 5",
+      "quality_score": 97,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0292",
+      "text": "The system shall authenticate users via username and password",
+      "quality_score": 85,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0293",
+      "text": "The system shall automatically restart services after unexpected failures",
+      "quality_score": 95,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0294",
+      "text": "The system shall be available 99.9% uptime annually, excluding scheduled maintenance",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0295",
+      "text": "The system shall validate email addresses before user registration",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0296",
+      "text": "Users shall be able to customize dashboard layout with drag-and-drop functionality",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0297",
+      "text": "All user authentication shall use OAuth 2.0 or SAML 2.0 with session timeout of 30 minutes of inactivity",
+      "quality_score": 97,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0298",
+      "text": "Users shall be able to export reports in PDF, CSV, and Excel formats",
+      "quality_score": 90,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0299",
+      "text": "System architecture documentation shall be updated within 2 weeks of any major changes",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0300",
+      "text": "The system shall implement rate limiting of 100 requests per minute per IP address",
+      "quality_score": 92,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0301",
+      "text": "Code shall follow PEP 8 style guide with maximum cyclomatic complexity of 5",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0302",
+      "text": "The application shall encrypt sensitive data using AES-256",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0303",
+      "text": "The user interface shall follow WCAG 2.1 AA accessibility standards",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0304",
+      "text": "All database access shall require multi-factor authentication for privileged operations",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0305",
+      "text": "The system shall support concurrent connections from up to 10,000 simultaneous users",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0306",
+      "text": "Users shall complete primary tasks with a maximum of 3 clicks from the home page",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0307",
+      "text": "The system shall support concurrent connections from up to 10,000 simultaneous users",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0308",
+      "text": "Mobile interface shall be fully functional on devices with minimum screen width of 320px",
+      "quality_score": 92,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0309",
+      "text": "Users shall complete primary tasks with a maximum of 3 clicks from the home page",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0310",
+      "text": "The system shall support user registration with email verification and password complexity rules (minimum 12 characters, 1 uppercase, 1 number, 1 symbol)",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0311",
+      "text": "Test coverage shall exceed 80% for critical business logic",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0312",
+      "text": "Database queries shall complete in under 500ms for standard analytics reports",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0313",
+      "text": "All database access shall require multi-factor authentication for privileged operations",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0314",
+      "text": "Database queries shall complete in under 500ms for standard analytics reports",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0315",
+      "text": "Authenticated administrative users shall be able to create, read, update, and delete user accounts through the administrative dashboard",
+      "quality_score": 88,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0316",
+      "text": "All user authentication shall use OAuth 2.0 or SAML 2.0 with session timeout of 30 minutes of inactivity",
+      "quality_score": 92,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0317",
+      "text": "The platform shall support role-based access control (RBAC) with 5 predefined roles",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0318",
+      "text": "All database access shall require multi-factor authentication for privileged operations",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0319",
+      "text": "Mean time to recovery (MTTR) shall not exceed 30 minutes for critical system failures",
+      "quality_score": 92,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0320",
+      "text": "Page load time shall not exceed 3 seconds on broadband connections (3+ Mbps)",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0321",
+      "text": "Code shall follow PEP 8 style guide with maximum cyclomatic complexity of 5",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0322",
+      "text": "Cloud resources shall auto-scale based on CPU utilization thresholds of 70%",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0323",
+      "text": "The system shall enforce HTTPS for all external communications using TLS 1.3",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0324",
+      "text": "Database connections shall use encrypted passwords stored in environment variables or secure vaults, never hardcoded",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0325",
+      "text": "The system architecture shall support horizontal scaling to handle 10x current user load",
+      "quality_score": 96,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0326",
+      "text": "Mobile interface shall be fully functional on devices with minimum screen width of 320px",
+      "quality_score": 96,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0327",
+      "text": "System architecture documentation shall be updated within 2 weeks of any major changes",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0328",
+      "text": "Authenticated administrative users shall be able to create, read, update, and delete user accounts through the administrative dashboard",
+      "quality_score": 98,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0329",
+      "text": "The user interface shall follow WCAG 2.1 AA accessibility standards",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0330",
+      "text": "The system shall load the dashboard homepage within 2.5 seconds (p95) for 99% of requests on 4G networks",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0331",
+      "text": "The system shall support concurrent connections from up to 10,000 simultaneous users",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0332",
+      "text": "The system shall provide real-time validation feedback with clear error messages",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0333",
+      "text": "The system shall implement rate limiting of 100 requests per minute per IP address",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0334",
+      "text": "The system shall generate daily reports containing: user count, transaction volume, system errors, and performance metrics",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0335",
+      "text": "User passwords shall be hashed using bcrypt with minimum cost factor of 12",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0336",
+      "text": "The system shall support concurrent connections from up to 10,000 simultaneous users",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0337",
+      "text": "Database design shall support partitioning to handle 100 million records",
+      "quality_score": 97,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0338",
+      "text": "The platform shall support role-based access control (RBAC) with 5 predefined roles",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0339",
+      "text": "The system shall maintain response times within specified limits when user load doubles",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0340",
+      "text": "The platform shall support role-based access control (RBAC) with 5 predefined roles",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0341",
+      "text": "REST API endpoints shall execute CRUD operations with response times of ≤200ms (p99) under peak load of 5000 concurrent users",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0342",
+      "text": "The system shall generate daily reports containing: user count, transaction volume, system errors, and performance metrics",
+      "quality_score": 98,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0343",
+      "text": "The user interface shall follow WCAG 2.1 AA accessibility standards",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0344",
+      "text": "The system shall log all security events and retain logs for 90 days",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0345",
+      "text": "The system shall log all security events and retain logs for 90 days",
+      "quality_score": 90,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0346",
+      "text": "The system shall generate daily reports containing: user count, transaction volume, system errors, and performance metrics",
+      "quality_score": 94,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0347",
+      "text": "Users shall be able to export reports in PDF, CSV, and Excel formats",
+      "quality_score": 96,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0348",
+      "text": "The platform shall support role-based access control (RBAC) with 5 predefined roles",
+      "quality_score": 95,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0349",
+      "text": "All functions shall have docstrings documenting parameters and return values",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0350",
+      "text": "The system shall support user registration with email verification and password complexity rules (minimum 12 characters, 1 uppercase, 1 number, 1 symbol)",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0351",
+      "text": "The system shall support concurrent connections from up to 10,000 simultaneous users",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0352",
+      "text": "Database indexes shall optimize query performance for tables with up to 50 million records",
+      "quality_score": 96,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0353",
+      "text": "Backup procedures shall complete successfully 100% of the time with zero data loss",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0354",
+      "text": "Database queries shall complete in under 500ms for standard analytics reports",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0355",
+      "text": "The application shall encrypt sensitive data using AES-256",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0356",
+      "text": "Average time between failures (MTBF) shall be at least 720 hours",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "maintainability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0357",
+      "text": "All database access shall require multi-factor authentication for privileged operations",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "security",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0358",
+      "text": "The system shall provide real-time validation feedback with clear error messages",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0359",
+      "text": "User passwords shall be hashed using bcrypt with minimum cost factor of 12",
+      "quality_score": 97,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0360",
+      "text": "The system shall maintain response times within specified limits when user load doubles",
+      "quality_score": 100,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0361",
+      "text": "Test coverage shall exceed 80% for critical business logic",
+      "quality_score": 98,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0362",
+      "text": "The system shall implement rate limiting of 100 requests per minute per IP address",
+      "quality_score": 90,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0363",
+      "text": "The system shall implement rate limiting of 100 requests per minute per IP address",
+      "quality_score": 96,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0364",
+      "text": "Database connections shall use encrypted passwords stored in environment variables or secure vaults, never hardcoded",
+      "quality_score": 86,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0365",
+      "text": "The system shall log all security events and retain logs for 90 days",
+      "quality_score": 93,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0366",
+      "text": "The system shall return search results within 2 seconds (p95) for datasets up to 1 million records",
+      "quality_score": 90,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0367",
+      "text": "All user authentication shall use OAuth 2.0 or SAML 2.0 with session timeout of 30 minutes of inactivity",
+      "quality_score": 90,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0368",
+      "text": "The system shall provide real-time validation feedback with clear error messages",
+      "quality_score": 91,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0369",
+      "text": "All functions shall have docstrings documenting parameters and return values",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0370",
+      "text": "The system shall load the dashboard homepage within 2.5 seconds (p95) for 99% of requests on 4G networks",
+      "quality_score": 85,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "usability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0371",
+      "text": "The system shall automatically restart services after unexpected failures",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0372",
+      "text": "Users shall be able to customize dashboard layout with drag-and-drop functionality",
+      "quality_score": 87,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "performance",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0373",
+      "text": "The system shall authenticate users via username and password",
+      "quality_score": 99,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "reliability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0374",
+      "text": "Page load time shall not exceed 3 seconds on broadband connections (3+ Mbps)",
+      "quality_score": 89,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "scalability",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0375",
+      "text": "The system shall authenticate users via username and password",
+      "quality_score": 96,
+      "issues": [],
+      "severity_level": "minor",
+      "category": "functional",
+      "improvement_suggestion": "Exceeds ISO 29148 quality standards",
+      "iso_violations": [],
+      "is_compliant": true
+    },
+    {
+      "requirement_id": "REQ-0376",
+      "text": "Users shall be able to view their profile information and edit basic details",
+      "quality_score": 57,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0377",
+      "text": "The database shall backup hourly to prevent data loss",
+      "quality_score": 73,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0378",
+      "text": "The API shall return JSON responses with appropriate HTTP status codes",
+      "quality_score": 56,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0379",
+      "text": "The system shall allow users to create accounts with email and password verification",
+      "quality_score": 74,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0380",
+      "text": "The system shall allow users to create accounts with email and password verification",
+      "quality_score": 67,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0381",
+      "text": "The database shall backup hourly to prevent data loss",
+      "quality_score": 73,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0382",
+      "text": "The system shall allow users to create accounts with email and password verification",
+      "quality_score": 65,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0383",
+      "text": "The API shall return JSON responses with appropriate HTTP status codes",
+      "quality_score": 58,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0384",
+      "text": "Users shall be able to view their profile information and edit basic details",
+      "quality_score": 73,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0385",
+      "text": "The system shall allow users to create accounts with email and password verification",
+      "quality_score": 65,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0386",
+      "text": "The API shall return JSON responses with appropriate HTTP status codes",
+      "quality_score": 66,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0387",
+      "text": "The API shall return JSON responses with appropriate HTTP status codes",
+      "quality_score": 60,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0388",
+      "text": "The database shall backup hourly to prevent data loss",
+      "quality_score": 66,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0389",
+      "text": "The system shall validate user input to prevent SQL injection and XSS attacks",
+      "quality_score": 75,
+      "issues": [
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0390",
+      "text": "The API shall return JSON responses with appropriate HTTP status codes",
+      "quality_score": 71,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0391",
+      "text": "Users shall be able to view their profile information and edit basic details",
+      "quality_score": 72,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0392",
+      "text": "The database shall backup hourly to prevent data loss",
+      "quality_score": 62,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0393",
+      "text": "The API shall return JSON responses with appropriate HTTP status codes",
+      "quality_score": 68,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0394",
+      "text": "The system shall validate user input to prevent SQL injection and XSS attacks",
+      "quality_score": 58,
+      "issues": [
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0395",
+      "text": "The system shall allow users to create accounts with email and password verification",
+      "quality_score": 66,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0396",
+      "text": "The system shall validate user input to prevent SQL injection and XSS attacks",
+      "quality_score": 60,
+      "issues": [
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0397",
+      "text": "The system shall validate user input to prevent SQL injection and XSS attacks",
+      "quality_score": 61,
+      "issues": [
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0398",
+      "text": "The API shall return JSON responses with appropriate HTTP status codes",
+      "quality_score": 66,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0399",
+      "text": "The database shall backup hourly to prevent data loss",
+      "quality_score": 75,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0400",
+      "text": "The system shall allow users to create accounts with email and password verification",
+      "quality_score": 72,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0401",
+      "text": "Users shall be able to view their profile information and edit basic details",
+      "quality_score": 64,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0402",
+      "text": "The API shall return JSON responses with appropriate HTTP status codes",
+      "quality_score": 59,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0403",
+      "text": "The system shall validate user input to prevent SQL injection and XSS attacks",
+      "quality_score": 59,
+      "issues": [
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0404",
+      "text": "The system shall validate user input to prevent SQL injection and XSS attacks",
+      "quality_score": 56,
+      "issues": [
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "functional",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0405",
+      "text": "The database shall backup hourly to prevent data loss",
+      "quality_score": 59,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0406",
+      "text": "Users shall be able to view their profile information and edit basic details",
+      "quality_score": 62,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0407",
+      "text": "The system shall validate user input to prevent SQL injection and XSS attacks",
+      "quality_score": 65,
+      "issues": [
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0408",
+      "text": "The database shall backup hourly to prevent data loss",
+      "quality_score": 67,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0409",
+      "text": "Users shall be able to view their profile information and edit basic details",
+      "quality_score": 71,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0410",
+      "text": "The system shall validate user input to prevent SQL injection and XSS attacks",
+      "quality_score": 59,
+      "issues": [
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "security",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0411",
+      "text": "The system shall validate user input to prevent SQL injection and XSS attacks",
+      "quality_score": 56,
+      "issues": [
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0412",
+      "text": "The system shall allow users to create accounts with email and password verification",
+      "quality_score": 62,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0413",
+      "text": "Users shall be able to view their profile information and edit basic details",
+      "quality_score": 69,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0414",
+      "text": "The API shall return JSON responses with appropriate HTTP status codes",
+      "quality_score": 60,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0415",
+      "text": "The database shall backup hourly to prevent data loss",
+      "quality_score": 70,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0416",
+      "text": "Users shall be able to view their profile information and edit basic details",
+      "quality_score": 71,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0417",
+      "text": "The system shall allow users to create accounts with email and password verification",
+      "quality_score": 74,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0418",
+      "text": "The database shall backup hourly to prevent data loss",
+      "quality_score": 67,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0419",
+      "text": "Users shall be able to view their profile information and edit basic details",
+      "quality_score": 61,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "reliability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0420",
+      "text": "The database shall backup hourly to prevent data loss",
+      "quality_score": 73,
+      "issues": [
+        "incomplete",
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0421",
+      "text": "Users shall be able to view their profile information and edit basic details",
+      "quality_score": 71,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "usability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0422",
+      "text": "The system shall allow users to create accounts with email and password verification",
+      "quality_score": 61,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0423",
+      "text": "The API shall return JSON responses with appropriate HTTP status codes",
+      "quality_score": 68,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "scalability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0424",
+      "text": "The system shall allow users to create accounts with email and password verification",
+      "quality_score": 61,
+      "issues": [
+        "incomplete"
+      ],
+      "severity_level": "major",
+      "category": "maintainability",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "complete"
+      ],
+      "is_compliant": false
+    },
+    {
+      "requirement_id": "REQ-0425",
+      "text": "The system shall validate user input to prevent SQL injection and XSS attacks",
+      "quality_score": 70,
+      "issues": [
+        "ambiguity"
+      ],
+      "severity_level": "major",
+      "category": "performance",
+      "improvement_suggestion": "Improve specificity and measurability to meet ISO 29148 standards",
+      "iso_violations": [
+        "verifiable"
+      ],
+      "is_compliant": false
+    }
+  ]
+}

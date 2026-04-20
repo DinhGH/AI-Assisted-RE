@@ -1,0 +1,86 @@
+# Docker Compose scaffold for local development.
+# This file wires the services together without implementing application behavior.
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/frontend.Dockerfile
+    env_file:
+      - ./frontend/.env.example
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_INTERVAL: "300"
+      VITE_HMR_HOST: localhost
+    ports:
+      - "5173:5173"
+    restart: unless-stopped
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend.Dockerfile
+    env_file:
+      - ./backend/.env.example
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - mysql
+      - redis
+      - ai-engine
+
+  backend-worker:
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend.Dockerfile
+    env_file:
+      - ./backend/.env.example
+    command: ["npm", "run", "start:worker"]
+    restart: unless-stopped
+    depends_on:
+      - mysql
+      - redis
+      - ai-engine
+
+  ai-engine:
+    build:
+      context: ./ai-engine
+      dockerfile: ../docker/ai-engine.Dockerfile
+    env_file:
+      - ./ai-engine/.env.example
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    depends_on:
+      - redis
+
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: ai_re_analysis
+      MYSQL_USER: ai_user
+      MYSQL_PASSWORD: ai_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3307:3306"
+    restart: unless-stopped
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+volumes:
+  mysql_data:
+  redis_data:
