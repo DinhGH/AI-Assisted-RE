@@ -58,20 +58,23 @@ export default function RequirementViewerPage() {
       <section className="panel space-y-4">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="text-sm font-medium text-cyan-300">
+            <p className="flex items-center gap-2 text-sm font-medium text-slate-700">
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg border-2 border-violet-300 bg-violet-100 text-violet-700">
+                📋
+              </span>
               Requirement list
             </p>
-            <h2 className="text-2xl font-semibold text-white">
+            <h2 className="text-2xl font-semibold text-gray-900">
               Segmented requirements
             </h2>
           </div>
-          <span className="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">
+          <span className="rounded-full border-2 border-slate-300 px-3 py-1 text-xs text-gray-600">
             {requirements.length} items
           </span>
         </div>
 
         {!selectedDocumentId ? (
-          <div className="rounded-xl border border-dashed border-slate-700 bg-slate-950/50 p-6 text-sm text-slate-400">
+          <div className="rounded-xl border-2 border-dashed border-slate-300 bg-gray-50 p-6 text-sm text-gray-600">
             Upload a document first so the viewer can load the extracted
             requirements.
           </div>
@@ -82,19 +85,19 @@ export default function RequirementViewerPage() {
             <button
               key={item.id}
               type="button"
-              className={`w-full rounded-2xl border p-4 text-left transition ${item.id === currentRequirement?.id ? "border-cyan-400 bg-cyan-500/10" : "border-slate-800 bg-slate-950/60 hover:border-slate-600"}`}
+              className={`w-full rounded-2xl border-2 p-4 text-left transition ${item.id === currentRequirement?.id ? "border-slate-400 bg-slate-50" : "border-slate-300 bg-white hover:border-slate-400"}`}
               onClick={() => selectRequirement(item.id)}
             >
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-sm font-semibold text-white">
+                  <p className="text-sm font-semibold text-gray-900">
                     {item.requirementCode || `Requirement #${item.id}`}
                   </p>
-                  <p className="mt-1 line-clamp-2 text-sm text-slate-300">
+                  <p className="mt-1 line-clamp-2 text-sm text-gray-700">
                     {item.text}
                   </p>
                 </div>
-                <span className="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-400">
+                <span className="rounded-full border-2 border-slate-300 px-3 py-1 text-xs text-gray-600">
                   {item.status}
                 </span>
               </div>
@@ -105,10 +108,13 @@ export default function RequirementViewerPage() {
 
       <section className="panel space-y-4">
         <div>
-          <p className="text-sm font-medium text-cyan-300">
+          <p className="flex items-center gap-2 text-sm font-medium text-slate-700">
+            <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg border-2 border-emerald-300 bg-emerald-100 text-emerald-700">
+              ✍
+            </span>
             Requirement detail
           </p>
-          <h3 className="text-2xl font-semibold text-white">
+          <h3 className="text-2xl font-semibold text-gray-900">
             Edit and re-run analysis
           </h3>
         </div>
@@ -130,12 +136,12 @@ export default function RequirementViewerPage() {
               ].map(([label, value]) => (
                 <div
                   key={label}
-                  className="rounded-xl border border-slate-800 bg-slate-950/60 p-4"
+                  className="rounded-xl border-2 border-slate-300 bg-white p-4"
                 >
-                  <p className="text-xs uppercase tracking-[0.25em] text-slate-500">
+                  <p className="text-xs uppercase tracking-[0.25em] text-gray-600">
                     {label}
                   </p>
-                  <p className="mt-2 text-lg font-semibold text-white">
+                  <p className="mt-2 text-lg font-semibold text-gray-900">
                     {value}
                   </p>
                 </div>
@@ -143,7 +149,7 @@ export default function RequirementViewerPage() {
             </div>
 
             <label className="block space-y-2">
-              <span className="text-sm font-medium text-slate-200">
+              <span className="text-sm font-medium text-gray-900">
                 Requirement text
               </span>
               <textarea
@@ -155,45 +161,71 @@ export default function RequirementViewerPage() {
 
             <div className="flex flex-wrap gap-3">
               <button
-                className="button-primary"
+                className="button-primary gap-2"
                 type="button"
                 disabled={loading || !draftText.trim()}
                 onClick={handleSave}
               >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  className="h-4 w-4"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  aria-hidden="true"
+                >
+                  <path d="M5 4h11l3 3v13H5V4Z" />
+                  <path d="M8 4v6h8" />
+                </svg>
                 {loading ? "Saving..." : "Save changes"}
               </button>
               <button
-                className="button-secondary"
+                className="button-secondary gap-2"
                 type="button"
                 onClick={() => setDraftText(currentRequirement.text)}
               >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  className="h-4 w-4"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  aria-hidden="true"
+                >
+                  <path d="M20 11a8 8 0 1 0-2.35 5.65" strokeLinecap="round" />
+                  <path
+                    d="M20 4v7h-7"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
                 Reset text
               </button>
             </div>
 
-            <div className="grid gap-3 rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-sm text-slate-300 sm:grid-cols-3">
+            <div className="grid gap-3 rounded-2xl border-2 border-slate-300 bg-white p-4 text-sm text-gray-700 sm:grid-cols-3">
               <div>
-                <span className="text-slate-500">Actor</span>
-                <p className="mt-1 text-white">
+                <span className="text-gray-500">Actor</span>
+                <p className="mt-1 text-gray-900">
                   {currentRequirement.actor || "—"}
                 </p>
               </div>
               <div>
-                <span className="text-slate-500">Action</span>
-                <p className="mt-1 text-white">
+                <span className="text-gray-500">Action</span>
+                <p className="mt-1 text-gray-900">
                   {currentRequirement.action || "—"}
                 </p>
               </div>
               <div>
-                <span className="text-slate-500">Object</span>
-                <p className="mt-1 text-white">
+                <span className="text-gray-500">Object</span>
+                <p className="mt-1 text-gray-900">
                   {currentRequirement.object || "—"}
                 </p>
               </div>
             </div>
           </>
         ) : (
-          <div className="rounded-xl border border-dashed border-slate-700 bg-slate-950/50 p-6 text-sm text-slate-400">
+          <div className="rounded-xl border-2 border-dashed border-slate-300 bg-gray-50 p-6 text-sm text-gray-600">
             No requirement selected yet.
           </div>
         )}

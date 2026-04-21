@@ -5,6 +5,25 @@ function isDeleteNotification(message) {
   return /(delete|deleted|remove|removed|xóa)/i.test(String(message || ""));
 }
 
+function InlineIcon({ children, tone = "blue" }) {
+  const toneClass = {
+    blue: "border-slate-300 bg-slate-100 text-slate-700",
+    purple: "border-violet-300 bg-violet-100 text-violet-700",
+    green: "border-emerald-300 bg-emerald-100 text-emerald-700",
+    red: "border-red-300 bg-red-100 text-red-700",
+    slate: "border-slate-300 bg-slate-100 text-slate-700",
+  }[tone];
+
+  return (
+    <span
+      className={`inline-flex h-8 w-8 items-center justify-center rounded-lg border-2 ${toneClass}`}
+      aria-hidden="true"
+    >
+      {children}
+    </span>
+  );
+}
+
 export default function Layout({ children }) {
   const appName = import.meta.env.VITE_APP_NAME || "AI Requirement Studio";
   const sessions = useAppStore((state) => state.sessions);
@@ -92,11 +111,11 @@ export default function Layout({ children }) {
   }, [success]);
 
   return (
-    <div className="h-screen overflow-hidden bg-radial-grid text-slate-100">
-      <header className="z-30 border-b border-zinc-800/80 bg-black/85 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-[1700px] items-center gap-4 px-4 py-3 sm:px-6 lg:px-8">
+    <div className="h-screen overflow-hidden border-[3px] border-slate-900 bg-white text-gray-900">
+      <header className="z-30 border-b-2 border-slate-300 bg-gradient-to-r from-white via-slate-50 to-slate-100 shadow-sm">
+        <div className="mx-auto flex max-w-[1700px] items-center gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
           <div className="fade-in-up flex min-w-max items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-500/40 bg-white/5 text-zinc-100 shadow-[0_0_18px_rgba(255,255,255,0.12)]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-slate-300 bg-white text-slate-700 shadow-sm">
               <svg viewBox="0 0 24 24" fill="none" className="h-full w-full">
                 <path
                   d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v11A2.5 2.5 0 0 1 16.5 20h-9A2.5 2.5 0 0 1 5 17.5v-11Z"
@@ -112,29 +131,41 @@ export default function Layout({ children }) {
               </svg>
             </div>
             <div className="leading-tight">
-              <h1 className="text-xl font-semibold text-white sm:text-2xl">
+              <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl">
                 {appName}
               </h1>
             </div>
           </div>
 
-          <div className="fade-in-up flex flex-1 items-center justify-center gap-2 min-w-max">
-            <select
-              className="input ring-focus w-[240px] max-w-[240px] py-2"
-              value={activeSession?.id || ""}
-              onChange={(event) => setActiveSession(event.target.value)}
-            >
-              {sessions.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
+          <div className="fade-in-up flex min-w-max flex-1 items-center justify-center gap-2">
+            <div className="flex items-center gap-2 ">
+              <select
+                className="input  border-0 bg-white py-1.5 text-sm shadow-none"
+                value={activeSession?.id || ""}
+                onChange={(event) => setActiveSession(event.target.value)}
+              >
+                {sessions.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
             <button
-              className="button-secondary ring-focus w-[140px] py-2"
+              className="button-secondary h-[45px]  gap-1.5 !px-3 !py-1.5 !text-sm"
               type="button"
               onClick={() => newSession()}
             >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                className="mr-1 h-3.5 w-3.5"
+                stroke="currentColor"
+                strokeWidth="1.9"
+                aria-hidden="true"
+              >
+                <path d="M12 5v14M5 12h14" strokeLinecap="round" />
+              </svg>
               New session
             </button>
           </div>
@@ -145,7 +176,7 @@ export default function Layout({ children }) {
                   return (
                     <div
                       key={displayError.id}
-                      className={`animate-pulse rounded-xl border px-4 py-3 text-sm font-medium shadow-[0_0_18px_rgba(220,38,38,0.35)] transition-all duration-300 ease-out border-red-700/70 bg-red-950/80 text-red-200 ${
+                      className={`animate-pulse rounded-xl border-2 px-4 py-3 text-sm font-medium shadow-md transition-all duration-300 ease-out border-red-300 bg-red-50 text-red-800 ${
                         displayError.phase === "enter"
                           ? "translate-x-full opacity-0"
                           : displayError.phase === "exit"
@@ -154,14 +185,14 @@ export default function Layout({ children }) {
                       } relative w-[320px] overflow-hidden`}
                     >
                       <div className="flex items-start gap-2 pr-2">
-                        <span className="mt-[1px] inline-flex h-5 w-5 items-center justify-center rounded-full border border-red-400/70 bg-red-500/15 text-xs font-bold text-red-200">
+                        <span className="mt-[1px] inline-flex h-5 w-5 items-center justify-center rounded-full border-2 border-red-300 bg-red-100 text-xs font-bold text-red-700">
                           ⚠
                         </span>
                         <p className="leading-5">{displayError.message}</p>
                       </div>
-                      <div className="absolute inset-x-0 bottom-0 h-1 bg-red-900/70">
+                      <div className="absolute inset-x-0 bottom-0 h-1 bg-red-200">
                         <span
-                          className="block h-full origin-left bg-red-300/95"
+                          className="block h-full origin-left bg-red-400"
                           style={{
                             animation: "toastCountdown 4s linear forwards",
                           }}
@@ -178,10 +209,10 @@ export default function Layout({ children }) {
                   return (
                     <div
                       key={displaySuccess.id}
-                      className={`animate-pulse rounded-xl border px-4 py-3 text-sm font-medium transition-all duration-300 ease-out ${
+                      className={`animate-pulse rounded-xl border-2 px-4 py-3 text-sm font-medium transition-all duration-300 ease-out ${
                         isDelete
-                          ? "border-red-700/70 bg-red-950/80 text-red-200 shadow-[0_0_18px_rgba(220,38,38,0.35)]"
-                          : "border-emerald-700/70 bg-emerald-950/80 text-emerald-100 shadow-[0_0_18px_rgba(16,185,129,0.35)]"
+                          ? "border-red-300 bg-red-50 text-red-800 shadow-md"
+                          : "border-emerald-300 bg-emerald-50 text-emerald-800 shadow-md"
                       } ${
                         displaySuccess.phase === "enter"
                           ? "translate-x-full opacity-0"
@@ -192,10 +223,10 @@ export default function Layout({ children }) {
                     >
                       <div className="flex items-start gap-2 pr-2">
                         <span
-                          className={`mt-[1px] inline-flex h-5 w-5 items-center justify-center rounded-full border text-xs font-bold ${
+                          className={`mt-[1px] inline-flex h-5 w-5 items-center justify-center rounded-full border-2 text-xs font-bold ${
                             isDelete
-                              ? "border-red-400/70 bg-red-500/15 text-red-200"
-                              : "border-emerald-300/70 bg-emerald-400/15 text-emerald-100"
+                              ? "border-red-300 bg-red-100 text-red-700"
+                              : "border-emerald-300 bg-emerald-100 text-emerald-700"
                           }`}
                         >
                           ✓
@@ -204,12 +235,12 @@ export default function Layout({ children }) {
                       </div>
                       <div
                         className={`absolute inset-x-0 bottom-0 h-1 ${
-                          isDelete ? "bg-red-900/70" : "bg-emerald-900/70"
+                          isDelete ? "bg-red-200" : "bg-emerald-200"
                         }`}
                       >
                         <span
                           className={`block h-full origin-left ${
-                            isDelete ? "bg-red-300/95" : "bg-emerald-300/95"
+                            isDelete ? "bg-red-400" : "bg-emerald-400"
                           }`}
                           style={{
                             animation: "toastCountdown 4s linear forwards",
@@ -231,7 +262,7 @@ export default function Layout({ children }) {
         }
       `}</style>
 
-      <main className="mx-auto h-[calc(100vh-88px)] max-w-[1700px] overflow-hidden px-4 py-4 sm:px-6 lg:px-8">
+      <main className="mx-auto h-[calc(100vh-88px)] max-w-[1700px] overflow-hidden bg-white px-4 pb-6 pt-4 text-gray-900 sm:px-6 lg:px-8">
         {children}
       </main>
     </div>

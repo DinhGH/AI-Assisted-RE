@@ -55,6 +55,25 @@ function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
 
+function IconChip({ tone = "blue", children }) {
+  const toneClass = {
+    blue: "border-slate-300 bg-slate-100 text-slate-700",
+    emerald: "border-emerald-300 bg-emerald-100 text-emerald-700",
+    violet: "border-violet-300 bg-violet-100 text-violet-700",
+    amber: "border-amber-300 bg-amber-100 text-amber-700",
+    slate: "border-slate-300 bg-slate-100 text-slate-700",
+  }[tone];
+
+  return (
+    <span
+      className={`inline-flex h-8 w-8 items-center justify-center rounded-lg border-2 ${toneClass}`}
+      aria-hidden="true"
+    >
+      {children}
+    </span>
+  );
+}
+
 export default function DashboardPage() {
   const navigate = useNavigate();
   const sessions = useAppStore((state) => state.sessions);
@@ -120,9 +139,9 @@ export default function DashboardPage() {
             totals.consistency,
             totals.ambiguityReadable,
           ],
-          backgroundColor: "rgba(255, 255, 255, 0.1)",
-          borderColor: "rgba(255, 255, 255, 0.9)",
-          pointBackgroundColor: "rgba(255, 255, 255, 1)",
+          backgroundColor: "rgba(59, 130, 246, 0.1)",
+          borderColor: "rgba(59, 130, 246, 0.8)",
+          pointBackgroundColor: "rgba(59, 130, 246, 1)",
         },
       ],
     }),
@@ -137,17 +156,17 @@ export default function DashboardPage() {
         max: 90,
         ticks: {
           backdropColor: "transparent",
-          color: "#94a3b8",
+          color: "#4b5563",
         },
-        angleLines: { color: "rgba(148, 163, 184, 0.2)" },
-        grid: { color: "rgba(148, 163, 184, 0.18)" },
-        pointLabels: { color: "#e2e8f0", font: { size: 12 } },
+        angleLines: { color: "rgba(156, 163, 175, 0.5)" }, // đậm hơn
+        grid: { color: "rgba(156, 163, 175, 0.4)" }, // đậm hơn
+        pointLabels: { color: "#111827", font: { size: 12 } },
       },
     },
     plugins: {
       legend: {
         labels: {
-          color: "#e2e8f0",
+          color: "#374151",
         },
       },
     },
@@ -162,8 +181,8 @@ export default function DashboardPage() {
         {
           label: "Requirement score",
           data: requirements.map((item) => numeric(item.score)),
-          backgroundColor: "rgba(255, 255, 255, 0.65)",
-          borderColor: "rgba(255, 255, 255, 1)",
+          backgroundColor: "rgba(59, 130, 246, 0.8)",
+          borderColor: "rgba(59, 130, 246, 1)",
           borderWidth: 1,
         },
       ],
@@ -176,18 +195,18 @@ export default function DashboardPage() {
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: "#cbd5e1" },
-        grid: { color: "rgba(148, 163, 184, 0.12)" },
+        ticks: { color: "#374151" },
+        grid: { color: "rgba(156, 163, 175, 0.4)" }, // đậm hơn
       },
       y: {
         min: 10,
         max: 90,
-        ticks: { color: "#cbd5e1" },
-        grid: { color: "rgba(148, 163, 184, 0.12)" },
+        ticks: { color: "#374151" },
+        grid: { color: "rgba(156, 163, 175, 0.4)" }, // đậm hơn
       },
     },
     plugins: {
-      legend: { labels: { color: "#e2e8f0" } },
+      legend: { labels: { color: "#374151" } },
     },
   };
 
@@ -206,36 +225,36 @@ export default function DashboardPage() {
         {
           label: "Score",
           data: requirements.map((item) => numeric(item.score)),
-          borderColor: "rgba(255,255,255,1)",
-          backgroundColor: "rgba(255,255,255,0.75)",
+          borderColor: "rgba(59,130,246,1)",
+          backgroundColor: "rgba(59,130,246,0.7)",
           borderWidth: 1,
         },
         {
           label: "Clarity",
           data: requirements.map((item) => numeric(item.clarity)),
-          borderColor: "rgba(56,189,248,1)",
-          backgroundColor: "rgba(56,189,248,0.65)",
+          borderColor: "rgba(59,130,246,1)",
+          backgroundColor: "rgba(59,130,246,0.5)",
           borderWidth: 1,
         },
         {
           label: "Completeness",
           data: requirements.map((item) => numeric(item.completeness)),
-          borderColor: "rgba(74,222,128,1)",
-          backgroundColor: "rgba(74,222,128,0.65)",
+          borderColor: "rgba(34,197,94,1)",
+          backgroundColor: "rgba(34,197,94,0.5)",
           borderWidth: 1,
         },
         {
           label: "Consistency",
           data: requirements.map((item) => numeric(item.consistency)),
-          borderColor: "rgba(250,204,21,1)",
-          backgroundColor: "rgba(250,204,21,0.65)",
+          borderColor: "rgba(217,119,6,1)",
+          backgroundColor: "rgba(217,119,6,0.5)",
           borderWidth: 1,
         },
         {
           label: "Ambiguity",
           data: requirements.map((item) => numeric(item.ambiguity)),
-          borderColor: "rgba(248,113,113,1)",
-          backgroundColor: "rgba(248,113,113,0.6)",
+          borderColor: "rgba(220,38,38,1)",
+          backgroundColor: "rgba(220,38,38,0.5)",
           borderWidth: 1,
         },
       ],
@@ -247,19 +266,19 @@ export default function DashboardPage() {
     maintainAspectRatio: false,
     scales: {
       x: {
-        ticks: { color: "#cbd5e1" },
-        grid: { color: "rgba(148, 163, 184, 0.12)" },
+        ticks: { color: "#374151" },
+        grid: { color: "rgba(156, 163, 175, 0.4)" }, // đậm hơn
       },
       y: {
         min: 10,
         max: 90,
-        ticks: { color: "#cbd5e1" },
-        grid: { color: "rgba(148, 163, 184, 0.12)" },
+        ticks: { color: "#374151" },
+        grid: { color: "rgba(156, 163, 175, 0.4)" }, // đậm hơn
       },
     },
     plugins: {
       legend: {
-        labels: { color: "#e2e8f0" },
+        labels: { color: "#374151" },
       },
       tooltip: {
         mode: "index",
@@ -351,13 +370,27 @@ export default function DashboardPage() {
         style={{ width: `${leftColWidth}%` }}
       >
         <div className="panel p-4">
-          <p className="text-xs uppercase tracking-[0.25em] text-zinc-400">
+          <p className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-gray-600">
+            <IconChip tone="violet">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                className="h-4 w-4"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              >
+                <path d="M4 19h16" strokeLinecap="round" />
+                <rect x="5" y="11" width="3" height="6" rx="1" />
+                <rect x="10.5" y="7" width="3" height="10" rx="1" />
+                <rect x="16" y="4" width="3" height="13" rx="1" />
+              </svg>
+            </IconChip>
             Session analytics
           </p>
-          <h2 className="mt-1 text-2xl font-semibold text-white">
+          <h2 className="mt-1 text-2xl font-semibold text-gray-900">
             Requirement analytics dashboard
           </h2>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-gray-700">
             Every change saved on the Home page is reflected here instantly.
           </p>
         </div>
@@ -383,16 +416,37 @@ export default function DashboardPage() {
 
         <div className="panel p-4">
           <div className="mb-3">
-            <p className="text-xs uppercase tracking-[0.25em] text-slate-400">
+            <p className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-gray-600">
+              <IconChip tone="blue">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  className="h-4 w-4"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
+                  <path d="M4 19h16" strokeLinecap="round" />
+                  <path
+                    d="M6 14l3-3 3 2 5-6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M16 7h3v3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </IconChip>
               Full requirement statistics
             </p>
-            <h3 className="mt-1 text-lg font-semibold text-white">
+            <h3 className="mt-1 text-lg font-semibold text-gray-900">
               All requirements across all dimensions
             </h3>
           </div>
 
           {requirements.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-slate-700 bg-slate-950/50 p-4 text-sm text-slate-400">
+            <div className="rounded-xl border-2 border-dashed border-slate-300 bg-gray-50 p-4 text-sm text-gray-600">
               No requirement data available yet.
             </div>
           ) : (
@@ -418,7 +472,7 @@ export default function DashboardPage() {
       {/* Resizer Divider */}
       <div
         onMouseDown={handleMouseDown}
-        className="w-1 cursor-col-resize bg-slate-700 hover:bg-slate-500 transition-colors"
+        className="w-[6px] cursor-col-resize rounded-full bg-gray-300 transition-colors hover:bg-gray-400 mx-1.5"
         style={{ userSelect: "none" }}
       />
 
@@ -428,7 +482,20 @@ export default function DashboardPage() {
         style={{ width: `${100 - leftColWidth}%` }}
       >
         <div className="panel p-4">
-          <p className="text-xs uppercase tracking-[0.25em] text-slate-400">
+          <p className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-gray-600">
+            <IconChip tone="emerald">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                className="h-4 w-4"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              >
+                <path d="M4 12h16" strokeLinecap="round" />
+                <path d="M12 4v16" strokeLinecap="round" />
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+              </svg>
+            </IconChip>
             KPI
           </p>
           <div className="mt-3 grid grid-cols-2 gap-2">
@@ -442,41 +509,86 @@ export default function DashboardPage() {
             ].map(([label, value]) => (
               <div
                 key={label}
-                className="card-hover rounded-xl border border-slate-800 bg-slate-950/60 p-3"
+                className="card-hover rounded-xl border-2 border-slate-300 bg-white p-3"
               >
-                <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">
+                <p className="text-[11px] uppercase tracking-[0.3em] text-gray-900">
                   {label}
                 </p>
-                <p className="mt-1 text-xl font-semibold text-white">{value}</p>
+                <p className="mt-1 text-xl font-semibold text-gray-900">
+                  {value}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
         <div className="panel p-4">
-          <p className="text-xs uppercase tracking-[0.25em] text-slate-400">
+          <p className="flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-gray-600">
+            <IconChip tone="amber">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                className="h-4 w-4"
+                stroke="currentColor"
+                strokeWidth="1.8"
+              >
+                <path d="M12 4v11" strokeLinecap="round" />
+                <path
+                  d="M8 11l4 4 4-4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <rect x="4" y="17" width="16" height="3" rx="1" />
+              </svg>
+            </IconChip>
             Export
           </p>
-          <h3 className="mt-1 text-lg font-semibold text-white">
+          <h3 className="mt-1 text-lg font-semibold text-gray-900">
             Export final requirements
           </h3>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-gray-700">
             The PDF includes all requirements after edits from the Home page.
           </p>
           <div className="mt-4 flex flex-col gap-2">
             <button
-              className="button-primary ring-focus"
+              className="button-primary ring-focus gap-2"
               type="button"
               onClick={exportPdf}
               disabled={requirements.length === 0}
             >
-              📄 Export PDF
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                className="h-4 w-4"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                aria-hidden="true"
+              >
+                <path d="M5 4h11l3 3v13H5V4Z" />
+                <path d="M8 4v6h8" />
+                <path d="M8 16h8" strokeLinecap="round" />
+              </svg>
+              Export PDF
             </button>
             <button
-              className="button-secondary ring-focus"
+              className="button-secondary ring-focus gap-2"
               type="button"
               onClick={() => navigate("/")}
             >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                className="h-4 w-4"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                aria-hidden="true"
+              >
+                <path
+                  d="M15 6l-6 6 6 6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
               Back to Home
             </button>
           </div>
