@@ -11,16 +11,10 @@ from app.nlp.parser import parse_requirement_text
 from app.readability.analyzer import analyze_readability
 from app.scoring.scorer import calculate_quality_dimensions, score_requirement
 from app.similarity.comparer import similarity_to_corpus
+from app.standards.loader import load_reference_standards
 from models.contracts import AnalyzeRequest, AnalyzeResponse, ChatRequest, ChatResponse
 
 router = APIRouter()
-
-
-REFERENCE_REQUIREMENT_PATTERNS = [
-    "The system shall allow authenticated users to submit requirements.",
-    "The application must validate mandatory fields before saving data.",
-    "The platform shall return a response within two seconds for standard queries.",
-]
 
 
 @router.get("/health")
@@ -30,11 +24,16 @@ def health() -> dict:
 
 @router.post("/analyze", response_model=AnalyzeResponse)
 def analyze(payload: AnalyzeRequest) -> AnalyzeResponse:
+    standards = load_reference_standards()
+
     parsed = parse_requirement_text(payload.text)
 
-    ambiguity_result = detect_ambiguity(payload.text)
+    ambiguity_result = detect_ambiguity(
+        payload.text,
+        extra_terms=standards.ambiguous_terms,
+    )
     readability = analyze_readability(payload.text)
-    similarity = similarity_to_corpus(payload.text, REFERENCE_REQUIREMENT_PATTERNS)
+    similarity = similarity_to_corpus(payload.text, standards.reference_patterns)
     contradiction = detect_internal_contradiction(payload.text)
 
     quality = calculate_quality_dimensions(
@@ -45,6 +44,8 @@ def analyze(payload: AnalyzeRequest) -> AnalyzeResponse:
         has_actor=bool(parsed.get("actor")),
         has_action=bool(parsed.get("action")),
         has_object=bool(parsed.get("object")),
+        requirement_text=payload.text,
+        standards_profile=standards.scoring_profile,
     )
 
     final_score = score_requirement(
@@ -52,6 +53,7 @@ def analyze(payload: AnalyzeRequest) -> AnalyzeResponse:
         completeness=quality["completeness"],
         consistency=quality["consistency"],
         ambiguity=ambiguity_result["score"],
+        quality_gate=quality.get("quality_gate", 1.0),
     )
 
     response_payload = {
@@ -59,6 +61,8 @@ def analyze(payload: AnalyzeRequest) -> AnalyzeResponse:
         "action": parsed.get("action", ""),
         "object": parsed.get("object", ""),
         "ambiguity": float(ambiguity_result["score"]),
+        "ambiguity_count": int(ambiguity_result.get("count", 0)),
+        "ambiguity_terms": list(ambiguity_result.get("terms", [])),
         "readability": float(readability),
         "similarity": float(similarity),
         "contradiction": float(contradiction),
@@ -68,7 +72,12 @@ def analyze(payload: AnalyzeRequest) -> AnalyzeResponse:
         "score": float(final_score),
     }
 
-    explanation = explain_result(response_payload)
+    explanation = explain_result(
+        {
+            **response_payload,
+            "standards_files": list(standards.files_used),
+        }
+    )
 
     return AnalyzeResponse(**response_payload, explanation=explanation["insights"])
 

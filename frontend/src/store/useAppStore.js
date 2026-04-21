@@ -24,6 +24,36 @@ function createSession(name) {
   };
 }
 
+function clampScoreValue(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) {
+    return null;
+  }
+
+  if (numeric >= 10 && numeric <= 90) {
+    return numeric;
+  }
+
+  const bounded = Math.max(0, Math.min(100, numeric));
+  const projected = 10 + 80 / (1 + Math.exp(-(bounded - 50) / 12));
+  return Number(projected.toFixed(2));
+}
+
+function normalizeRequirement(item) {
+  if (!item || typeof item !== "object") {
+    return item;
+  }
+
+  return {
+    ...item,
+    ambiguity: clampScoreValue(item.ambiguity),
+    clarity: clampScoreValue(item.clarity),
+    completeness: clampScoreValue(item.completeness),
+    consistency: clampScoreValue(item.consistency),
+    score: clampScoreValue(item.score),
+  };
+}
+
 const AUTO_REVIEW_VERSION = 3;
 
 function updateActiveSession(state, updater) {
@@ -59,7 +89,7 @@ function ensureDefaultSession(state) {
       const safeSession =
         session && typeof session === "object" ? session : createSession();
       const requirements = Array.isArray(safeSession.requirements)
-        ? safeSession.requirements
+        ? safeSession.requirements.map((item) => normalizeRequirement(item))
         : [];
       const requirementIds = new Set(
         requirements.map((item) => item?.id).filter(Boolean),
@@ -159,10 +189,13 @@ function mergeRequirementsById(existingRequirements, fetchedRequirements) {
     }
 
     const current = requirementsById.get(item.id) || {};
-    requirementsById.set(item.id, {
-      ...current,
-      ...item,
-    });
+    requirementsById.set(
+      item.id,
+      normalizeRequirement({
+        ...current,
+        ...item,
+      }),
+    );
   });
 
   return Array.from(requirementsById.values()).sort(
@@ -614,6 +647,14 @@ export const useAppStore = create(
           return null;
         }
 
+        const hasExistingChatForRequirement = (
+          currentSession.chatMessages || []
+        ).some((item) => item?.requirementId === requirementId);
+
+        if (hasExistingChatForRequirement) {
+          return null;
+        }
+
         const reviewKey = `${currentSession.id}:${requirementId}`;
         if (state.reviewInFlight?.[reviewKey]) {
           return null;
@@ -645,7 +686,7 @@ export const useAppStore = create(
             const analysis = reEvaluate?.analysis;
 
             if (analysis && typeof analysis === "object") {
-              requirementForReview = {
+              requirementForReview = normalizeRequirement({
                 ...requirement,
                 actor: analysis.actor ?? requirement.actor ?? null,
                 action: analysis.action ?? requirement.action ?? null,
@@ -664,7 +705,7 @@ export const useAppStore = create(
                   analysis.consistency ?? requirement.consistency ?? null,
                 score: analysis.score ?? requirement.score ?? null,
                 status: "analyzed",
-              };
+              });
 
               set((s) => {
                 const patch = updateActiveSession(

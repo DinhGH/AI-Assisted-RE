@@ -6,7 +6,10 @@ import os
 from functools import lru_cache
 from typing import Dict
 
-import spacy
+try:
+    import spacy
+except Exception:  # pragma: no cover - optional runtime dependency
+    spacy = None  # type: ignore[assignment]
 
 from utils.helpers import normalize_text, split_sentences
 
@@ -14,6 +17,9 @@ from utils.helpers import normalize_text, split_sentences
 @lru_cache(maxsize=1)
 def _load_nlp():
     """Load spaCy pipeline lazily for faster startup in test contexts."""
+    if spacy is None:
+        return None
+
     model_name = os.getenv("SPACY_MODEL", "en_core_web_sm")
     try:
         return spacy.load(model_name)
@@ -23,12 +29,35 @@ def _load_nlp():
 
 
 def _fallback_parse(text: str) -> Dict[str, str]:
-    """Heuristic parser used when POS/dependency signals are unavailable."""
-    tokens = normalize_text(text).split(" ")
-    actor = tokens[0] if len(tokens) > 0 else ""
-    action = tokens[1] if len(tokens) > 1 else ""
-    obj = " ".join(tokens[2:]) if len(tokens) > 2 else ""
-    return {"actor": actor, "action": action, "object": obj}
+    """Heuristic parser used when POS/dependency signals are unavailable.
+
+    IMPORTANT: avoid assigning actor/action/object for low-information text
+    (e.g. "haha") because that inflates completeness scoring.
+    """
+    normalized = normalize_text(text)
+    tokens = [token for token in normalized.split(" ") if token]
+
+    # For very short/non-requirement text, return empty components.
+    if len(tokens) < 4:
+        return {"actor": "", "action": "", "object": ""}
+
+    lowered = [token.lower() for token in tokens]
+    modal_candidates = {"shall", "must", "should", "will", "can", "may"}
+
+    modal_index = -1
+    for idx, token in enumerate(lowered):
+        if token in modal_candidates:
+            modal_index = idx
+            break
+
+    if 1 <= modal_index < len(tokens) - 1:
+        actor = " ".join(tokens[:modal_index]).strip()
+        action = tokens[modal_index + 1].strip()
+        obj = " ".join(tokens[modal_index + 2 :]).strip()
+        return {"actor": actor, "action": action, "object": obj}
+
+    # Conservative fallback: only populate object when structure is unclear.
+    return {"actor": "", "action": "", "object": normalized}
 
 
 def parse_requirement_text(text: str):
@@ -41,6 +70,9 @@ def parse_requirement_text(text: str):
         return {"actor": "", "action": "", "object": ""}
 
     nlp = _load_nlp()
+    if nlp is None:
+        return _fallback_parse(normalized)
+
     doc = nlp(normalized)
 
     # If dependency parser is missing (blank model), use a deterministic fallback.

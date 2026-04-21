@@ -1,6 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAppStore } from "../store/useAppStore";
 
+function formatBoundedScore(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) {
+    return "—";
+  }
+
+  let normalized = numeric;
+  if (numeric < 10 || numeric > 90) {
+    const bounded = Math.max(0, Math.min(100, numeric));
+    normalized = 10 + 80 / (1 + Math.exp(-(bounded - 50) / 12));
+  }
+
+  return String(Math.round(normalized));
+}
+
 export default function RequirementViewerPage() {
   const requirements = useAppStore((state) => state.requirements);
   const selectedRequirementId = useAppStore(
@@ -102,10 +117,16 @@ export default function RequirementViewerPage() {
           <>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               {[
-                ["Score", currentRequirement.score ?? "—"],
-                ["Clarity", currentRequirement.clarity ?? "—"],
-                ["Completeness", currentRequirement.completeness ?? "—"],
-                ["Consistency", currentRequirement.consistency ?? "—"],
+                ["Score", formatBoundedScore(currentRequirement.score)],
+                ["Clarity", formatBoundedScore(currentRequirement.clarity)],
+                [
+                  "Completeness",
+                  formatBoundedScore(currentRequirement.completeness),
+                ],
+                [
+                  "Consistency",
+                  formatBoundedScore(currentRequirement.consistency),
+                ],
               ].map(([label, value]) => (
                 <div
                   key={label}

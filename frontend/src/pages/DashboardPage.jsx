@@ -34,12 +34,21 @@ function average(values) {
 }
 
 function numeric(value) {
-  const n = Number(value ?? 0);
-  return Number.isFinite(n) ? n : 0;
+  const n = Number(value);
+  if (!Number.isFinite(n)) {
+    return 10;
+  }
+
+  if (n >= 10 && n <= 90) {
+    return n;
+  }
+
+  const bounded = clamp(n, 0, 100);
+  return 10 + 80 / (1 + Math.exp(-(bounded - 50) / 12));
 }
 
 function toAmbiguityPercent(value) {
-  return clamp(numeric(value) * 10, 0, 100);
+  return clamp(numeric(value), 10, 90);
 }
 
 function clamp(value, min, max) {
@@ -124,8 +133,8 @@ export default function DashboardPage() {
     responsive: true,
     scales: {
       r: {
-        min: 0,
-        max: 100,
+        min: 10,
+        max: 90,
         ticks: {
           backdropColor: "transparent",
           color: "#94a3b8",
@@ -171,8 +180,8 @@ export default function DashboardPage() {
         grid: { color: "rgba(148, 163, 184, 0.12)" },
       },
       y: {
-        min: 0,
-        max: 100,
+        min: 10,
+        max: 90,
         ticks: { color: "#cbd5e1" },
         grid: { color: "rgba(148, 163, 184, 0.12)" },
       },
@@ -242,8 +251,8 @@ export default function DashboardPage() {
         grid: { color: "rgba(148, 163, 184, 0.12)" },
       },
       y: {
-        min: 0,
-        max: 100,
+        min: 10,
+        max: 90,
         ticks: { color: "#cbd5e1" },
         grid: { color: "rgba(148, 163, 184, 0.12)" },
       },

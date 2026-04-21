@@ -26,6 +26,54 @@ const uploadMiddleware = multer({
   },
 });
 
+function clampScoreValue(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) {
+    return null;
+  }
+
+  // Keep naturally distributed scores in the practical 10..90 band.
+  // If legacy/extreme data leaks in (e.g. 0 or 100), softly project it
+  // back into the band instead of hard-fixing to 10/90.
+  if (n >= 10 && n <= 90) {
+    return n;
+  }
+
+  const bounded = Math.max(0, Math.min(100, n));
+  const projected = 10 + 80 / (1 + Math.exp(-(bounded - 50) / 12));
+  return Number(projected.toFixed(2));
+}
+
+function normalizeRequirementScores(requirement) {
+  if (!requirement || typeof requirement !== "object") {
+    return requirement;
+  }
+
+  return {
+    ...requirement,
+    ambiguity: clampScoreValue(requirement.ambiguity),
+    clarity: clampScoreValue(requirement.clarity),
+    completeness: clampScoreValue(requirement.completeness),
+    consistency: clampScoreValue(requirement.consistency),
+    score: clampScoreValue(requirement.score),
+  };
+}
+
+function normalizeAnalysisScores(analysis) {
+  if (!analysis || typeof analysis !== "object") {
+    return analysis;
+  }
+
+  return {
+    ...analysis,
+    ambiguity: clampScoreValue(analysis.ambiguity),
+    clarity: clampScoreValue(analysis.clarity),
+    completeness: clampScoreValue(analysis.completeness),
+    consistency: clampScoreValue(analysis.consistency),
+    score: clampScoreValue(analysis.score),
+  };
+}
+
 const healthCheck = asyncHandler(async (req, res) => {
   res.json({ status: "ok" });
 });
@@ -85,9 +133,11 @@ const reEvaluateRequirementController = asyncHandler(async (req, res) => {
     changedBy: changedBy || "user",
   });
 
+  const normalizedAnalysis = normalizeAnalysisScores(result.analysis);
+
   res.json({
     requirement_id: requirementId,
-    analysis: result.analysis,
+    analysis: normalizedAnalysis,
   });
 });
 
@@ -173,7 +223,11 @@ const listRequirements = asyncHandler(async (req, res) => {
     order: [["id", "ASC"]],
   });
 
-  res.json({ requirements });
+  res.json({
+    requirements: requirements.map((item) =>
+      normalizeRequirementScores(item.toJSON ? item.toJSON() : item),
+    ),
+  });
 });
 
 const chatController = asyncHandler(async (req, res) => {
@@ -282,6 +336,8 @@ const chatController = asyncHandler(async (req, res) => {
     }
   }
 
+  analysisPayload = normalizeAnalysisScores(analysisPayload);
+
   const assistantMessage = await chatWithAI({
     requirement: requirementText,
     analysis: analysisPayload,
@@ -332,9 +388,12 @@ const metricsController = asyncHandler(async (req, res) => {
   let fn = 0;
 
   requirements.forEach((item) => {
-    const predictedGood = (item.score || 0) >= threshold;
+    const normalizedScore = clampScoreValue(item.score) ?? 0;
+    const normalizedAmbiguity = clampScoreValue(item.ambiguity) ?? 100;
+
+    const predictedGood = normalizedScore >= threshold;
     const actualGood =
-      (item.ambiguity || 0) <= 2 && (item.contradiction || 0) < 0.5;
+      normalizedAmbiguity <= 20 && (item.contradiction || 0) < 0.5;
 
     if (predictedGood && actualGood) tp += 1;
     if (predictedGood && !actualGood) fp += 1;

@@ -23,6 +23,8 @@ class AnalyzeResponse(BaseModel):
     completeness: float
     consistency: float
     score: float
+    ambiguity_count: Optional[int] = None
+    ambiguity_terms: Optional[List[str]] = None
     explanation: List[str]
 
 

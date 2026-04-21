@@ -6,11 +6,96 @@ function formatScore(value) {
   if (value === null || value === undefined) return "—";
   const numeric = Number(value);
   if (Number.isNaN(numeric)) return "—";
-  return `${Math.round(numeric)}`;
+
+  let normalized = numeric;
+  if (numeric < 10 || numeric > 90) {
+    const bounded = clamp(numeric, 0, 100);
+    normalized = 10 + 80 / (1 + Math.exp(-(bounded - 50) / 12));
+  }
+
+  return `${Math.round(normalized)}`;
 }
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
+}
+
+function sanitizeAssistantMessage(message = "") {
+  return String(message || "")
+    .replace(/\r\n/g, "\n")
+    .replace(/```[a-zA-Z]*\n?/g, "")
+    .replace(/```/g, "")
+    .replace(/^\s*[-*_]{3,}\s*$/gm, "")
+    .replace(/^\s{0,3}#{1,6}\s*/gm, "")
+    .replace(/^\s*>\s?/gm, "")
+    .replace(/\*\*(.*?)\*\*/g, "$1")
+    .replace(/__(.*?)__/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function renderChatMessage(message, role) {
+  const normalized =
+    role === "assistant"
+      ? sanitizeAssistantMessage(message)
+      : String(message || "").trim();
+
+  if (!normalized) {
+    return null;
+  }
+
+  const blocks = normalized.split(/\n{2,}/).filter(Boolean);
+
+  return blocks.map((block, blockIndex) => {
+    const lines = block
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    if (!lines.length) {
+      return null;
+    }
+
+    const isOrderedList = lines.every((line) => /^\d+\.\s+/.test(line));
+    if (isOrderedList) {
+      return (
+        <ol
+          key={`ordered-${blockIndex}`}
+          className="list-decimal space-y-1 pl-5 leading-6"
+        >
+          {lines.map((line, index) => (
+            <li key={`${blockIndex}-${index}`}>
+              {line.replace(/^\d+\.\s+/, "")}
+            </li>
+          ))}
+        </ol>
+      );
+    }
+
+    const isBulletList = lines.every((line) => /^[-•]\s+/.test(line));
+    if (isBulletList) {
+      return (
+        <ul
+          key={`bullet-${blockIndex}`}
+          className="list-disc space-y-1 pl-5 leading-6"
+        >
+          {lines.map((line, index) => (
+            <li key={`${blockIndex}-${index}`}>
+              {line.replace(/^[-•]\s+/, "")}
+            </li>
+          ))}
+        </ul>
+      );
+    }
+
+    return (
+      <p key={`para-${blockIndex}`} className="leading-7">
+        {lines.join(" ")}
+      </p>
+    );
+  });
 }
 
 export default function HomePage() {
@@ -377,9 +462,9 @@ export default function HomePage() {
                       <p className="mb-1 text-[10px] uppercase tracking-[0.25em] text-slate-400">
                         {item.role}
                       </p>
-                      <p className="whitespace-pre-wrap leading-6">
-                        {item.message}
-                      </p>
+                      <div className="space-y-2 text-[14px]">
+                        {renderChatMessage(item.message, item.role)}
+                      </div>
                     </div>
                   ))
                 )}
