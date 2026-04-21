@@ -125,6 +125,10 @@ function sanitizeAssistantResponse(rawText = "") {
     .trim();
 }
 
+function hasTerminalEnding(text = "") {
+  return /[.!?\]"')\u2026]$/.test(String(text || "").trim());
+}
+
 function appearsTruncated(text = "") {
   const value = String(text || "").trim();
   if (!value) {
@@ -132,18 +136,39 @@ function appearsTruncated(text = "") {
   }
 
   const words = countWords(value);
-  if (words < 24) {
+  if (words < 10) {
     return false;
   }
 
   // Most complete answers should end with terminal punctuation.
-  if (/[.!?\]"')\u2026]$/.test(value)) {
+  if (hasTerminalEnding(value)) {
     return false;
   }
 
+  const lines = value
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const lastLine = lines[lines.length - 1] || value;
+
+  // Very common hard-cut signals in lists and sectioned outputs.
+  if (/^\d+\.\s+.+$/i.test(lastLine) && !/[.!?\]"')\u2026:]$/.test(lastLine)) {
+    const itemBody = lastLine.replace(/^\d+\.\s+/, "");
+    if (countWords(itemBody) <= 12) {
+      return true;
+    }
+  }
+
+  if (/^[-•]\s+.+$/i.test(lastLine) && !/[.!?\]"')\u2026:]$/.test(lastLine)) {
+    const itemBody = lastLine.replace(/^[-•]\s+/, "");
+    if (countWords(itemBody) <= 12) {
+      return true;
+    }
+  }
+
   // Common signs of abrupt cutoff.
-  return /(and|or|by|with|to|for|of|in|that|which|because|when|if|then|also|more)$/i.test(
-    value,
+  return /(and|or|by|with|to|for|of|in|that|which|because|when|if|then|also|more|including|involved|implement|support|feedback)$/i.test(
+    lastLine,
   );
 }
 
@@ -363,6 +388,48 @@ function looksLikeJsonResponse(text = "") {
   return hasJsonBlock || hasMetricsPattern;
 }
 
+function isContinueIntent(question = "") {
+  const q = String(question || "")
+    .trim()
+    .toLowerCase();
+  if (!q) {
+    return false;
+  }
+
+  return /^(continue|cont|go on|go ahead|keep going|more|tiếp|tiếp đi|tiếp tục|viết tiếp|nói tiếp|tiếp theo)\.?$/.test(
+    q,
+  );
+}
+
+function buildContinueQuestionFromHistory(history = []) {
+  const safeHistory = Array.isArray(history) ? history : [];
+  const lastAssistantMessage = [...safeHistory]
+    .reverse()
+    .find(
+      (item) =>
+        item?.role === "assistant" && String(item?.content || "").trim(),
+    );
+
+  if (!lastAssistantMessage) {
+    return "Please continue your previous response from the exact point where it stopped. Do not restart from the beginning.";
+  }
+
+  const fullPrevious = String(lastAssistantMessage.content || "").trim();
+  const previousTail = fullPrevious.slice(-1800);
+
+  return [
+    "User asked to continue your previous answer.",
+    "Continue from the exact unfinished point of your previous assistant response.",
+    "Do not repeat content that was already sent.",
+    "If a numbered/bullet list was interrupted, continue and finish that list.",
+    "",
+    "Previous assistant response tail:",
+    previousTail,
+    "",
+    "Output only the missing continuation.",
+  ].join("\n");
+}
+
 async function chatWithOllama(messages, mode = "followup", returnMeta = false) {
   const safeMode = mode === "initial" ? "initial" : "followup";
   const configuredMaxTokens = Math.max(
@@ -371,8 +438,8 @@ async function chatWithOllama(messages, mode = "followup", returnMeta = false) {
   );
   const numPredict =
     safeMode === "initial"
-      ? Math.min(240, Math.max(128, configuredMaxTokens))
-      : Math.min(192, Math.max(64, configuredMaxTokens));
+      ? Math.min(768, Math.max(320, configuredMaxTokens))
+      : Math.min(640, Math.max(280, configuredMaxTokens));
   const baseTemperature = Number(config.ollama.temperature || 0.2);
   const effectiveTemperature =
     safeMode === "initial"
@@ -506,7 +573,7 @@ async function continueTruncatedResponse({
     {
       role: "system",
       content:
-        "Continue the assistant response naturally from the last unfinished sentence. Do not repeat prior content. Do not output JSON or code fences.",
+        "Continue the assistant response naturally from the exact unfinished point. Do not repeat prior content. Keep the same style and section structure. If it was a numbered or bullet list, continue and complete that list. Do not output JSON or code fences.",
     },
     {
       role: "user",
@@ -520,7 +587,7 @@ async function continueTruncatedResponse({
         "Partial response that ended abruptly:",
         String(partialResponse || ""),
         "",
-        "Please continue only the missing ending in 2-4 concise paragraphs.",
+        "Please continue only the missing ending and finish the response cleanly.",
       ].join("\n"),
     },
   ];
@@ -530,6 +597,45 @@ async function continueTruncatedResponse({
   }
 
   return chatWithOllama(continueMessages, "followup");
+}
+
+async function completeResponseFromScratch({
+  provider,
+  requirement,
+  analysis,
+  partialResponse,
+  mode,
+}) {
+  const safeMode = mode === "initial" ? "initial" : "followup";
+
+  const completionMessages = [
+    {
+      role: "system",
+      content:
+        "Rewrite the assistant response into a complete final answer. Keep the same intent and structure, but ensure every section and sentence is fully completed. Do not output JSON or code fences.",
+    },
+    {
+      role: "user",
+      content: [
+        "Selected requirement:",
+        String(requirement || ""),
+        "",
+        "Analysis snapshot:",
+        prettyJson(compactAnalysis(analysis || {})),
+        "",
+        "Current partial/truncated answer:",
+        String(partialResponse || ""),
+        "",
+        "Please provide a complete final version without cutting off any section.",
+      ].join("\n"),
+    },
+  ];
+
+  if (provider === "groq") {
+    return chatWithGroq(completionMessages, safeMode);
+  }
+
+  return chatWithOllama(completionMessages, "initial");
 }
 
 async function chatWithAI({ requirement, analysis, history, question, mode }) {
@@ -567,11 +673,18 @@ async function chatWithAI({ requirement, analysis, history, question, mode }) {
     });
   }
 
+  const normalizedHistory = Array.isArray(history) ? history : [];
+  const continuationByUser =
+    safeMode === "followup" && isContinueIntent(question);
+  const effectiveQuestion = continuationByUser
+    ? buildContinueQuestionFromHistory(normalizedHistory)
+    : question || "";
+
   const messages = buildMessages({
     requirement: safeRequirement,
     analysis: analysis || {},
-    history: Array.isArray(history) ? history : [],
-    question: question || "",
+    history: normalizedHistory,
+    question: effectiveQuestion,
     mode: safeMode,
   });
 
@@ -614,20 +727,83 @@ async function chatWithAI({ requirement, analysis, history, question, mode }) {
 
     const likelyTokenCut =
       doneReason === "length" || doneReason === "max_tokens";
-    if (safeMode === "followup" && (likelyTokenCut || appearsTruncated(text))) {
+    const suspiciousLongNoEnding =
+      countWords(text) >= 45 && !hasTerminalEnding(text);
+
+    let needsRecovery =
+      likelyTokenCut || appearsTruncated(text) || suspiciousLongNoEnding;
+
+    if (needsRecovery) {
+      for (let attempt = 0; attempt < 2; attempt += 1) {
+        try {
+          const continuation = await continueTruncatedResponse({
+            provider,
+            requirement: safeRequirement,
+            analysis,
+            partialResponse: text,
+          });
+
+          const cleanContinuation = String(continuation || "").trim();
+          if (!cleanContinuation) {
+            break;
+          }
+
+          const nextText = `${text}\n\n${cleanContinuation}`.trim();
+          if (nextText.length <= text.length) {
+            break;
+          }
+
+          text = nextText;
+
+          const stillSuspicious =
+            appearsTruncated(text) ||
+            (countWords(text) >= 45 && !hasTerminalEnding(text));
+
+          if (!stillSuspicious) {
+            needsRecovery = false;
+            break;
+          }
+        } catch {
+          break;
+        }
+      }
+    }
+
+    if (needsRecovery && (appearsTruncated(text) || !hasTerminalEnding(text))) {
       try {
-        const continuation = await continueTruncatedResponse({
+        const completed = await completeResponseFromScratch({
           provider,
           requirement: safeRequirement,
           analysis,
           partialResponse: text,
+          mode: safeMode,
         });
 
-        if (continuation) {
-          text = `${text}\n\n${continuation}`;
+        if (
+          completed &&
+          countWords(completed) >= Math.max(14, countWords(text) - 8)
+        ) {
+          text = completed;
         }
       } catch {
-        // Keep original text if continuation fails.
+        // Keep best-effort response if completion pass fails.
+      }
+    }
+
+    if (safeMode === "initial" && countWords(text) < INITIAL_MIN_WORDS) {
+      try {
+        const expanded = await expandShortInitialResponse({
+          provider,
+          requirement: safeRequirement,
+          analysis,
+          shortDraft: text,
+        });
+
+        if (expanded && countWords(expanded) > countWords(text)) {
+          text = expanded;
+        }
+      } catch {
+        // Keep original text if expansion fails.
       }
     }
 

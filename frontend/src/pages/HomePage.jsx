@@ -46,56 +46,98 @@ function renderChatMessage(message, role) {
     return null;
   }
 
-  const blocks = normalized.split(/\n{2,}/).filter(Boolean);
+  const lines = normalized.split("\n").map((line) => line.trim());
+  const elements = [];
+  let index = 0;
 
-  return blocks.map((block, blockIndex) => {
-    const lines = block
-      .split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean);
+  const isHeadingLine = (line) =>
+    /^([^\n:]{2,80}):$/.test(line) &&
+    !/^\d+\.$/.test(line) &&
+    !/^[-•]/.test(line);
 
-    if (!lines.length) {
-      return null;
+  while (index < lines.length) {
+    const line = lines[index];
+
+    if (!line) {
+      index += 1;
+      continue;
     }
 
-    const isOrderedList = lines.every((line) => /^\d+\.\s+/.test(line));
-    if (isOrderedList) {
-      return (
+    if (isHeadingLine(line)) {
+      elements.push(
+        <p
+          key={`heading-${index}`}
+          className="pt-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300"
+        >
+          {line.replace(/:$/, "")}
+        </p>,
+      );
+      index += 1;
+      continue;
+    }
+
+    if (/^\d+\.\s+/.test(line)) {
+      const items = [];
+      while (index < lines.length && /^\d+\.\s+/.test(lines[index])) {
+        items.push(lines[index].replace(/^\d+\.\s+/, ""));
+        index += 1;
+      }
+
+      elements.push(
         <ol
-          key={`ordered-${blockIndex}`}
-          className="list-decimal space-y-1 pl-5 leading-6"
+          key={`ordered-${index}`}
+          className="list-decimal space-y-1.5 pl-5 leading-6 text-slate-200"
         >
-          {lines.map((line, index) => (
-            <li key={`${blockIndex}-${index}`}>
-              {line.replace(/^\d+\.\s+/, "")}
-            </li>
+          {items.map((item, itemIndex) => (
+            <li key={`ordered-${index}-${itemIndex}`}>{item}</li>
           ))}
-        </ol>
+        </ol>,
       );
+      continue;
     }
 
-    const isBulletList = lines.every((line) => /^[-•]\s+/.test(line));
-    if (isBulletList) {
-      return (
+    if (/^[-•]\s+/.test(line)) {
+      const items = [];
+      while (index < lines.length && /^[-•]\s+/.test(lines[index])) {
+        items.push(lines[index].replace(/^[-•]\s+/, ""));
+        index += 1;
+      }
+
+      elements.push(
         <ul
-          key={`bullet-${blockIndex}`}
-          className="list-disc space-y-1 pl-5 leading-6"
+          key={`bullet-${index}`}
+          className="list-disc space-y-1.5 pl-5 leading-6 text-slate-200"
         >
-          {lines.map((line, index) => (
-            <li key={`${blockIndex}-${index}`}>
-              {line.replace(/^[-•]\s+/, "")}
-            </li>
+          {items.map((item, itemIndex) => (
+            <li key={`bullet-${index}-${itemIndex}`}>{item}</li>
           ))}
-        </ul>
+        </ul>,
       );
+      continue;
     }
 
-    return (
-      <p key={`para-${blockIndex}`} className="leading-7">
-        {lines.join(" ")}
-      </p>
-    );
-  });
+    const paragraphLines = [];
+    while (
+      index < lines.length &&
+      lines[index] &&
+      !isHeadingLine(lines[index]) &&
+      !/^\d+\.\s+/.test(lines[index]) &&
+      !/^[-•]\s+/.test(lines[index])
+    ) {
+      paragraphLines.push(lines[index]);
+      index += 1;
+    }
+
+    if (paragraphLines.length) {
+      elements.push(
+        <p key={`para-${index}`} className="leading-7 text-slate-100">
+          {paragraphLines.join(" ")}
+        </p>,
+      );
+    }
+  }
+
+  return elements;
 }
 
 export default function HomePage() {
