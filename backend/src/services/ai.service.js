@@ -2,8 +2,6 @@ const axios = require("axios");
 const config = require("../config");
 const { AppError } = require("../middlewares/error.middleware");
 
-const INITIAL_MIN_WORDS = 90;
-
 const aiClient = axios.create({
   baseURL: config.aiEngine.baseUrl,
   timeout: 60000,
@@ -86,29 +84,6 @@ function countWords(text = "") {
     .filter(Boolean).length;
 }
 
-function isLowSignalRequirement(text = "") {
-  const normalized = String(text || "")
-    .toLowerCase()
-    .replace(/[^\p{L}\p{N}\s]/gu, " ")
-    .trim();
-
-  if (!normalized) {
-    return true;
-  }
-
-  const tokens = normalized.split(/\s+/).filter(Boolean);
-  if (tokens.length <= 3) {
-    return true;
-  }
-
-  const uniqueTokens = new Set(tokens);
-  if (uniqueTokens.size <= 2 && tokens.length <= 6) {
-    return true;
-  }
-
-  return false;
-}
-
 function sanitizeAssistantResponse(rawText = "") {
   return String(rawText || "")
     .replace(/\r\n/g, "\n")
@@ -172,126 +147,147 @@ function appearsTruncated(text = "") {
   );
 }
 
-function buildDeterministicInitialReview({ requirement, analysis, draft }) {
-  const clarity = analysis?.clarity ?? "N/A";
-  const completeness = analysis?.completeness ?? "N/A";
-  const consistency = analysis?.consistency ?? "N/A";
-  const ambiguity = analysis?.ambiguity ?? "N/A";
-  const score = analysis?.score ?? "N/A";
-  const actor = String(analysis?.actor || "").trim();
-  const action = String(analysis?.action || "").trim();
-  const object = String(analysis?.object || "").trim();
-  const ambiguityTerms = Array.isArray(analysis?.ambiguity_terms)
-    ? analysis.ambiguity_terms.filter(Boolean).slice(0, 8)
-    : [];
+function extractSuggestedRewrite(text = "") {
+  const normalized = sanitizeAssistantResponse(text);
+  if (!normalized) {
+    return "";
+  }
 
-  const missingParts = [];
-  if (!actor) missingParts.push("actor/owner");
-  if (!action) missingParts.push("explicit action");
-  if (!object) missingParts.push("target object/scope");
+  const lines = normalized.split("\n").map((line) => line.trim());
+  const headingIndex = lines.findIndex((line) =>
+    /^suggested\s+rewrite\s*:/i.test(line),
+  );
 
-  const ambiguityLine = ambiguityTerms.length
-    ? `Ambiguous terms currently present: ${ambiguityTerms.join(", ")}.`
-    : "No specific ambiguous keyword was extracted, but wording still needs measurable constraints.";
+  if (headingIndex < 0) {
+    return "";
+  }
 
-  const rewriteCandidate = `The system shall ${action || "[specific action]"} for ${object || "[target object/scope]"} by ${actor || "[responsible role]"}, under [clear condition], within [measurable threshold], and validated by [acceptance criteria].`;
+  const headingLine = lines[headingIndex] || "";
+  const sameLine = headingLine
+    .replace(/^suggested\s+rewrite\s*:\s*/i, "")
+    .trim();
+  if (sameLine) {
+    return sameLine;
+  }
+
+  for (let i = headingIndex + 1; i < lines.length; i += 1) {
+    const line = lines[i];
+    if (!line) {
+      continue;
+    }
+
+    if (/^review\s*:/i.test(line)) {
+      break;
+    }
+
+    const candidate = line.replace(/^[-•]\s+/, "").trim();
+    if (candidate) {
+      return candidate;
+    }
+  }
+
+  return "";
+}
+
+function toSingleSentence(text = "") {
+  const value = String(text || "")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!value) {
+    return "";
+  }
+
+  const match = value.match(/^(.+?[.!?])(?:\s|$)/);
+  if (match?.[1]) {
+    return match[1].trim();
+  }
+
+  return value;
+}
+
+function fallbackRewriteFromAnalysis(analysis = {}) {
+  const actor = String(analysis?.actor || "the responsible actor").trim();
+  const action = String(
+    analysis?.action || "perform the required action",
+  ).trim();
+  const object = String(analysis?.object || "the target object").trim();
+
+  return `The system shall ${action} on ${object} for ${actor} when the specified condition is met and within measurable criteria.`;
+}
+
+function normalizeInitialReviewMessage(text = "", rewrite = "") {
+  const normalized = sanitizeAssistantResponse(text);
+  const lines = normalized.split("\n").map((line) => line.trim());
+  let reviewLines = [];
+
+  let inReview = false;
+  for (const line of lines) {
+    if (!line) {
+      continue;
+    }
+
+    if (/^review\s*:/i.test(line)) {
+      inReview = true;
+      continue;
+    }
+
+    if (/^suggested\s+rewrite\s*:/i.test(line)) {
+      inReview = false;
+      continue;
+    }
+
+    if (inReview) {
+      const bullet = line.replace(/^[-•]\s*/, "").trim();
+      if (bullet) {
+        reviewLines.push(bullet);
+      }
+    }
+  }
+
+  reviewLines = reviewLines
+    .map((line) => line.replace(/^[-•]\s*/, "").trim())
+    .filter(Boolean)
+    .map((line) => {
+      if (/^[^:]{2,120}:\s+.+[.!?]$/u.test(line)) {
+        return line;
+      }
+
+      if (/^[^:]{2,120}:\s+.+$/u.test(line)) {
+        return `${line}.`;
+      }
+
+      return `Quality issue: ${line.replace(/[.!?]+$/u, "")}.`;
+    });
+
+  const professionalFallbackBullets = [
+    "Missing actor: The requirement does not clearly specify which system component or user is responsible for the action.",
+    "Lack of measurable criteria: There are no quantifiable limits such as response time, throughput, or performance thresholds.",
+    "Ambiguity: Terms such as support or handle are vague and can lead to inconsistent implementation decisions.",
+    "Missing condition: The requirement does not define under which system state or trigger this behavior must occur.",
+    "Verification gap: The requirement does not provide concrete acceptance criteria for objective validation.",
+  ];
+
+  if (reviewLines.length < 3) {
+    for (const fallback of professionalFallbackBullets) {
+      if (!reviewLines.includes(fallback)) {
+        reviewLines.push(fallback);
+      }
+
+      if (reviewLines.length >= 3) {
+        break;
+      }
+    }
+  }
+
+  reviewLines = reviewLines.slice(0, 5);
 
   return [
-    draft ? String(draft).trim() : "",
-    "Overall assessment:",
-    `This requirement is understandable at a high level, but it still needs clearer boundaries and measurable language to reduce interpretation gaps across stakeholders. Current indicators suggest: clarity ${clarity}, completeness ${completeness}, consistency ${consistency}, ambiguity ${ambiguity}, and an overall score of ${score}.`,
+    "Review:",
+    ...reviewLines.map((line) => `- ${line}`),
     "",
-    "Detailed analysis:",
-    `1. Missing parts: ${missingParts.length ? missingParts.join(", ") : "none of the core actor/action/object parts are missing"}.`,
-    "2. Measurability: Add explicit success criteria such as timing, limits, throughput, and acceptable error thresholds.",
-    `3. Ambiguity reduction: ${ambiguityLine}`,
-    "4. Consistency checks: Align this requirement with related business rules, roles, and non-functional constraints to avoid conflicts.",
-    "",
-    "Suggested rewrite:",
-    rewriteCandidate,
-    "",
-    "Next actions:",
-    "- Confirm business owner expectations for scope and measurable thresholds.",
-    "- Define acceptance test cases before implementation.",
-    "- Re-run quality review after rewriting to verify score improvements (especially clarity, completeness, and ambiguity).",
-  ]
-    .filter(Boolean)
-    .join("\n");
-}
-
-function shouldAugmentInitialReview(text = "", analysis = {}) {
-  const normalized = String(text || "").toLowerCase();
-
-  const ambiguity = Number(analysis?.ambiguity ?? NaN);
-  const highAmbiguity = Number.isFinite(ambiguity) && ambiguity >= 40;
-  const lowScore =
-    Number.isFinite(Number(analysis?.score)) && Number(analysis?.score) <= 40;
-
-  const actor = String(analysis?.actor || "").trim();
-  const action = String(analysis?.action || "").trim();
-  const object = String(analysis?.object || "").trim();
-  const missingCore = !actor || !action || !object;
-
-  const mentionsAmbiguity = /(ambigu|mơ hồ|vague|không rõ|unclear)/i.test(
-    normalized,
-  );
-  const deniesAmbiguity =
-    /(no\s+ambigu|không\s+mơ\s*hồ|not\s+ambiguous|không\s+có\s+vấn\s+đề\s+mơ\s*hồ)/i.test(
-      normalized,
-    );
-  const mentionsMissingParts =
-    /(missing|thiếu|actor|action|object|scope|measur|threshold|acceptance)/i.test(
-      normalized,
-    );
-  const mentionsRewrite =
-    /(rewrite|re-write|viết lại|đề xuất|suggested rewrite|shall)/i.test(
-      normalized,
-    );
-  const mentionsScoreImprovement =
-    /(score\s*improv|improv\w*\s+score|increase\s+score|raise\s+score|nâng\s+điểm)/i.test(
-      normalized,
-    );
-
-  if (highAmbiguity && !mentionsAmbiguity) {
-    return true;
-  }
-
-  if (highAmbiguity && deniesAmbiguity) {
-    return true;
-  }
-
-  if (missingCore && !mentionsMissingParts) {
-    return true;
-  }
-
-  if (!mentionsRewrite) {
-    return true;
-  }
-
-  // For clearly weak requirements, enforce score-improvement guidance.
-  if ((highAmbiguity || lowScore) && !mentionsScoreImprovement) {
-    return true;
-  }
-
-  return false;
-}
-
-function shouldOverrideInitialReview(text = "", analysis = {}) {
-  const normalized = String(text || "").toLowerCase();
-  const ambiguity = Number(analysis?.ambiguity ?? NaN);
-  const highAmbiguity = Number.isFinite(ambiguity) && ambiguity >= 40;
-
-  const claimsNoAmbiguity =
-    /(no\s+ambigu|not\s+ambiguous|không\s+mơ\s*hồ|không\s+có\s+vấn\s+đề\s+mơ\s*hồ)/i.test(
-      normalized,
-    );
-
-  const overPositiveSummary =
-    /(clear,?\s*complete,?\s*consistent|meets\s+all\s+the\s+specified\s+criteria)/i.test(
-      normalized,
-    );
-
-  return highAmbiguity && (claimsNoAmbiguity || overPositiveSummary);
+    "Suggested Rewrite:",
+    rewrite,
+  ].join("\n");
 }
 
 function buildMessages({ requirement, analysis, history, question, mode }) {
@@ -311,7 +307,19 @@ function buildMessages({ requirement, analysis, history, question, mode }) {
     "When reviewing requirements, always identify what is missing (actor/action/object/condition/measurement) and explain how to fix each gap.",
     "Ambiguity is a risk metric where lower is better; explicitly propose edits that reduce ambiguity.",
     safeMode === "initial"
-      ? "For the first requirement review, provide a detailed response with: overall assessment, missing parts, ambiguity issues, concrete rewritten requirement, and next actions. Keep it substantial (roughly 140+ words) and specific to the selected requirement."
+      ? [
+          "STRICT FORMAT REQUIRED.",
+          "Return EXACTLY two sections in this order:",
+          "Review:",
+          "- provide 3 to 5 professional bullet points.",
+          "- each bullet must contain Issue + one-sentence explanation.",
+          "- do not repeat or paraphrase the original requirement text.",
+          "- avoid generic statements; give concrete quality gaps.",
+          "Suggested Rewrite:",
+          "- ONE sentence only.",
+          "The rewrite sentence must include actor, action, object, condition, and measurable criteria.",
+          "Do not add any other headings or sections.",
+        ].join(" ")
       : "For follow-up replies, stay concise but still specific.",
   ].join(" ");
 
@@ -333,7 +341,7 @@ function buildMessages({ requirement, analysis, history, question, mode }) {
 
   const fallbackQuestion =
     safeMode === "initial"
-      ? "Please provide a detailed first-pass review for the selected requirement with sections: overall assessment, specific issues, rewrite suggestion, and actionable next steps. Keep it specific and substantial."
+      ? "Please provide an initial requirement review using EXACTLY two sections: Review and Suggested Rewrite. In Review, provide 3 to 5 professional bullets where each bullet has Issue + one-sentence explanation, without repeating the original requirement and without generic statements. In Suggested Rewrite, provide exactly one sentence including actor, action, object, condition, and measurable criteria."
       : "Please continue helping with this requirement conversation.";
 
   const userQuestion = String(question || "").trim() || fallbackQuestion;
@@ -438,7 +446,7 @@ async function chatWithOllama(messages, mode = "followup", returnMeta = false) {
   );
   const numPredict =
     safeMode === "initial"
-      ? Math.min(768, Math.max(320, configuredMaxTokens))
+      ? Math.min(900, Math.max(420, configuredMaxTokens))
       : Math.min(640, Math.max(280, configuredMaxTokens));
   const baseTemperature = Number(config.ollama.temperature || 0.2);
   const effectiveTemperature =
@@ -645,32 +653,16 @@ async function chatWithAI({ requirement, analysis, history, question, mode }) {
   }
 
   const safeMode = mode === "initial" ? "initial" : "followup";
-
-  const ambiguityValue = Number(analysis?.ambiguity ?? NaN);
-  const scoreValue = Number(analysis?.score ?? NaN);
-  const actor = String(analysis?.actor || "").trim();
-  const action = String(analysis?.action || "").trim();
-  const object = String(analysis?.object || "").trim();
-  const coreMissingCount = [actor, action, object].filter(
-    (part) => !part,
-  ).length;
-  const lowSignalRequirement = isLowSignalRequirement(safeRequirement);
-
-  const forceDeterministicInitialReview =
-    safeMode === "initial" &&
-    (lowSignalRequirement ||
-      (Number.isFinite(ambiguityValue) &&
-        ambiguityValue >= 85 &&
-        Number.isFinite(scoreValue) &&
-        scoreValue <= 20 &&
-        coreMissingCount >= 2));
-
-  if (forceDeterministicInitialReview) {
-    return buildDeterministicInitialReview({
-      requirement: safeRequirement,
-      analysis,
-      draft: "",
-    });
+  let initialRequirementAnalysis = analysis || {};
+  if (safeMode === "initial") {
+    try {
+      const analyzed = await analyzeText(safeRequirement);
+      if (analyzed && typeof analyzed === "object") {
+        initialRequirementAnalysis = analyzed;
+      }
+    } catch {
+      // Keep provided analysis snapshot if analyze endpoint is temporarily unavailable.
+    }
   }
 
   const normalizedHistory = Array.isArray(history) ? history : [];
@@ -790,53 +782,31 @@ async function chatWithAI({ requirement, analysis, history, question, mode }) {
       }
     }
 
-    if (safeMode === "initial" && countWords(text) < INITIAL_MIN_WORDS) {
-      try {
-        const expanded = await expandShortInitialResponse({
-          provider,
-          requirement: safeRequirement,
-          analysis,
-          shortDraft: text,
-        });
-
-        if (expanded && countWords(expanded) > countWords(text)) {
-          text = expanded;
-        }
-      } catch {
-        // Keep original text if expansion fails.
-      }
-    }
-
     text = sanitizeAssistantResponse(text);
 
-    if (
-      safeMode === "initial" &&
-      forceDeterministicInitialReview &&
-      countWords(text) < INITIAL_MIN_WORDS
-    ) {
-      text = buildDeterministicInitialReview({
-        requirement: safeRequirement,
-        analysis,
-        draft: text,
-      });
-    }
-
-    if (safeMode === "initial" && shouldOverrideInitialReview(text, analysis)) {
-      text = buildDeterministicInitialReview({
-        requirement: safeRequirement,
-        analysis,
-        draft: "",
-      });
-    }
-
-    if (safeMode === "initial" && shouldAugmentInitialReview(text, analysis)) {
-      if (forceDeterministicInitialReview) {
-        text = buildDeterministicInitialReview({
-          requirement: safeRequirement,
-          analysis,
-          draft: "",
-        });
+    if (safeMode === "initial") {
+      let rewrite = extractSuggestedRewrite(text);
+      if (!rewrite) {
+        rewrite = fallbackRewriteFromAnalysis(initialRequirementAnalysis);
       }
+
+      rewrite = toSingleSentence(rewrite);
+
+      if (!hasTerminalEnding(rewrite)) {
+        rewrite = `${rewrite}.`;
+      }
+
+      const message = normalizeInitialReviewMessage(text, rewrite);
+
+      return {
+        message,
+        rewrite,
+        analysis:
+          initialRequirementAnalysis &&
+          typeof initialRequirementAnalysis === "object"
+            ? initialRequirementAnalysis
+            : {},
+      };
     }
 
     return text;

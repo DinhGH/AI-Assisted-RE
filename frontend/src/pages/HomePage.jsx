@@ -174,6 +174,7 @@ export default function HomePage() {
   const selectRequirement = useAppStore((state) => state.selectRequirement);
   const updateRequirement = useAppStore((state) => state.updateRequirement);
   const sendChatMessage = useAppStore((state) => state.sendChatMessage);
+  const acceptRewrite = useAppStore((state) => state.acceptRewrite);
   const requestRequirementReview = useAppStore(
     (state) => state.requestRequirementReview,
   );
@@ -195,6 +196,8 @@ export default function HomePage() {
     right: 26,
   });
   const [draggingSeparator, setDraggingSeparator] = useState(null);
+  const [acceptingMessageKey, setAcceptingMessageKey] = useState(null);
+  const [acceptedMessageKeys, setAcceptedMessageKeys] = useState({});
   const chatScrollRef = useRef(null);
   const chatBottomRef = useRef(null);
   const chatInputRef = useRef(null);
@@ -338,6 +341,40 @@ export default function HomePage() {
   const handleSaveRequirement = async () => {
     if (!selectedRequirement || !editorDraft.trim()) return;
     await updateRequirement(selectedRequirement.id, editorDraft);
+  };
+
+  const handleAccept = async (item, index) => {
+    if (!selectedRequirement?.id) {
+      return;
+    }
+
+    const rewrite = String(item?.rewrite || "").trim();
+    if (!rewrite) {
+      return;
+    }
+
+    const messageKey = `${item.createdAt || "m"}-${index}`;
+
+    if (acceptingMessageKey === messageKey) {
+      return;
+    }
+
+    setEditorDraft(rewrite);
+    setAcceptingMessageKey(messageKey);
+
+    try {
+      await acceptRewrite({
+        requirementId: selectedRequirement.id,
+        rewrite,
+      });
+
+      setAcceptedMessageKeys((current) => ({
+        ...current,
+        [messageKey]: true,
+      }));
+    } finally {
+      setAcceptingMessageKey(null);
+    }
   };
 
   useEffect(() => {
@@ -593,12 +630,46 @@ export default function HomePage() {
                       key={`${item.createdAt || "m"}-${index}`}
                       className={`fade-in-up max-w-[88%] rounded-xl border-2 px-4 py-3 text-base ${item.role === "user" ? "ml-auto border-slate-300 bg-slate-50 text-gray-900" : "border-slate-300 bg-gray-50 text-gray-900"}`}
                     >
-                      <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-gray-700">
-                        {item.role}
-                      </p>
-                      <div className="space-y-2 text-[15px] font-medium">
-                        {renderChatMessage(item.message, item.role)}
-                      </div>
+                      {(() => {
+                        const messageKey = `${item.createdAt || "m"}-${index}`;
+                        const hasRewrite =
+                          item.role === "assistant" &&
+                          typeof item.rewrite === "string" &&
+                          item.rewrite.trim();
+                        const isAccepting = acceptingMessageKey === messageKey;
+                        const isAccepted = Boolean(
+                          acceptedMessageKeys[messageKey],
+                        );
+
+                        return (
+                          <>
+                            <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-gray-700">
+                              {item.role}
+                            </p>
+                            <div className="space-y-2 text-[15px] font-medium">
+                              {renderChatMessage(item.message, item.role)}
+                            </div>
+                            {hasRewrite ? (
+                              <div className="mt-2 flex items-center gap-2">
+                                <button
+                                  type="button"
+                                  className="inline-flex items-center rounded-md border border-slate-300 bg-white px-2 py-1 text-xs font-semibold text-slate-700 transition hover:border-slate-400 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+                                  onClick={() => handleAccept(item, index)}
+                                  disabled={
+                                    loading || isAccepting || isAccepted
+                                  }
+                                >
+                                  {isAccepting
+                                    ? "Accepting..."
+                                    : isAccepted
+                                      ? "Accepted"
+                                      : "Accept"}
+                                </button>
+                              </div>
+                            ) : null}
+                          </>
+                        );
+                      })()}
                     </div>
                   ))
                 )}

@@ -59,6 +59,9 @@ your local environment or CI/CD pipeline before release.
    docker compose up --build
    docker compose up
    docker compose restart ai-engine backend
+   docker compose exec ollama ollama run qwen2.5:0.5b
+   docker compose down -v
+   docker compose up --build
    docker compose down
    ```
 

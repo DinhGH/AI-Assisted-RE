@@ -338,7 +338,7 @@ const chatController = asyncHandler(async (req, res) => {
 
   analysisPayload = normalizeAnalysisScores(analysisPayload);
 
-  const assistantMessage = await chatWithAI({
+  const assistantResult = await chatWithAI({
     requirement: requirementText,
     analysis: analysisPayload,
     history: history.map((item) => ({
@@ -349,15 +349,39 @@ const chatController = asyncHandler(async (req, res) => {
     mode: effectiveMode,
   });
 
-  if (!assistantMessage) {
+  if (!assistantResult) {
     throw new AppError(502, "Ollama returned an empty response");
+  }
+
+  const assistantMessage =
+    assistantResult && typeof assistantResult === "object"
+      ? String(assistantResult.message || "").trim()
+      : String(assistantResult || "").trim();
+
+  const rewrite =
+    assistantResult && typeof assistantResult === "object"
+      ? String(assistantResult.rewrite || "").trim() || null
+      : null;
+
+  const rewrittenAnalysisRaw =
+    assistantResult && typeof assistantResult === "object"
+      ? assistantResult.analysis
+      : null;
+
+  const rewrittenAnalysis =
+    rewrittenAnalysisRaw && typeof rewrittenAnalysisRaw === "object"
+      ? normalizeAnalysisScores(rewrittenAnalysisRaw)
+      : null;
+
+  if (!assistantMessage) {
+    throw new AppError(502, "AI returned an empty response");
   }
 
   await models.ChatMessage.create({
     sessionId,
     requirementId: currentRequirementId,
     role: "assistant",
-    message: String(assistantMessage),
+    message: assistantMessage,
   });
 
   const updatedHistory = await models.ChatMessage.findAll({
@@ -370,7 +394,10 @@ const chatController = asyncHandler(async (req, res) => {
 
   res.json({
     session_id: sessionId,
-    response: String(assistantMessage),
+    response: assistantMessage,
+    message: assistantMessage,
+    rewrite,
+    analysis: rewrittenAnalysis,
     history: updatedHistory.map((item) => ({
       role: item.role,
       content: item.message,

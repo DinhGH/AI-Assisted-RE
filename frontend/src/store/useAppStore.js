@@ -135,6 +135,10 @@ function ensureDefaultSession(state) {
                   ...item,
                   role: item?.role === "assistant" ? "assistant" : "user",
                   message,
+                  rewrite:
+                    item?.rewrite && typeof item.rewrite === "string"
+                      ? item.rewrite.trim()
+                      : null,
                   createdAt: item?.createdAt || new Date().toISOString(),
                   requirementId: item?.requirementId ?? null,
                 };
@@ -543,6 +547,88 @@ export const useAppStore = create(
         }
       },
 
+      acceptRewrite: async ({ requirementId, rewrite }) => {
+        const safeRequirementId = Number(requirementId);
+        const safeRewrite = String(rewrite || "").trim();
+
+        if (!safeRequirementId || !safeRewrite) {
+          return null;
+        }
+
+        set({ loading: true, error: null, success: null });
+
+        try {
+          const reEvaluate = await requirementService.reEvaluateRequirement(
+            safeRequirementId,
+            safeRewrite,
+            "user",
+          );
+
+          const analysis =
+            reEvaluate?.analysis && typeof reEvaluate.analysis === "object"
+              ? reEvaluate.analysis
+              : {};
+
+          set((state) => {
+            const patch = updateActiveSession(
+              ensureDefaultSession({
+                ...state,
+                activeSessionId:
+                  state.activeSessionId || state.sessions[0]?.id || null,
+              }),
+              (session) => ({
+                ...session,
+                requirements: session.requirements.map((item) =>
+                  item.id === safeRequirementId
+                    ? normalizeRequirement({
+                        ...item,
+                        text: safeRewrite,
+                        actor: analysis.actor ?? item.actor ?? null,
+                        action: analysis.action ?? item.action ?? null,
+                        object: analysis.object ?? item.object ?? null,
+                        ambiguity: analysis.ambiguity ?? item.ambiguity ?? null,
+                        readability:
+                          analysis.readability ?? item.readability ?? null,
+                        similarity:
+                          analysis.similarity ?? item.similarity ?? null,
+                        contradiction:
+                          analysis.contradiction ?? item.contradiction ?? null,
+                        clarity: analysis.clarity ?? item.clarity ?? null,
+                        completeness:
+                          analysis.completeness ?? item.completeness ?? null,
+                        consistency:
+                          analysis.consistency ?? item.consistency ?? null,
+                        score: analysis.score ?? item.score ?? null,
+                        status: "analyzed",
+                      })
+                    : item,
+                ),
+              }),
+            );
+
+            return {
+              ...patch,
+              success: "Rewrite accepted and re-analyzed.",
+            };
+          });
+
+          return {
+            requirementId: safeRequirementId,
+            rewrite: safeRewrite,
+            analysis,
+          };
+        } catch (error) {
+          const message =
+            error?.response?.data?.message ||
+            error.message ||
+            "Unable to accept and re-analyze rewrite";
+          set({ error: message });
+          throw error;
+        } finally {
+          set({ loading: false });
+        }
+      },
+
       sendChatMessage: async (message) => {
         const text = String(message || "").trim();
         if (!text) return null;
@@ -597,6 +683,10 @@ export const useAppStore = create(
           const assistantChat = {
             role: "assistant",
             message: response.response || "No response from AI.",
+            rewrite:
+              typeof response.rewrite === "string" && response.rewrite.trim()
+                ? response.rewrite.trim()
+                : null,
             createdAt: new Date().toISOString(),
             requirementId: selectedRequirement?.id || null,
           };
@@ -759,6 +849,10 @@ export const useAppStore = create(
           const assistantChat = {
             role: "assistant",
             message: response.response || "No response from AI.",
+            rewrite:
+              typeof response.rewrite === "string" && response.rewrite.trim()
+                ? response.rewrite.trim()
+                : null,
             createdAt: new Date().toISOString(),
             requirementId,
             autoReview: true,
