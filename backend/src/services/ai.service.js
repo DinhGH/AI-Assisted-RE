@@ -249,46 +249,28 @@ function normalizeInitialReviewMessage(text = "", rewrite = "") {
   for (let i = 0; i < reviewLines.length; i++) {
     let line = reviewLines[i].trim();
 
-    // CASE 0: "Issue: Title" + next line là description
-    if (/^issue\s*:/i.test(line)) {
-      const title = line.replace(/^issue\s*:/i, "").trim();
+    // 🔥 STEP 1: remove "Issue" prefix ở mọi dạng
+    line = line.replace(/^issue\s*:?\s*/i, "").trim();
+
+    // 🔥 STEP 2: nếu dòng chỉ là tiêu đề rỗng → skip
+    if (!line) continue;
+
+    // 🔥 STEP 3: nếu dòng tiếp theo là description
+    if (!line.includes("-") && !line.includes(":")) {
       const next = (reviewLines[i + 1] || "").trim();
 
       if (next) {
-        parsedBullets.push(`${title}\n  ${next.replace(/[.!?]+$/, "")}.`);
-        i++; // skip dòng description
-        continue;
-      }
+        const cleanNext = next.replace(/^issue\s*:?\s*/i, "").trim();
 
-      // fallback nếu không có dòng sau
-      parsedBullets.push(`Quality Issue\n  ${title}.`);
-      continue;
-    }
-    // CASE 1: dòng "Issue"
-    if (/^issue$/i.test(line)) {
-      const next = (reviewLines[i + 1] || "").trim();
+        // gộp title + desc
+        parsedBullets.push(`${line}\n  ${cleanNext.replace(/[.!?]+$/, "")}.`);
 
-      if (next) {
-        // check dạng: "Ambiguity - something"
-        if (next.includes("-")) {
-          const [title, ...rest] = next.split("-");
-          const desc = rest.join("-").trim();
-
-          parsedBullets.push(
-            `${title.trim()}\n  ${desc.replace(/[.!?]+$/, "")}.`,
-          );
-        } else {
-          parsedBullets.push(
-            `Quality Issue\n  ${next.replace(/[.!?]+$/, "")}.`,
-          );
-        }
-
-        i++; // skip dòng sau vì đã dùng
+        i++;
         continue;
       }
     }
 
-    // CASE 2: "Title - description"
+    // 🔥 STEP 4: xử lý "Title - desc"
     if (line.includes("-")) {
       const [title, ...rest] = line.split("-");
       const desc = rest.join("-").trim();
@@ -297,7 +279,7 @@ function normalizeInitialReviewMessage(text = "", rewrite = "") {
       continue;
     }
 
-    // CASE 3: "Title: description"
+    // 🔥 STEP 5: xử lý "Title: desc"
     if (line.includes(":")) {
       const [title, ...rest] = line.split(":");
       const desc = rest.join(":").trim();
@@ -306,8 +288,8 @@ function normalizeInitialReviewMessage(text = "", rewrite = "") {
       continue;
     }
 
-    // fallback
-    parsedBullets.push(`Quality Issue\n  ${line.replace(/[.!?]+$/, "")}.`);
+    // 🔥 STEP 6: fallback đẹp hơn
+    parsedBullets.push(`General Issue\n  ${line.replace(/[.!?]+$/, "")}.`);
   }
 
   reviewLines = parsedBullets;
