@@ -244,20 +244,73 @@ function normalizeInitialReviewMessage(text = "", rewrite = "") {
     }
   }
 
-  reviewLines = reviewLines
-    .map((line) => line.replace(/^[-•]\s*/, "").trim())
-    .filter(Boolean)
-    .map((line) => {
-      if (/^[^:]{2,120}:\s+.+[.!?]$/u.test(line)) {
-        return line;
+  const parsedBullets = [];
+
+  for (let i = 0; i < reviewLines.length; i++) {
+    let line = reviewLines[i].trim();
+
+    // CASE 0: "Issue: Title" + next line là description
+    if (/^issue\s*:/i.test(line)) {
+      const title = line.replace(/^issue\s*:/i, "").trim();
+      const next = (reviewLines[i + 1] || "").trim();
+
+      if (next) {
+        parsedBullets.push(`${title}\n  ${next.replace(/[.!?]+$/, "")}.`);
+        i++; // skip dòng description
+        continue;
       }
 
-      if (/^[^:]{2,120}:\s+.+$/u.test(line)) {
-        return `${line}.`;
-      }
+      // fallback nếu không có dòng sau
+      parsedBullets.push(`Quality Issue\n  ${title}.`);
+      continue;
+    }
+    // CASE 1: dòng "Issue"
+    if (/^issue$/i.test(line)) {
+      const next = (reviewLines[i + 1] || "").trim();
 
-      return `Quality issue: ${line.replace(/[.!?]+$/u, "")}.`;
-    });
+      if (next) {
+        // check dạng: "Ambiguity - something"
+        if (next.includes("-")) {
+          const [title, ...rest] = next.split("-");
+          const desc = rest.join("-").trim();
+
+          parsedBullets.push(
+            `${title.trim()}\n  ${desc.replace(/[.!?]+$/, "")}.`,
+          );
+        } else {
+          parsedBullets.push(
+            `Quality Issue\n  ${next.replace(/[.!?]+$/, "")}.`,
+          );
+        }
+
+        i++; // skip dòng sau vì đã dùng
+        continue;
+      }
+    }
+
+    // CASE 2: "Title - description"
+    if (line.includes("-")) {
+      const [title, ...rest] = line.split("-");
+      const desc = rest.join("-").trim();
+
+      parsedBullets.push(`${title.trim()}\n  ${desc.replace(/[.!?]+$/, "")}.`);
+      continue;
+    }
+
+    // CASE 3: "Title: description"
+    if (line.includes(":")) {
+      const [title, ...rest] = line.split(":");
+      const desc = rest.join(":").trim();
+
+      parsedBullets.push(`${title.trim()}\n  ${desc.replace(/[.!?]+$/, "")}.`);
+      continue;
+    }
+
+    // fallback
+    parsedBullets.push(`Quality Issue\n  ${line.replace(/[.!?]+$/, "")}.`);
+  }
+
+  reviewLines = parsedBullets;
 
   const professionalFallbackBullets = [
     "Missing actor: The requirement does not clearly specify which system component or user is responsible for the action.",
@@ -312,7 +365,9 @@ function buildMessages({ requirement, analysis, history, question, mode }) {
           "Return EXACTLY two sections in this order:",
           "Review:",
           "- provide 3 to 5 professional bullet points.",
-          "- each bullet must contain Issue + one-sentence explanation.",
+          "Each bullet must start with a short professional issue title (2–5 words), followed by one sentence explanation.",
+          "- each bullet must contain the name of the issue (not the word 'Issue') + one-sentence explanation.",
+          "DO NOT use the words 'Issue' or 'Explanation' as labels.",
           "- do not repeat or paraphrase the original requirement text.",
           "- avoid generic statements; give concrete quality gaps.",
           "Suggested Rewrite:",

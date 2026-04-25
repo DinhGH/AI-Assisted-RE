@@ -127,7 +127,7 @@ export default function DashboardPage() {
         "Clarity",
         "Completeness",
         "Consistency",
-        "Ambiguity (100-x)",
+        "Ambiguity (90-x)",
       ],
       datasets: [
         {

@@ -29,7 +29,7 @@ services:
       - ./backend/.env
     environment:
       OLLAMA_BASE_URL: http://ollama:11434
-      OLLAMA_MODEL: qwen2.5:0.5b
+      OLLAMA_MODEL: qwen2.5:3b
     ports:
       - "3000:3000"
     restart: unless-stopped
@@ -51,7 +51,7 @@ services:
       - ./backend/.env
     environment:
       OLLAMA_BASE_URL: http://ollama:11434
-      OLLAMA_MODEL: qwen2.5:0.5b
+      OLLAMA_MODEL: qwen2.5:3b
     command: ["npm", "run", "start:worker"]
     restart: unless-stopped
     depends_on:
